@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { MetaLabel, Reveal, SectionHeader, Tag } from '../components';
+import TiltCard from '../components/TiltCard';
 import type { FullProject } from '../lib/projects';
 import { ProjectActions, ProjectVisual } from '../site/ProjectBits';
 
@@ -72,10 +73,12 @@ export default function Featured({ projects }: { projects: FullProject[] }) {
         <SectionHeader
           title={<span id="featured-title">Things leaving the lab.</span>}
           description="A rotating selection of projects, ranked by stars. Every record below is verified data, no invented claims."
+          className="lamp-cone"
         />
         <Reveal className="mt-14 flex flex-col gap-6" stagger="loose">
           <div data-reveal>
-            <article className="grid overflow-hidden rounded-xl border border-border bg-surface lg:grid-cols-12">
+            <TiltCard max={7}>
+            <article className="border-gold-hover grid overflow-hidden rounded-xl border bg-surface lg:grid-cols-12">
               <ProjectVisual title={lead.name} glyph={{ pattern: lead.pattern, accent: lead.accent }} className="min-h-72 md:min-h-96 lg:col-span-7" />
               <div className="flex flex-col gap-6 p-6 md:p-10 lg:col-span-5">
                 <MetaLabel>{lead.category}</MetaLabel>
@@ -94,6 +97,7 @@ export default function Featured({ projects }: { projects: FullProject[] }) {
                 <div className="mt-auto pt-2"><ProjectActions repoUrl={lead.repoUrl} demoUrl={lead.demoUrl} /></div>
               </div>
             </article>
+            </TiltCard>
           </div>
           {rest.length > 0 && (
             <div className="grid gap-6 lg:grid-cols-12">

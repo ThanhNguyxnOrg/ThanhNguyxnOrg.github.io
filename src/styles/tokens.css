@@ -198,6 +198,39 @@
   }
 }
 
+@utility border-gold-hover {
+  border: 1px solid rgb(245 158 11 / 0.35);
+  transition: border-color var(--duration-fast) var(--ease-out-expo), box-shadow var(--duration-fast) var(--ease-out-expo);
+  &:hover {
+    border-color: rgb(252 211 77 / 0.8);
+    box-shadow: 0 0 0 1px rgb(245 158 11 / 0.4), 0 12px 40px -12px rgb(245 158 11 / 0.35);
+  }
+}
+
+@utility lamp-cone {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -40px -20px auto -20px;
+    height: 120px;
+    background: conic-gradient(from 180deg at 50% 0%, transparent 42%, rgb(245 158 11 / 0.18), transparent 58%);
+    mask-image: linear-gradient(to bottom, black, transparent);
+    pointer-events: none;
+  }
+}
+
+@utility section-glow {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(480px at var(--mx, 50%) var(--my, 40%), rgb(245 158 11 / 0.08), transparent 70%);
+    pointer-events: none;
+  }
+}
+
 @utility noise-overlay {
   position: fixed;
   inset: 0;
