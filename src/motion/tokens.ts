@@ -1,4 +1,4 @@
-/** Motion tokens — mirror the CSS custom properties in styles/tokens.css. GSAP uses seconds. */
+/** Motion tokens - mirror the CSS custom properties in styles/tokens.css. GSAP uses seconds. */
 export const duration = {
   instant: 0.12,
   fast: 0.2,
@@ -20,7 +20,7 @@ export const stagger = {
   loose: 0.14,
 } as const;
 
-/** Entrance distances (px) — keep small; motion conveys arrival, not travel. */
+/** Entrance distances (px) - keep small; motion conveys arrival, not travel. */
 export const distance = {
   sm: 12,
   md: 24,

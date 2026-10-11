@@ -1,0 +1,694 @@
+- generic [active] [ref=f13e1]:
+  - link "Skip to content" [ref=f13e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f13e4]:
+    - navigation "Primary" [ref=f13e5]:
+      - link "TNORG TNORG home" [ref=f13e6] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f13e7]:
+          - generic [ref=f13e8]: TNORG
+          - generic [ref=f13e10]: TNORG home
+      - list [ref=f13e11]:
+        - listitem [ref=f13e12]:
+          - link "Projects" [ref=f13e13] [cursor=pointer]:
+            - /url: "#projects"
+        - listitem [ref=f13e14]:
+          - link "Journey" [ref=f13e15] [cursor=pointer]:
+            - /url: "#journey"
+        - listitem [ref=f13e16]:
+          - link "Packages" [ref=f13e17] [cursor=pointer]:
+            - /url: "#packages"
+        - listitem [ref=f13e18]:
+          - link "Support" [ref=f13e19] [cursor=pointer]:
+            - /url: "#support"
+      - link "GitHub" [ref=f13e21] [cursor=pointer]:
+        - /url: https://github.com/ThanhNguyxnOrg
+  - main [ref=f13e24]:
+    - generic [ref=f13e29]:
+      - generic [ref=f13e30]:
+        - heading "Build. Explore. Evolve." [level=1] [ref=f13e31]:
+          - generic [ref=f13e32]: Build.
+          - generic [ref=f13e34]: Explore.
+          - generic [ref=f13e36]: Evolve.
+        - paragraph [ref=f13e38]: Independent technology practice building developer tools, AI workflows, and open source utilities. Documented, preserved, and rebuilt in the open.
+        - generic [ref=f13e39]:
+          - link "Browse projects" [ref=f13e40] [cursor=pointer]:
+            - /url: "#projects"
+          - link "Visit GitHub" [ref=f13e45] [cursor=pointer]:
+            - /url: https://github.com/ThanhNguyxnOrg
+      - img [aria-hidden] [ref=f13e50]:
+        - generic [ref=f13e58]: TOOLS
+        - generic [ref=f13e62]: LIBRARIES
+        - generic [ref=f13e66]: APPS
+        - generic [ref=f13e70]: EXPERIMENTS
+        - generic [ref=f13e74]: NEXT
+    - generic [ref=f13e85]:
+      - generic [ref=f13e86]:
+        - term [ref=f13e88]: Repositories
+        - definition [ref=f13e89]: "16"
+        - definition [ref=f13e90]: public
+      - generic [ref=f13e91]:
+        - term [ref=f13e93]: Stars
+        - definition [ref=f13e94]: "10"
+        - definition [ref=f13e95]: across the org
+      - generic [ref=f13e96]:
+        - term [ref=f13e98]: npm downloads
+        - definition [ref=f13e99]: "313"
+        - definition [ref=f13e100]: last 30 days
+      - generic [ref=f13e101]:
+        - term [ref=f13e103]: Live demos
+        - definition [ref=f13e104]: "5"
+        - definition [ref=f13e105]: snapshot 2026-10-11
+    - region "Things leaving the lab." [ref=f13e106]:
+      - generic [ref=f13e107]:
+        - generic [ref=f13e108]:
+          - heading "Things leaving the lab." [level=2] [ref=f13e110]
+          - paragraph [ref=f13e112]: A rotating selection of projects, ranked by stars. Every record below is verified data, no invented claims.
+        - generic [ref=f13e113]:
+          - article [ref=f13e115]:
+            - generic [ref=f13e116]: blendops
+            - generic [ref=f13e131]:
+              - generic [ref=f13e132]: AI & Agents
+              - heading "blendops" [level=3] [ref=f13e133]
+              - paragraph [ref=f13e134]: Born in the org on 2026-04-24; 174 of 189 commits landed in a two-month sprint through draft releases v0.1 to v0.7.
+              - generic [ref=f13e135]:
+                - generic [ref=f13e136]:
+                  - term [ref=f13e137]: skills
+                  - definition [ref=f13e138]: "48"
+                - generic [ref=f13e139]:
+                  - term [ref=f13e140]: install targets
+                  - definition [ref=f13e141]: "26"
+                - generic [ref=f13e142]:
+                  - term [ref=f13e143]: commits
+                  - definition [ref=f13e144]: "189"
+              - link "Repository" [ref=f13e147] [cursor=pointer]:
+                - /url: https://github.com/ThanhNguyxnOrg/blendops
+          - generic [ref=f13e151]:
+            - article [ref=f13e153]:
+              - generic [ref=f13e154]: Media
+              - heading "lumeo" [level=3] [ref=f13e155]
+              - generic [ref=f13e156]: lumeo
+              - paragraph [ref=f13e171]: Started pre-org as Lumen Subtitle Studio, renamed and merged with the Echoly engine in May 2026, now at v2.0.6.
+              - list "Tags" [ref=f13e172]:
+                - listitem [ref=f13e173]:
+                  - generic [ref=f13e174]: ai-dubbing
+                - listitem [ref=f13e175]:
+                  - generic [ref=f13e176]: chrome-extension
+                - listitem [ref=f13e177]:
+                  - generic [ref=f13e178]: javascript
+                - listitem [ref=f13e179]:
+                  - generic [ref=f13e180]: realtime
+                - listitem [ref=f13e181]:
+                  - generic [ref=f13e182]: subtitles
+                - listitem [ref=f13e183]:
+                  - generic [ref=f13e184]: youtube
+              - link "Repository" [ref=f13e187] [cursor=pointer]:
+                - /url: https://github.com/ThanhNguyxnOrg/lumeo
+            - article [ref=f13e192]:
+              - generic [ref=f13e193]:
+                - generic [ref=f13e194]: Developer Tools
+                - heading "apidex-hub" [level=3] [ref=f13e195]
+                - paragraph [ref=f13e196]: Free-API catalog with a daily dead-link hygiene pipeline that files issues for every broken link.
+                - list "Tags" [ref=f13e197]:
+                  - listitem [ref=f13e198]:
+                    - generic [ref=f13e199]: api
+                  - listitem [ref=f13e200]:
+                    - generic [ref=f13e201]: api-collection
+                  - listitem [ref=f13e202]:
+                    - generic [ref=f13e203]: awesome-list
+                  - listitem [ref=f13e204]:
+                    - generic [ref=f13e205]: developer-tools
+                  - listitem [ref=f13e206]:
+                    - generic [ref=f13e207]: free-api
+                  - listitem [ref=f13e208]:
+                    - generic [ref=f13e209]: open-source
+                - generic [ref=f13e211]:
+                  - link "Repository" [ref=f13e212] [cursor=pointer]:
+                    - /url: https://github.com/ThanhNguyxnOrg/apidex-hub
+                  - link "Live demo" [ref=f13e216] [cursor=pointer]:
+                    - /url: https://thanhnguyxnorg.github.io/apidex-hub/
+              - generic [ref=f13e222]: apidex-hub
+            - article [ref=f13e262]:
+              - generic [ref=f13e263]: Learning
+              - heading "awesome-cert-sherpa" [level=3] [ref=f13e264]
+              - generic [ref=f13e265]: awesome-cert-sherpa
+              - paragraph [ref=f13e278]: Born personal in February 2026, migrated in April, rewritten from Docusaurus to a Vite SPA in May keeping every question.
+              - list "Tags" [ref=f13e279]:
+                - listitem [ref=f13e280]:
+                  - generic [ref=f13e281]: aws
+                - listitem [ref=f13e282]:
+                  - generic [ref=f13e283]: azure
+                - listitem [ref=f13e284]:
+                  - generic [ref=f13e285]: certification
+                - listitem [ref=f13e286]:
+                  - generic [ref=f13e287]: docusaurus
+                - listitem [ref=f13e288]:
+                  - generic [ref=f13e289]: exam-prep
+                - listitem [ref=f13e290]:
+                  - generic [ref=f13e291]: open-source
+              - generic [ref=f13e293]:
+                - link "Repository" [ref=f13e294] [cursor=pointer]:
+                  - /url: https://github.com/ThanhNguyxnOrg/awesome-cert-sherpa
+                - link "Live demo" [ref=f13e298] [cursor=pointer]:
+                  - /url: https://thanhnguyxnorg.github.io/awesome-cert-sherpa/
+            - article [ref=f13e305]:
+              - generic [ref=f13e306]:
+                - generic [ref=f13e307]: Web Apps
+                - heading "Snapbooth" [level=3] [ref=f13e308]
+                - paragraph [ref=f13e309]: "Oldest repo: empty scaffold in May 2025, SnapStrip static site, rebuilt as React Snapbooth in May 2026 by one author."
+                - list "Tags" [ref=f13e310]:
+                  - listitem [ref=f13e311]:
+                    - generic [ref=f13e312]: browser-only
+                  - listitem [ref=f13e313]:
+                    - generic [ref=f13e314]: filters
+                  - listitem [ref=f13e315]:
+                    - generic [ref=f13e316]: gif
+                  - listitem [ref=f13e317]:
+                    - generic [ref=f13e318]: github-pages
+                  - listitem [ref=f13e319]:
+                    - generic [ref=f13e320]: photobooth
+                  - listitem [ref=f13e321]:
+                    - generic [ref=f13e322]: privacy-first
+                - generic [ref=f13e324]:
+                  - link "Repository" [ref=f13e325] [cursor=pointer]:
+                    - /url: https://github.com/ThanhNguyxnOrg/Snapbooth
+                  - link "Live demo" [ref=f13e329] [cursor=pointer]:
+                    - /url: https://thanhnguyxnorg.github.io/Snapbooth/
+              - generic [ref=f13e335]: Snapbooth
+            - article [ref=f13e375]:
+              - generic [ref=f13e376]: Learning
+              - heading "StepDSA" [level=3] [ref=f13e377]
+              - generic [ref=f13e378]: StepDSA
+              - paragraph [ref=f13e393]: Visual DSA playground where every algorithm step can be replayed deterministically.
+              - list "Tags" [ref=f13e394]:
+                - listitem [ref=f13e395]:
+                  - generic [ref=f13e396]: algorithms
+                - listitem [ref=f13e397]:
+                  - generic [ref=f13e398]: data-structures
+                - listitem [ref=f13e399]:
+                  - generic [ref=f13e400]: education
+                - listitem [ref=f13e401]:
+                  - generic [ref=f13e402]: typescript
+                - listitem [ref=f13e403]:
+                  - generic [ref=f13e404]: visualizer
+              - generic [ref=f13e406]:
+                - link "Repository" [ref=f13e407] [cursor=pointer]:
+                  - /url: https://github.com/ThanhNguyxnOrg/StepDSA
+                - link "Live demo" [ref=f13e411] [cursor=pointer]:
+                  - /url: https://thanhnguyxnorg.github.io/StepDSA/
+    - region "How the practice works." [ref=f13e417]:
+      - generic [ref=f13e418]:
+        - generic [ref=f13e419]:
+          - heading "How the practice works." [level=2] [ref=f13e421]
+          - paragraph [ref=f13e423]: TNORG is not tied to one product category. These are the principles every project follows.
+        - list [ref=f13e424]:
+          - listitem [ref=f13e425]:
+            - generic [ref=f13e426]: Build
+            - generic [ref=f13e427]: Useful beats impressive.
+            - generic [ref=f13e428]: Projects aim at real problems and ship as working software.
+          - listitem [ref=f13e429]:
+            - generic [ref=f13e430]: Explore
+            - generic [ref=f13e431]: Ideas start as experiments.
+            - generic [ref=f13e432]: Small prototypes test whether an idea deserves to become a tool.
+          - listitem [ref=f13e433]:
+            - generic [ref=f13e434]: Evolve
+            - generic [ref=f13e435]: Releases compound.
+            - generic [ref=f13e436]: Good work keeps improving through issues and honest critique.
+          - listitem [ref=f13e437]:
+            - generic [ref=f13e438]: Second life
+            - generic [ref=f13e439]: Good projects get a cleaner home.
+            - generic [ref=f13e440]: Older work is preserved, rebuilt, and given a second life.
+    - region "Second lives." [ref=f13e441]:
+      - generic [ref=f13e442]:
+        - generic [ref=f13e443]:
+          - heading "Second lives." [level=2] [ref=f13e445]
+          - paragraph [ref=f13e447]: "Where each project came from, and what it became. Thin histories stay thin: nothing here is invented."
+        - list [ref=f13e449]:
+          - listitem [ref=f13e451]:
+            - time [ref=f13e452]: 2025-05
+            - generic [ref=f13e453]:
+              - paragraph [ref=f13e455]: An empty scaffold
+              - paragraph [ref=f13e456]: Snapbooth starts life as a single .gitattributes file, waiting almost a year for code.
+              - generic [ref=f13e457]: snapbooth
+          - listitem [ref=f13e460]:
+            - time [ref=f13e461]: 2026-02
+            - generic [ref=f13e462]:
+              - paragraph [ref=f13e464]: Study notes become a portal
+              - paragraph [ref=f13e465]: awesome-cert-sherpa is scaffolded on a personal account with 640 practice questions on day one.
+              - generic [ref=f13e466]: awesome-cert-sherpa
+          - listitem [ref=f13e469]:
+            - time [ref=f13e470]: 2026-04
+            - generic [ref=f13e471]:
+              - paragraph [ref=f13e473]: The org forms
+              - paragraph [ref=f13e474]: ThanhNguyxnOrg is founded on April 9; personal repositories start migrating over with rewritten links.
+              - generic [ref=f13e475]: meta
+          - listitem [ref=f13e478]:
+            - time [ref=f13e479]: 2026-05
+            - generic [ref=f13e480]:
+              - paragraph [ref=f13e482]: The sprint
+              - paragraph [ref=f13e483]: BlendOps lands 174 of its 189 commits in two months, growing from MVP scaffold to a 48-skill pack.
+              - generic [ref=f13e484]: blendops
+          - listitem [ref=f13e487]:
+            - time [ref=f13e488]: 2026-05
+            - generic [ref=f13e489]:
+              - paragraph [ref=f13e491]: Second life, twice
+              - paragraph [ref=f13e492]: Cert-sherpa is backup-tagged and rewritten from Docusaurus to a Vite SPA; Snapbooth is rebuilt as a React studio and renamed.
+              - generic [ref=f13e493]:
+                - generic [ref=f13e494]: awesome-cert-sherpa
+                - generic [ref=f13e495]: snapbooth
+          - listitem [ref=f13e497]:
+            - time [ref=f13e498]: 2026-10
+            - generic [ref=f13e499]:
+              - paragraph [ref=f13e501]: Still shippingNow
+              - paragraph [ref=f13e502]: Lumeo reaches v2.0.6, the org holds 16 repositories, and this site goes live.
+              - generic [ref=f13e503]: lumeo
+    - region "The full index." [ref=f13e506]:
+      - generic [ref=f13e507]:
+        - generic [ref=f13e508]:
+          - heading "The full index." [level=2] [ref=f13e510]
+          - paragraph [ref=f13e512]: Search and filter every project record. Same verified data source as the featured section.
+        - generic [ref=f13e513]:
+          - complementary "Filters" [ref=f13e514]:
+            - generic [ref=f13e515]:
+              - generic [ref=f13e516]: Search
+              - searchbox "Search" [ref=f13e518]
+            - generic [ref=f13e519]:
+              - generic [ref=f13e520]: Category
+              - group "Category" [ref=f13e521]:
+                - button "All 16" [pressed] [ref=f13e522]:
+                  - text: All
+                  - generic [ref=f13e523]: "16"
+                - button "AI & Agents 3" [ref=f13e524]:
+                  - text: AI & Agents
+                  - generic [ref=f13e525]: "3"
+                - button "Media 1" [ref=f13e526]:
+                  - text: Media
+                  - generic [ref=f13e527]: "1"
+                - button "Developer Tools 6" [ref=f13e528]:
+                  - text: Developer Tools
+                  - generic [ref=f13e529]: "6"
+                - button "Learning 2" [ref=f13e530]:
+                  - text: Learning
+                  - generic [ref=f13e531]: "2"
+                - button "Web Apps 1" [ref=f13e532]:
+                  - text: Web Apps
+                  - generic [ref=f13e533]: "1"
+                - button "Meta 1" [ref=f13e534]:
+                  - text: Meta
+                  - generic [ref=f13e535]: "1"
+                - button "Network 1" [ref=f13e536]:
+                  - text: Network
+                  - generic [ref=f13e537]: "1"
+                - button "Documents 1" [ref=f13e538]:
+                  - text: Documents
+                  - generic [ref=f13e539]: "1"
+            - generic [ref=f13e540]:
+              - generic [ref=f13e541]: Technology and topic
+              - group "Tags" [ref=f13e542]:
+                - button "academic-paper" [ref=f13e543]
+                - button "agent-orchestration" [ref=f13e546]
+                - button "agent-skills" [ref=f13e549]
+                - button "ai-agents" [ref=f13e552]
+                - button "ai-dubbing" [ref=f13e555]
+                - button "algorithms" [ref=f13e558]
+                - button "api" [ref=f13e561]
+                - button "api-collection" [ref=f13e564]
+                - button "awesome-list" [ref=f13e567]
+                - button "aws" [ref=f13e570]
+                - button "azure" [ref=f13e573]
+                - button "blender" [ref=f13e576]
+                - button "blender-mcp" [ref=f13e579]
+                - button "browser-only" [ref=f13e582]
+                - button "certification" [ref=f13e585]
+                - button "chrome-extension" [ref=f13e588]
+                - button "claude" [ref=f13e591]
+                - button "claude-code" [ref=f13e594]
+                - button "cleaner" [ref=f13e597]
+                - button "code-analysis" [ref=f13e600]
+                - button "community-health" [ref=f13e603]
+                - button "competitive-programming" [ref=f13e606]
+                - button "creative-ai" [ref=f13e609]
+                - button "data-structures" [ref=f13e612]
+                - button "developer-tools" [ref=f13e615]
+                - button "django" [ref=f13e618]
+                - button "docker" [ref=f13e621]
+                - button "docs" [ref=f13e624]
+                - button "docusaurus" [ref=f13e627]
+                - button "education" [ref=f13e630]
+                - button "exam-prep" [ref=f13e633]
+                - button "filters" [ref=f13e636]
+                - button "free-api" [ref=f13e639]
+                - button "game-booster" [ref=f13e642]
+                - button "gif" [ref=f13e645]
+                - button "git" [ref=f13e648]
+                - button "github" [ref=f13e651]
+                - button "github-cli" [ref=f13e654]
+                - button "github-pages" [ref=f13e657]
+                - button "golang" [ref=f13e660]
+                - button "javascript" [ref=f13e663]
+                - button "latency-reducer" [ref=f13e666]
+                - button "multi-account" [ref=f13e669]
+                - button "nuxt" [ref=f13e672]
+                - button "online-judge" [ref=f13e675]
+                - button "open-source" [ref=f13e678]
+                - button "pdf-translation" [ref=f13e681]
+                - button "photobooth" [ref=f13e684]
+                - button "postgresql" [ref=f13e687]
+                - button "privacy-first" [ref=f13e690]
+                - button "prompt-evaluation" [ref=f13e693]
+                - button "public-apis" [ref=f13e696]
+                - button "python" [ref=f13e699]
+                - button "react" [ref=f13e702]
+                - button "realtime" [ref=f13e705]
+                - button "repository-management" [ref=f13e708]
+                - button "rust" [ref=f13e711]
+                - button "skills" [ref=f13e714]
+                - button "static-analysis" [ref=f13e717]
+                - button "subtitles" [ref=f13e720]
+                - button "tauri" [ref=f13e723]
+                - button "translation" [ref=f13e726]
+                - button "typescript" [ref=f13e729]
+                - button "uninstaller" [ref=f13e732]
+                - button "visualizer" [ref=f13e735]
+                - button "vpn" [ref=f13e738]
+                - button "vue" [ref=f13e741]
+                - button "windows" [ref=f13e744]
+                - button "wintun" [ref=f13e747]
+                - button "workflows" [ref=f13e750]
+                - button "youtube" [ref=f13e753]
+            - generic [ref=f13e756]:
+              - generic [ref=f13e757]: Sort
+              - group "Sort" [ref=f13e758]:
+                - button "Top starred" [pressed] [ref=f13e759]
+                - button "A to Z" [ref=f13e760]
+          - generic [ref=f13e761]:
+            - generic [ref=f13e762]: 16 of 16 projects
+            - list [ref=f13e764]:
+              - listitem [ref=f13e765]:
+                - generic [ref=f13e773]:
+                  - paragraph [ref=f13e774]: blendops
+                  - paragraph [ref=f13e775]: AI-native Blender workflow and skill pack for non-Blender users, built around official Blender MCP
+                  - generic [ref=f13e776]:
+                    - generic [ref=f13e777]: agent-skills
+                    - generic [ref=f13e778]: ai-agents
+                    - generic [ref=f13e779]: blender
+                    - generic [ref=f13e780]: blender-mcp
+                    - generic [ref=f13e781]: claude
+                    - generic [ref=f13e782]: claude-code
+                  - link "Repository" [ref=f13e785] [cursor=pointer]:
+                    - /url: https://github.com/ThanhNguyxnOrg/blendops
+              - listitem [ref=f13e789]:
+                - generic [ref=f13e797]:
+                  - paragraph [ref=f13e798]: lumeo
+                  - paragraph [ref=f13e799]: Bilingual captions and live AI dubbing for YouTube in one extension, three tiers
+                  - generic [ref=f13e800]:
+                    - generic [ref=f13e801]: ai-dubbing
+                    - generic [ref=f13e802]: chrome-extension
+                    - generic [ref=f13e803]: javascript
+                    - generic [ref=f13e804]: realtime
+                    - generic [ref=f13e805]: subtitles
+                    - generic [ref=f13e806]: youtube
+                  - link "Repository" [ref=f13e809] [cursor=pointer]:
+                    - /url: https://github.com/ThanhNguyxnOrg/lumeo
+              - listitem [ref=f13e813]:
+                - generic [ref=f13e845]:
+                  - paragraph [ref=f13e846]: apidex-hub
+                  - paragraph [ref=f13e847]: A curated collection of awesome public APIs and web scrapers for developers
+                  - generic [ref=f13e848]:
+                    - generic [ref=f13e849]: api
+                    - generic [ref=f13e850]: api-collection
+                    - generic [ref=f13e851]: awesome-list
+                    - generic [ref=f13e852]: developer-tools
+                    - generic [ref=f13e853]: free-api
+                    - generic [ref=f13e854]: open-source
+                  - generic [ref=f13e856]:
+                    - link "Repository" [ref=f13e857] [cursor=pointer]:
+                      - /url: https://github.com/ThanhNguyxnOrg/apidex-hub
+                    - link "Live demo" [ref=f13e861] [cursor=pointer]:
+                      - /url: https://thanhnguyxnorg.github.io/apidex-hub/
+              - listitem [ref=f13e867]:
+                - generic [ref=f13e873]:
+                  - paragraph [ref=f13e874]: awesome-cert-sherpa
+                  - paragraph [ref=f13e875]: Community IT certification prep with 1,590+ original practice questions and an anti-dump pledge
+                  - generic [ref=f13e876]:
+                    - generic [ref=f13e877]: aws
+                    - generic [ref=f13e878]: azure
+                    - generic [ref=f13e879]: certification
+                    - generic [ref=f13e880]: docusaurus
+                    - generic [ref=f13e881]: exam-prep
+                    - generic [ref=f13e882]: open-source
+                  - generic [ref=f13e884]:
+                    - link "Repository" [ref=f13e885] [cursor=pointer]:
+                      - /url: https://github.com/ThanhNguyxnOrg/awesome-cert-sherpa
+                    - link "Live demo" [ref=f13e889] [cursor=pointer]:
+                      - /url: https://thanhnguyxnorg.github.io/awesome-cert-sherpa/
+              - listitem [ref=f13e895]:
+                - generic [ref=f13e927]:
+                  - paragraph [ref=f13e928]: Snapbooth
+                  - paragraph [ref=f13e929]: Private browser photobooth with count-in capture, filters, frames and GIF export
+                  - generic [ref=f13e930]:
+                    - generic [ref=f13e931]: browser-only
+                    - generic [ref=f13e932]: filters
+                    - generic [ref=f13e933]: gif
+                    - generic [ref=f13e934]: github-pages
+                    - generic [ref=f13e935]: photobooth
+                    - generic [ref=f13e936]: privacy-first
+                  - generic [ref=f13e938]:
+                    - link "Repository" [ref=f13e939] [cursor=pointer]:
+                      - /url: https://github.com/ThanhNguyxnOrg/Snapbooth
+                    - link "Live demo" [ref=f13e943] [cursor=pointer]:
+                      - /url: https://thanhnguyxnorg.github.io/Snapbooth/
+              - listitem [ref=f13e949]:
+                - generic [ref=f13e957]:
+                  - paragraph [ref=f13e958]: StepDSA
+                  - paragraph [ref=f13e959]: Interactive DSA learning platform and visualizer with a deterministic time-travel engine
+                  - generic [ref=f13e960]:
+                    - generic [ref=f13e961]: algorithms
+                    - generic [ref=f13e962]: data-structures
+                    - generic [ref=f13e963]: education
+                    - generic [ref=f13e964]: typescript
+                    - generic [ref=f13e965]: visualizer
+                  - generic [ref=f13e967]:
+                    - link "Repository" [ref=f13e968] [cursor=pointer]:
+                      - /url: https://github.com/ThanhNguyxnOrg/StepDSA
+                    - link "Live demo" [ref=f13e972] [cursor=pointer]:
+                      - /url: https://thanhnguyxnorg.github.io/StepDSA/
+              - listitem [ref=f13e978]:
+                - generic [ref=f13e986]:
+                  - paragraph [ref=f13e987]: .github
+                  - paragraph [ref=f13e988]: Organization profile and community health files for ThanhNguyxnOrg
+                  - generic [ref=f13e989]:
+                    - generic [ref=f13e990]: community-health
+                    - generic [ref=f13e991]: docs
+                    - generic [ref=f13e992]: github
+                  - link "Repository" [ref=f13e995] [cursor=pointer]:
+                    - /url: https://github.com/ThanhNguyxnOrg/.github
+              - listitem [ref=f13e999]:
+                - generic [ref=f13e1005]:
+                  - paragraph [ref=f13e1006]: cogmint
+                  - paragraph [ref=f13e1007]: Dark-first control plane for Claude Code orchestration with skills, commands and workflows
+                  - generic [ref=f13e1008]:
+                    - generic [ref=f13e1009]: agent-orchestration
+                    - generic [ref=f13e1010]: ai-agents
+                    - generic [ref=f13e1011]: claude-code
+                    - generic [ref=f13e1012]: nuxt
+                    - generic [ref=f13e1013]: vue
+                  - link "Repository" [ref=f13e1016] [cursor=pointer]:
+                    - /url: https://github.com/ThanhNguyxnOrg/cogmint
+              - listitem [ref=f13e1020]:
+                - generic [ref=f13e1052]:
+                  - paragraph [ref=f13e1053]: ForgeHelm
+                  - paragraph [ref=f13e1054]: "Chrome extension for bulk GitHub repository management: archive, delete, transfer and more"
+                  - generic [ref=f13e1055]:
+                    - generic [ref=f13e1056]: chrome-extension
+                    - generic [ref=f13e1057]: developer-tools
+                    - generic [ref=f13e1058]: javascript
+                    - generic [ref=f13e1059]: repository-management
+                  - link "Repository" [ref=f13e1062] [cursor=pointer]:
+                    - /url: https://github.com/ThanhNguyxnOrg/ForgeHelm
+              - listitem [ref=f13e1066]:
+                - generic [ref=f13e1074]:
+                  - paragraph [ref=f13e1075]: git-account-switcher
+                  - paragraph [ref=f13e1076]: One-command Git identity and GitHub CLI auth switcher across accounts, zero SSH needed
+                  - generic [ref=f13e1077]:
+                    - generic [ref=f13e1078]: developer-tools
+                    - generic [ref=f13e1079]: git
+                    - generic [ref=f13e1080]: github-cli
+                    - generic [ref=f13e1081]: multi-account
+                  - link "Repository" [ref=f13e1084] [cursor=pointer]:
+                    - /url: https://github.com/ThanhNguyxnOrg/git-account-switcher
+              - listitem [ref=f13e1088]:
+                - generic [ref=f13e1094]:
+                  - paragraph [ref=f13e1095]: judgeloom-core
+                  - paragraph [ref=f13e1096]: High-performance competitive programming judge on Django, Channels and Celery
+                  - generic [ref=f13e1097]:
+                    - generic [ref=f13e1098]: competitive-programming
+                    - generic [ref=f13e1099]: django
+                    - generic [ref=f13e1100]: docker
+                    - generic [ref=f13e1101]: online-judge
+                    - generic [ref=f13e1102]: postgresql
+                    - generic [ref=f13e1103]: python
+                  - link "Repository" [ref=f13e1106] [cursor=pointer]:
+                    - /url: https://github.com/ThanhNguyxnOrg/judgeloom-core
+              - listitem [ref=f13e1110]:
+                - generic [ref=f13e1118]:
+                  - paragraph [ref=f13e1119]: lagvex
+                  - paragraph [ref=f13e1120]: Open-source game latency reducer and ping booster via WinTun and Go VPS relay
+                  - generic [ref=f13e1121]:
+                    - generic [ref=f13e1122]: game-booster
+                    - generic [ref=f13e1123]: golang
+                    - generic [ref=f13e1124]: latency-reducer
+                    - generic [ref=f13e1125]: vpn
+                    - generic [ref=f13e1126]: wintun
+                  - link "Repository" [ref=f13e1129] [cursor=pointer]:
+                    - /url: https://github.com/ThanhNguyxnOrg/lagvex
+              - listitem [ref=f13e1133]:
+                - generic [ref=f13e1165]:
+                  - paragraph [ref=f13e1166]: LayoutLingua
+                  - paragraph [ref=f13e1167]: PDF translator that preserves layout, math formulas and tables for academic papers
+                  - generic [ref=f13e1168]:
+                    - generic [ref=f13e1169]: academic-paper
+                    - generic [ref=f13e1170]: pdf-translation
+                    - generic [ref=f13e1171]: python
+                    - generic [ref=f13e1172]: translation
+                  - link "Repository" [ref=f13e1175] [cursor=pointer]:
+                    - /url: https://github.com/ThanhNguyxnOrg/LayoutLingua
+              - listitem [ref=f13e1179]:
+                - generic [ref=f13e1187]:
+                  - paragraph [ref=f13e1188]: Locsight
+                  - paragraph [ref=f13e1189]: Blazing-fast codebase health, security and refactoring hotspot analyzer on Rust and Tauri
+                  - generic [ref=f13e1190]:
+                    - generic [ref=f13e1191]: code-analysis
+                    - generic [ref=f13e1192]: developer-tools
+                    - generic [ref=f13e1193]: rust
+                    - generic [ref=f13e1194]: static-analysis
+                    - generic [ref=f13e1195]: tauri
+                    - generic [ref=f13e1196]: typescript
+                  - link "Repository" [ref=f13e1199] [cursor=pointer]:
+                    - /url: https://github.com/ThanhNguyxnOrg/Locsight
+              - listitem [ref=f13e1203]:
+                - generic [ref=f13e1211]:
+                  - paragraph [ref=f13e1212]: PurgeKit
+                  - paragraph [ref=f13e1213]: Developer-focused system uninstaller and deep cleaner for Windows
+                  - generic [ref=f13e1214]:
+                    - generic [ref=f13e1215]: cleaner
+                    - generic [ref=f13e1216]: developer-tools
+                    - generic [ref=f13e1217]: rust
+                    - generic [ref=f13e1218]: tauri
+                    - generic [ref=f13e1219]: uninstaller
+                    - generic [ref=f13e1220]: windows
+                  - link "Repository" [ref=f13e1223] [cursor=pointer]:
+                    - /url: https://github.com/ThanhNguyxnOrg/PurgeKit
+              - listitem [ref=f13e1227]:
+                - generic [ref=f13e1233]:
+                  - paragraph [ref=f13e1234]: SkillGauge
+                  - paragraph [ref=f13e1235]: Static auditing engine and leaderboard platform for agent skills
+                  - generic [ref=f13e1236]:
+                    - generic [ref=f13e1237]: agent-skills
+                    - generic [ref=f13e1238]: ai-agents
+                    - generic [ref=f13e1239]: developer-tools
+                    - generic [ref=f13e1240]: prompt-evaluation
+                  - generic [ref=f13e1242]:
+                    - link "Repository" [ref=f13e1243] [cursor=pointer]:
+                      - /url: https://github.com/ThanhNguyxnOrg/SkillGauge
+                    - link "Live demo" [ref=f13e1247] [cursor=pointer]:
+                      - /url: https://thanhnguyxnorg.github.io/SkillGauge/
+    - region "Where the code lives." [ref=f13e1253]:
+      - generic [ref=f13e1254]:
+        - generic [ref=f13e1255]:
+          - generic [ref=f13e1256]:
+            - heading "Where the code lives." [level=2] [ref=f13e1258]
+            - paragraph [ref=f13e1260]: Repositories, packages and resources. Every number below was verified; destinations without proof stay unlinked.
+          - paragraph [ref=f13e1266]:
+            - generic [ref=f13e1267]: Snapshot 2026-10-11.
+            - text: Numbers refresh daily from the GitHub and npm APIs.
+        - list [ref=f13e1268]:
+          - listitem [ref=f13e1269]:
+            - link "01 Organization ThanhNguyxnOrg on GitHub Home of every TNORG repository, issue tracker and discussion. (opens in a new tab)" [ref=f13e1270] [cursor=pointer]:
+              - /url: https://github.com/ThanhNguyxnOrg
+              - generic [ref=f13e1271]: "01"
+              - generic [ref=f13e1272]:
+                - generic [ref=f13e1273]: Organization
+                - generic [ref=f13e1274]: ThanhNguyxnOrg on GitHub
+                - generic [ref=f13e1275]: Home of every TNORG repository, issue tracker and discussion.
+              - generic [ref=f13e1279]: (opens in a new tab)
+          - listitem [ref=f13e1280]:
+            - link "02 Package archpulse 0.5.3 Living architecture diagrams for modern codebases Downloaded 146 times in the last 30 days. (opens in a new tab)" [ref=f13e1281] [cursor=pointer]:
+              - /url: https://www.npmjs.com/package/archpulse
+              - generic [ref=f13e1282]: "02"
+              - generic [ref=f13e1283]:
+                - generic [ref=f13e1284]: Package
+                - generic [ref=f13e1285]: archpulse 0.5.3
+                - generic [ref=f13e1286]: Living architecture diagrams for modern codebases Downloaded 146 times in the last 30 days.
+              - generic [ref=f13e1290]: (opens in a new tab)
+          - listitem [ref=f13e1291]:
+            - link "03 Package production-backend-kit 1.1.2 Production-grade backend engineering patterns, checklists and AI adapters Downloaded 167 times in the last 30 days. (opens in a new tab)" [ref=f13e1292] [cursor=pointer]:
+              - /url: https://www.npmjs.com/package/production-backend-kit
+              - generic [ref=f13e1293]: "03"
+              - generic [ref=f13e1294]:
+                - generic [ref=f13e1295]: Package
+                - generic [ref=f13e1296]: production-backend-kit 1.1.2
+                - generic [ref=f13e1297]: Production-grade backend engineering patterns, checklists and AI adapters Downloaded 167 times in the last 30 days.
+              - generic [ref=f13e1301]: (opens in a new tab)
+          - listitem [ref=f13e1302]:
+            - 'link "04 Resource Control room Org profile and community files: contributing, support and security notes. (opens in a new tab)" [ref=f13e1303] [cursor=pointer]':
+              - /url: https://github.com/ThanhNguyxnOrg/.github
+              - generic [ref=f13e1304]: "04"
+              - generic [ref=f13e1305]:
+                - generic [ref=f13e1306]: Resource
+                - generic [ref=f13e1307]: Control room
+                - generic [ref=f13e1308]: "Org profile and community files: contributing, support and security notes."
+              - generic [ref=f13e1312]: (opens in a new tab)
+    - generic [ref=f13e1318]:
+      - generic [ref=f13e1319]:
+        - heading "Use it. Fork it. Make it better." [level=2] [ref=f13e1320]
+        - paragraph [ref=f13e1321]: Personal workspace, best effort. Active work gets priority review; archives may not update. Start with an issue.
+      - generic [ref=f13e1322]:
+        - link "Open an issue" [ref=f13e1323] [cursor=pointer]:
+          - /url: https://github.com/ThanhNguyxnOrg/.github/issues
+        - link "Follow on GitHub" [ref=f13e1328] [cursor=pointer]:
+          - /url: https://github.com/ThanhNguyxnOrg
+        - link "Browse the index" [ref=f13e1332] [cursor=pointer]:
+          - /url: "#archive"
+  - contentinfo [ref=f13e1334]:
+    - generic [ref=f13e1335]:
+      - generic [ref=f13e1336]:
+        - generic [ref=f13e1337]:
+          - generic [ref=f13e1338]:
+            - generic [ref=f13e1339]: TNORG
+            - generic [ref=f13e1340]: ThanhNguyxnOrg
+          - generic [ref=f13e1341]: TNORG home
+        - paragraph [ref=f13e1342]: ThanhNguyxnOrg, an independent technology practice building developer tools in the open.
+        - list "Social links" [ref=f13e1343]:
+          - listitem [ref=f13e1344]:
+            - link "GitHub (opens in a new tab)" [ref=f13e1345] [cursor=pointer]:
+              - /url: https://github.com/ThanhNguyxnOrg
+      - navigation "Footer" [ref=f13e1348]:
+        - generic [ref=f13e1349]:
+          - paragraph [ref=f13e1350]: Site
+          - list [ref=f13e1351]:
+            - listitem [ref=f13e1352]:
+              - link "Projects" [ref=f13e1353] [cursor=pointer]:
+                - /url: "#projects"
+            - listitem [ref=f13e1354]:
+              - link "Journey" [ref=f13e1355] [cursor=pointer]:
+                - /url: "#journey"
+            - listitem [ref=f13e1356]:
+              - link "Packages" [ref=f13e1357] [cursor=pointer]:
+                - /url: "#packages"
+        - generic [ref=f13e1358]:
+          - paragraph [ref=f13e1359]: Org
+          - list [ref=f13e1360]:
+            - listitem [ref=f13e1361]:
+              - link "Organization (opens in a new tab)" [ref=f13e1362] [cursor=pointer]:
+                - /url: https://github.com/ThanhNguyxnOrg
+                - text: Organization
+                - generic [ref=f13e1366]: (opens in a new tab)
+            - listitem [ref=f13e1367]:
+              - link "Control room (opens in a new tab)" [ref=f13e1368] [cursor=pointer]:
+                - /url: https://github.com/ThanhNguyxnOrg/.github
+                - text: Control room
+                - generic [ref=f13e1372]: (opens in a new tab)
+    - generic [ref=f13e1374]:
+      - generic [ref=f13e1375]: © 2026 ThanhNguyxnOrg
+      - generic [ref=f13e1376]: Built in the open

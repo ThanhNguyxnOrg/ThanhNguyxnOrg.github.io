@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { Minus, Plus } from 'lucide-react';
 
 export type FilterOption = { value: string; label: string; count?: number };
 
@@ -59,7 +60,7 @@ export function ToggleChip({ pressed, onPressedChange, children }: { pressed: bo
         pressed ? 'border-secondary bg-secondary/10 text-secondary' : 'border-border text-fg-muted hover:border-border-strong hover:text-fg',
       )}
     >
-      <span aria-hidden>{pressed ? '−' : '+'}</span>
+      <span aria-hidden>{pressed ? <Minus className="size-3" /> : <Plus className="size-3" />}</span>
       {children}
     </button>
   );

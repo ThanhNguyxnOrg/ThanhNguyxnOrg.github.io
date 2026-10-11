@@ -4,7 +4,7 @@ import { ArrowUpRight } from 'lucide-react';
 
 export type TextLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   children: ReactNode;
-  /** Opens in a new tab, adds the ↗ glyph and a screen-reader hint. */
+  /** Opens in a new tab, adds the arrow glyph and a screen-reader hint. */
   external?: boolean;
   tone?: 'default' | 'muted';
 };

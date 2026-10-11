@@ -27,7 +27,7 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
   }, [projects, query, category, tags, sort]);
 
   const active = [
-    ...(query.trim() ? [{ key: 'q', label: `“${query.trim()}”`, clear: () => setQuery('') }] : []),
+    ...(query.trim() ? [{ key: 'q', label: `"${query.trim()}"`, clear: () => setQuery('') }] : []),
     ...(category !== 'all' ? [{ key: 'c', label: category, clear: () => setCategory('all') }] : []),
     ...tags.map((t) => ({ key: `t-${t}`, label: `#${t}`, clear: () => setTags((s) => s.filter((x) => x !== t)) })),
   ];
@@ -39,8 +39,8 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
         <SectionHeader title={<span id="archive-title">The full index.</span>} description="Search and filter every project record. Same verified data source as the featured section." />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-12">
-          <aside className="flex flex-col gap-8 lg:sticky lg:top-24 lg:col-span-4 lg:self-start" aria-label="Filters">
-            <SearchField label="Search" value={query} onValueChange={setQuery} placeholder="Name or summary…" />
+          <aside className="flex min-w-0 flex-col gap-8 lg:sticky lg:top-24 lg:col-span-4 lg:self-start" aria-label="Filters">
+            <SearchField label="Search" value={query} onValueChange={setQuery} placeholder="Name or summary..." />
             <div className="flex flex-col gap-3">
               <span className="font-mono text-label uppercase text-fg-muted">Category</span>
               <FilterGroup label="Category" value={category} onChange={setCategory} className="lg:flex-wrap" options={[{ value: 'all', label: 'All', count: projects.length }, ...categories.map((c) => ({ value: c, label: c, count: projects.filter((p) => p.category === c).length }))]} />
@@ -61,7 +61,7 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
             </div>
           </aside>
 
-          <div className="flex flex-col gap-5 lg:col-span-8">
+          <div className="flex min-w-0 flex-col gap-5 lg:col-span-8">
             <div className="flex min-h-11 flex-wrap items-center gap-2 border-b border-border pb-4">
               <span className="mr-2 font-mono text-label uppercase text-fg-muted" aria-live="polite">
                 {results.length} of {projects.length} projects

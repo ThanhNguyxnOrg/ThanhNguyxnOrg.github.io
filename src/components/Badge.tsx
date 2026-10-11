@@ -25,7 +25,7 @@ export function Badge({ tone = 'neutral', children, className }: { tone?: BadgeT
   );
 }
 
-/** Technology tag — lowercase mono, quiet. Never interactive by itself. */
+/** Technology tag - lowercase mono, quiet. Never interactive by itself. */
 export function Tag({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <span

@@ -21,7 +21,7 @@ export default function Ecosystem({ resources, fetchedAt }: { resources: EcoReso
           <div className="flex gap-3 rounded-lg border border-dashed border-border-strong p-4">
             <Database aria-hidden className="mt-0.5 size-4 shrink-0 text-fg-subtle" />
             <p className="text-body-sm text-fg-muted">
-              <span className="font-mono text-label uppercase text-fg-soft">Snapshot {fetchedAt} · </span>
+              <span className="font-mono text-label uppercase text-fg-soft">Snapshot {fetchedAt}. </span>
               Numbers refresh daily from the GitHub and npm APIs.
             </p>
           </div>
