@@ -172,6 +172,14 @@
   transition-timing-function: var(--ease-out-expo);
 }
 
+/* Constellation nodes: ring brightens on hover/focus to show they link out. */
+.constellation a .hero-node > circle:first-of-type {
+  transition: stroke var(--duration-fast) var(--ease-out-expo);
+}
+.constellation a:hover .hero-node > circle:first-of-type {
+  stroke: var(--color-gold-soft);
+}
+
 /* Reduced motion: kill CSS motion globally; GSAP checks via gsap.matchMedia */
 @media (prefers-reduced-motion: reduce) {
   *,

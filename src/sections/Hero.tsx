@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ArrowRight } from 'lucide-react';
@@ -8,12 +8,17 @@ import type { FullProject } from '../lib/projects';
 gsap.registerPlugin(useGSAP);
 const { duration, ease, stagger, MOTION_OK_QUERY } = motionTokens;
 
-const slots = [
-  { x: 92, y: 96 },
-  { x: 404, y: 70 },
-  { x: 430, y: 330 },
-  { x: 110, y: 380 },
-  { x: 300, y: 390 },
+const RINGS = [
+  { r: 110, duration: 36 },
+  { r: 170, duration: 60 },
+];
+// [ringIndex, angleDeg]: two most-starred orbit inside, rest outside.
+const ORBITS: [number, number][] = [
+  [0, 160],
+  [0, 340],
+  [1, 90],
+  [1, 215],
+  [1, 335],
 ];
 const core = { x: 260, y: 220 };
 
@@ -25,33 +30,49 @@ function nodeRadius(stars: number) {
 
 /** Project map: five real top-starred repositories orbiting the practice. Size encodes stars, gold means a live demo exists, every node links out. */
 function Constellation({ projects }: { projects: FullProject[] }) {
-  const nodes = projects.slice(0, 5).map((p, i) => ({ p, ...slots[i % slots.length] }));
+  const nodes = projects.slice(0, 5).map((p, i) => {
+    const [ringIdx, deg] = ORBITS[i % ORBITS.length];
+    const ring = RINGS[ringIdx];
+    const a = (deg * Math.PI) / 180;
+    return {
+      p,
+      ring: ringIdx === 0 ? ('inner' as const) : ('outer' as const),
+      x: core.x + ring.r * Math.cos(a),
+      y: core.y + ring.r * Math.sin(a),
+    };
+  });
   return (
-    <svg viewBox="0 0 520 460" className="h-auto w-full overflow-visible" aria-label="Map of top starred projects">
+    <svg viewBox="0 0 520 460" className="constellation h-auto w-full overflow-visible" aria-label="Map of top starred projects">
+      <defs>
+        <radialGradient id="sunGlow">
+          <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.22" />
+          <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
+        </radialGradient>
+      </defs>
       <circle cx={core.x} cy={core.y} r="170" fill="none" stroke="var(--color-border)" strokeDasharray="2 6" />
       <circle cx={core.x} cy={core.y} r="110" fill="none" stroke="var(--color-border-strong)" />
-      {nodes.map(({ p, x, y }) => (
-        <path key={p.name} className="hero-link" d={`M${core.x} ${core.y} Q ${(core.x + x) / 2 + 30} ${(core.y + y) / 2 - 30} ${x} ${y}`} fill="none" stroke="var(--color-primary)" strokeOpacity=".7" strokeWidth="1.5" pathLength={1} strokeDasharray="1" />
-      ))}
-      {nodes.map(({ p, x, y }) => {
+      <circle cx={core.x} cy={core.y} r="64" fill="url(#sunGlow)" />
+      {nodes.map(({ p, ring, x, y }) => {
         const r = nodeRadius(p.stars);
         const c = p.demoUrl ? 'var(--color-primary)' : 'var(--color-secondary)';
         return (
-          <a
-            key={p.name}
-            href={p.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${p.name} repository, ${p.stars} ${p.stars === 1 ? 'star' : 'stars'}${p.demoUrl ? ', live demo available' : ''}`}
-            className="focus-ring rounded-sm"
-          >
-            <g className="hero-node" style={{ transformOrigin: `${x}px ${y}px` }}>
-              <circle cx={x} cy={y} r={r} fill="var(--color-surface)" stroke={c} strokeWidth="1.5" />
-              <circle cx={x} cy={y} r="4" fill={c} />
-              <text x={x} y={y + r + 18} textAnchor="middle" fill="var(--color-fg-muted)" fontFamily="var(--font-mono)" fontSize="11" letterSpacing="1">{p.name.toUpperCase()}</text>
-              <text x={x} y={y + r + 34} textAnchor="middle" fill="var(--color-fg-subtle)" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="1">{p.stars} {p.stars === 1 ? 'STAR' : 'STARS'}</text>
+          <g key={p.name} className="rotor" data-ring={ring}>
+            <g transform={`translate(${x} ${y})`}>
+              <a
+                href={p.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${p.name} repository, ${p.stars} ${p.stars === 1 ? 'star' : 'stars'}${p.demoUrl ? ', live demo available' : ''}`}
+                className="spinner focus-ring rounded-sm"
+              >
+                <g className="hero-node">
+                  <circle cx={0} cy={0} r={r} fill={c} fillOpacity={0.08} stroke={c} strokeWidth="1.5" />
+                  <text x={0} y={r + 18} textAnchor="middle" fill="var(--color-fg-muted)" fontFamily="var(--font-mono)" fontSize="11" letterSpacing="1" stroke="var(--color-bg)" strokeWidth="3" style={{ paintOrder: 'stroke' }}>{p.name.toUpperCase()}</text>
+                  <text x={0} y={r + 34} textAnchor="middle" fill="var(--color-fg-subtle)" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="1" stroke="var(--color-bg)" strokeWidth="3" style={{ paintOrder: 'stroke' }}>{p.stars} {p.stars === 1 ? 'STAR' : 'STARS'}</text>
+                </g>
+              </a>
             </g>
-          </a>
+          </g>
         );
       })}
       <g className="hero-node" style={{ transformOrigin: `${core.x}px ${core.y}px` }}>
@@ -63,6 +84,8 @@ function Constellation({ projects }: { projects: FullProject[] }) {
 
 export default function Hero({ projects }: { projects: FullProject[] }) {
   const scope = useRef<HTMLDivElement>(null);
+  const spins = useRef<ReturnType<typeof gsap.to>[]>([]);
+  const [paused, setPaused] = useState(false);
 
   useGSAP(
     () => {
@@ -71,13 +94,27 @@ export default function Hero({ projects }: { projects: FullProject[] }) {
         const tl = gsap.timeline({ defaults: { ease: ease.out } });
         tl.from('.hero-word', { yPercent: 110, duration: duration.epic, stagger: stagger.loose })
           .from('.hero-fade', { y: 16, autoAlpha: 0, duration: duration.slow, stagger: stagger.base }, '-=0.6')
-          .from('.hero-link', { strokeDashoffset: 1, duration: duration.epic, ease: ease.inOut, stagger: stagger.tight }, 0.2)
           .from('.hero-node', { scale: 0, autoAlpha: 0, duration: duration.slow, ease: ease.snap, stagger: stagger.base }, 0.5);
+        gsap.utils.toArray<SVGGElement>('.rotor').forEach((rot) => {
+          const dur = rot.dataset.ring === 'inner' ? RINGS[0].duration : RINGS[1].duration;
+          spins.current.push(gsap.to(rot, { rotation: '+=360', duration: dur, repeat: -1, ease: 'none', svgOrigin: `${core.x} ${core.y}` }));
+        });
+        gsap.utils.toArray<SVGAElement>('.spinner').forEach((sp) => {
+          const rot = sp.closest('.rotor');
+          const dur = rot?.getAttribute('data-ring') === 'inner' ? RINGS[0].duration : RINGS[1].duration;
+          spins.current.push(gsap.to(sp, { rotation: '-=360', duration: dur, repeat: -1, ease: 'none', transformOrigin: '50% 50%' }));
+        });
       });
       return () => mm.revert();
     },
     { scope },
   );
+
+  const toggleOrbits = () => {
+    const next = !paused;
+    setPaused(next);
+    spins.current.forEach((t) => gsap.to(t, { timeScale: next ? 0 : 1, duration: 0.4, overwrite: 'auto' }));
+  };
 
   return (
     <div ref={scope} className="relative overflow-hidden border-b border-border">
@@ -104,6 +141,16 @@ export default function Hero({ projects }: { projects: FullProject[] }) {
         </div>
         <div className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
           <Constellation projects={projects} />
+          <div className="mt-4 flex justify-end">
+            <button
+              type="button"
+              onClick={toggleOrbits}
+              aria-pressed={paused}
+              className="inline-flex min-h-11 items-center rounded-md border border-border px-4 font-mono text-label uppercase text-fg-muted transition-ui hover:border-border-strong hover:text-fg focus-ring motion-reduce:hidden"
+            >
+              {paused ? 'Play orbits' : 'Pause orbits'}
+            </button>
+          </div>
         </div>
       </Container>
     </div>
