@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+/* ==========================================================================
+   TNORG design tokens (single source of truth)
+   Raw palette → semantic tokens → components. Components use semantic only.
+   Re-skinned to the single gold accent per spec; violet/cyan/lime removed.
+   ========================================================================== */
+
+@theme {
+  /* ---- Raw brand palette (do not use directly in components) ---- */
+  --color-midnight: #080b14;
+  --color-gold-bright: #f59e0b;
+  --color-gold-soft: #fcd34d;
+  --color-gold-deep: #a16207;
+  --color-gold-ink: #854d0e;
+  --color-stone: #e7e5e4;
+
+  --color-ink-50: #f4f5fa;
+  --color-ink-200: #c9cde0;
+  --color-ink-300: #a3a9bf;
+  --color-ink-400: #868ca6;
+  --color-ink-600: #2e3550;
+  --color-ink-700: #1f2537;
+  --color-ink-800: #151a2b;
+  --color-ink-900: #0e1220;
+
+  /* ---- Semantic color tokens ---- */
+  --color-bg: var(--color-midnight);
+  --color-surface: var(--color-ink-900);
+  --color-surface-raised: var(--color-ink-800);
+  --color-border: var(--color-ink-700);
+  --color-border-strong: var(--color-ink-600);
+  --color-fg: var(--color-ink-50);
+  --color-fg-soft: var(--color-ink-200);
+  --color-fg-muted: var(--color-ink-300);
+  --color-fg-subtle: var(--color-ink-400);
+
+  --color-primary: var(--color-gold-bright);
+  --color-primary-fill: var(--color-gold-deep);
+  --color-primary-fill-hover: var(--color-gold-ink);
+  --color-primary-text: var(--color-gold-soft);
+  --color-on-primary: #ffffff;
+
+  --color-secondary: var(--color-stone);
+  --color-on-secondary: var(--color-midnight);
+
+  --color-highlight: var(--color-gold-soft);
+  --color-on-highlight: var(--color-midnight);
+
+  --color-focus: var(--color-gold-soft);
+
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+  --color-error: #f43f5e;
+  --color-error-text: #fda4af;
+
+  /* ---- Typography ---- */
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Fluid display scale (mobile → desktop) */
+  --text-display-2xl: clamp(3rem, 1.6rem + 6vw, 7rem);
+  --text-display-2xl--line-height: 0.92;
+  --text-display-2xl--letter-spacing: -0.045em;
+  --text-display-xl: clamp(2.5rem, 1.6rem + 3.6vw, 4.75rem);
+  --text-display-xl--line-height: 0.98;
+  --text-display-xl--letter-spacing: -0.04em;
+  --text-display-lg: clamp(2rem, 1.5rem + 2vw, 3.25rem);
+  --text-display-lg--line-height: 1.04;
+  --text-display-lg--letter-spacing: -0.03em;
+  --text-display-md: clamp(1.5rem, 1.25rem + 1vw, 2.125rem);
+  --text-display-md--line-height: 1.12;
+  --text-display-md--letter-spacing: -0.02em;
+  --text-title: 1.25rem;
+  --text-title--line-height: 1.3;
+  --text-title--letter-spacing: -0.01em;
+
+  /* UI / body */
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.65;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.55;
+
+  /* Mono labels (data only: dates, counts, codes) */
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.08em;
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.2;
+  --text-micro--letter-spacing: 0.1em;
+
+  /* ---- Layout ---- */
+  --container-page: 80rem;
+  --container-reading: 42rem;
+  --container-measure: 34rem;
+
+  /* ---- Radius ---- */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-pill: 999px;
+
+  /* ---- Elevation (dark UI: border + light, not heavy shadows) ---- */
+  --shadow-raised: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 12px 32px -16px rgb(0 0 0 / 0.6);
+  --shadow-glow-primary: 0 0 0 1px rgb(245 158 11 / 0.5), 0 12px 40px -12px rgb(245 158 11 / 0.55);
+  --shadow-glow-secondary: 0 0 0 1px rgb(231 229 228 / 0.25), 0 12px 40px -12px rgb(231 229 228 / 0.2);
+
+  /* ---- Motion ---- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+  --ease-snap: cubic-bezier(0.2, 0.9, 0.1, 1.2);
+}
+
+:root {
+  --duration-instant: 120ms;
+  --duration-fast: 200ms;
+  --duration-base: 320ms;
+  --duration-slow: 600ms;
+  --duration-epic: 1000ms;
+  color-scheme: dark;
+}
+
+/* ---- Base ---- */
+@layer base {
+  html {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-highlight);
+    color: var(--color-on-highlight);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+}
+
+/* ---- Brand utilities ---- */
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+}
+
+@utility bg-blueprint {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@utility bg-aurora {
+  background:
+    radial-gradient(60% 50% at 15% 0%, rgb(245 158 11 / 0.16), transparent 70%),
+    radial-gradient(40% 40% at 90% 20%, rgb(252 211 77 / 0.1), transparent 70%);
+}
+
+@utility transition-ui {
+  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out-expo);
+}
+
+/* Reduced motion: kill CSS motion globally; GSAP checks via gsap.matchMedia */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
