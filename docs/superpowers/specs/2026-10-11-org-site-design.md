@@ -92,18 +92,19 @@ Wireframe (left-aligned, max width 1120, sections separated by 1px rules):
 
 ## 6. Components (each one responsibility, typed props)
 
-- `Layout.astro`: head, fonts, nav, footer, skip link. Props: title, description.
-- `Hero.astro` + `MetricsBand.tsx` island (animated counters, `client:visible`): props totals + fetched_at.
-- `ShowcaseCard.astro`: props repo entry + story + demoUrl?. Static, spotlight via CSS only.
-- `ArchiveFilter.tsx` island (`client:visible`): props full repo list; text + language filter, count, clear. No URL state (YAGNI; deep-link later if asked).
-- `Philosophy.astro`, `Timeline.astro` (progress line driven by ScrollTrigger), `NpmShelf.astro`, `Support.astro`, `Logo.astro` (local `src/assets/logo.png`, cropped; favicon.ico + apple-touch-icon generated at build).
+- `Layout.astro`: head, fonts, nav, footer, skip link. Props: title, description. Composes `SiteHeader` island (`client:load`) + static `SiteFooterBlock`; all JSX props constructed in `SiteChrome.tsx` (Astro cannot pass its JSX as props to islands).
+- `sections/Hero.tsx` (constellation keeps SVG geometry, core mark is the real logo, dots strip replaced by metrics band) + `MetricsBand.tsx` island (animated counters, `client:visible`): props totals + fetched_at.
+- `sections/Featured.tsx` (Lead/Poster/Strip kept): props 6 real records with story lines; demo button only where live-verified.
+- `sections/Explorer.tsx` island (`client:visible`): search + category + tags + sort over real 16, result count, reset. No URL state (YAGNI; deep-link later if asked).
+- `sections/Philosophy.tsx` rewritten to org truth (Build/Explore/Evolve/Second life); `sections/Ecosystem.tsx` (org + 2 npm packages + control room); `sections/Journey.tsx` (Timeline, 6 dated stops); `CTA.tsx` (no eyebrow, no gradient word).
+- Primitives in `src/components/*` (Button, Badge, Container, TextLink, IconButton, BrandIcons, ProjectGlyph, Logo, SearchField, FilterGroup, States, Content, SiteNav, SiteFooter, ProjectCard, FeaturedProject) + `src/motion/*` (tokens, Reveal). Lucide only; no phosphor/three/lenis/motion packages.
 - `src/lib/baked.ts`: zod schemas + typed loaders. `src/lib/format.ts`: star/download/date formatters.
 
 ## 7. Visual system (MASTER.md overrides recorded here)
 
-- Tokens: bg `#020617`, raised `#0E1223`, border `#334155` (visible, structural), text `#F8FAFC`, muted `#94A3B8`, accent star-gold `#A16207` (white text on it for fills; gold text only 16px+ bold on dark).
+- Tokens (frame incumbent wins over pre-frame values): bg `#080b14`, surface `#0e1220`, raised `#151a2b`, border `#1f2537` visible structural, text `#f4f5fa`, muted `#a3a9bf`, subtle `#868ca6`. Gold family: bright `#f59e0b` (text accents), soft `#fcd34d` (emphasis text), deep `#a16207` (fills, white text 4.92:1), ink `#854d0e` (fill hover). Neutral stone `#e7e5e4` for secondary actions. All 9 text pairs measured AA 2026-10-11 (weakest 4.92:1).
 - Shape: sharp corners (0-4px), cards flat with 1px borders, pills only for small badges/inputs. Left-aligned throughout.
-- Type: display Space Grotesk 500-700 (geometric grotesk, devtool-native, vietnamese subset kept for future VI copy; chosen over Palanquin Dark and Familjen Grotesk via ui-ux-pro-max google-fonts domain), body IBM Plex Sans 400-600, data JetBrains Mono 400-700 for code and numbers only, never body copy. Scale: display `clamp(2.75rem, 7vw, 5.5rem)` tight leading, H2 1.75rem, body 16px/1.6, data 13-14px. Three roles, never mixed for emphasis.
+- Type: display Space Grotesk 500-700 (geometric grotesk, devtool-native, vietnamese subset kept for future VI copy; chosen over Palanquin Dark and Familjen Grotesk via ui-ux-pro-max google-fonts domain), body Inter 400-700 (frame incumbent; Plex Sans dropped to avoid churning every component), data JetBrains Mono 400-700 for code and numbers only, never body copy. Scale: display `clamp(2.75rem, 7vw, 5.5rem)` tight leading, H2 1.75rem, body 16px/1.6, data 13-14px. Three roles, never mixed for emphasis.
 - Icons: Phosphor Icons, one family everywhere, regular weight, consistent stroke; static Astro parts inline the same paths. No emoji as icons. (Explicit fallback: ui-ux-pro-max icons domain returned 0 results on two queries, so the taste-skill built-in default applies.)
 - No eyebrow kickers above headings, no numbered section labels. Exception: timeline stops carry real dates, a true sequence, so date markers there encode information.
 - Logo TNX mark in nav (44px) + footer; favicon from cropped mark; `public/og-image.png` 1200x630 static card derived from logo for link previews.
