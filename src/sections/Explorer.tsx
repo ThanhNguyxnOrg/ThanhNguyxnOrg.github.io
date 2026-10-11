@@ -11,9 +11,15 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
   const [category, setCategory] = useState('all');
   const [tags, setTags] = useState<string[]>([]);
   const [sort, setSort] = useState<Sort>('default');
+  const [showAllTags, setShowAllTags] = useState(false);
 
   const categories = useMemo(() => [...new Set(projects.map((p) => p.category))], [projects]);
-  const allTags = useMemo(() => [...new Set(projects.flatMap((p) => p.topics))].sort(), [projects]);
+  const tagCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    projects.forEach((p) => p.topics.forEach((t) => counts.set(t, (counts.get(t) ?? 0) + 1)));
+    return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  }, [projects]);
+  const visibleTags = showAllTags ? tagCounts : tagCounts.slice(0, 10);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -31,7 +37,7 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
     ...(category !== 'all' ? [{ key: 'c', label: category, clear: () => setCategory('all') }] : []),
     ...tags.map((t) => ({ key: `t-${t}`, label: `#${t}`, clear: () => setTags((s) => s.filter((x) => x !== t)) })),
   ];
-  const reset = () => { setQuery(''); setCategory('all'); setTags([]); setSort('default'); };
+  const reset = () => { setQuery(''); setCategory('all'); setTags([]); setSort('default'); setShowAllTags(false); };
 
   return (
     <section id="archive" aria-labelledby="archive-title" className="scroll-mt-20 border-t border-border">
@@ -45,14 +51,24 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
               <span className="font-mono text-label uppercase text-fg-muted">Category</span>
               <FilterGroup label="Category" value={category} onChange={setCategory} className="lg:flex-wrap" options={[{ value: 'all', label: 'All', count: projects.length }, ...categories.map((c) => ({ value: c, label: c, count: projects.filter((p) => p.category === c).length }))]} />
             </div>
-            {allTags.length > 0 && (
+            {tagCounts.length > 0 && (
               <div className="flex flex-col gap-3">
-                <span className="font-mono text-label uppercase text-fg-muted">Technology and topic</span>
+                <span className="font-mono text-label uppercase text-fg-muted">Top topics</span>
                 <div role="group" aria-label="Tags" className="flex flex-wrap gap-2">
-                  {allTags.map((t) => (
+                  {visibleTags.map(([t]) => (
                     <ToggleChip key={t} pressed={tags.includes(t)} onPressedChange={(on) => setTags((s) => (on ? [...s, t] : s.filter((x) => x !== t)))}>{t}</ToggleChip>
                   ))}
                 </div>
+                {tagCounts.length > 10 && (
+                  <button
+                    type="button"
+                    onClick={() => setShowAllTags((v) => !v)}
+                    aria-expanded={showAllTags}
+                    className="self-start font-mono text-label uppercase text-fg-muted underline decoration-border-strong underline-offset-4 transition-ui hover:text-fg focus-ring"
+                  >
+                    {showAllTags ? 'Show fewer' : `Show all ${tagCounts.length} topics`}
+                  </button>
+                )}
               </div>
             )}
             <div className="flex flex-col gap-3">

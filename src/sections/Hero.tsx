@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { ArrowRight } from 'lucide-react';
-import { Button, Container, GitHubMark, motionTokens } from '../components';
+import { ArrowRight, Pause, Play } from 'lucide-react';
+import { Button, Container, GitHubMark, IconButton, motionTokens } from '../components';
 import type { FullProject } from '../lib/projects';
 
 gsap.registerPlugin(useGSAP);
@@ -34,11 +34,18 @@ function Constellation({ projects }: { projects: FullProject[] }) {
     const [ringIdx, deg] = ORBITS[i % ORBITS.length];
     const ring = RINGS[ringIdx];
     const a = (deg * Math.PI) / 180;
+    const x = core.x + ring.r * Math.cos(a);
+    const y = core.y + ring.r * Math.sin(a);
+    // Label sits outward from the sun so it never covers the logo.
+    const len = Math.hypot(x - core.x, y - core.y) || 1;
+    const r = nodeRadius(p.stars);
     return {
       p,
       ring: ringIdx === 0 ? ('inner' as const) : ('outer' as const),
-      x: core.x + ring.r * Math.cos(a),
-      y: core.y + ring.r * Math.sin(a),
+      x,
+      y,
+      lx: ((x - core.x) / len) * (r + 20),
+      ly: ((y - core.y) / len) * (r + 20),
     };
   });
   return (
@@ -52,7 +59,7 @@ function Constellation({ projects }: { projects: FullProject[] }) {
       <circle cx={core.x} cy={core.y} r="170" fill="none" stroke="var(--color-border)" strokeDasharray="2 6" />
       <circle cx={core.x} cy={core.y} r="110" fill="none" stroke="var(--color-border-strong)" />
       <circle cx={core.x} cy={core.y} r="64" fill="url(#sunGlow)" />
-      {nodes.map(({ p, ring, x, y }) => {
+      {nodes.map(({ p, ring, x, y, lx, ly }) => {
         const r = nodeRadius(p.stars);
         const c = p.demoUrl ? 'var(--color-primary)' : 'var(--color-secondary)';
         return (
@@ -67,8 +74,8 @@ function Constellation({ projects }: { projects: FullProject[] }) {
               >
                 <g className="hero-node">
                   <circle cx={0} cy={0} r={r} fill={c} fillOpacity={0.08} stroke={c} strokeWidth="1.5" />
-                  <text x={0} y={r + 18} textAnchor="middle" fill="var(--color-fg-muted)" fontFamily="var(--font-mono)" fontSize="11" letterSpacing="1" stroke="var(--color-bg)" strokeWidth="3" style={{ paintOrder: 'stroke' }}>{p.name.toUpperCase()}</text>
-                  <text x={0} y={r + 34} textAnchor="middle" fill="var(--color-fg-subtle)" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="1" stroke="var(--color-bg)" strokeWidth="3" style={{ paintOrder: 'stroke' }}>{p.stars} {p.stars === 1 ? 'STAR' : 'STARS'}</text>
+                  <text x={0} y={2} textAnchor="middle" dominantBaseline="central" fill="var(--color-fg)" fontFamily="var(--font-display)" fontWeight="700" fontSize={Math.round(r * 0.9)}>{p.stars}</text>
+                  <text x={lx} y={ly} textAnchor="middle" fill="var(--color-fg-muted)" fontFamily="var(--font-mono)" fontSize="11" letterSpacing="1" stroke="var(--color-bg)" strokeWidth="3" style={{ paintOrder: 'stroke' }}>{p.name.toUpperCase()}</text>
                 </g>
               </a>
             </g>
@@ -141,15 +148,15 @@ export default function Hero({ projects }: { projects: FullProject[] }) {
         </div>
         <div className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
           <Constellation projects={projects} />
-          <div className="mt-4 flex justify-end">
-            <button
-              type="button"
+          <div className="mt-4 flex items-center justify-between gap-4">
+            <p className="font-mono text-micro uppercase text-fg-subtle">Five most-starred repos in orbit. Number is the live star count.</p>
+            <IconButton
+              label={paused ? 'Play orbits' : 'Pause orbits'}
+              icon={paused ? <Play /> : <Pause />}
               onClick={toggleOrbits}
               aria-pressed={paused}
-              className="inline-flex min-h-11 items-center rounded-md border border-border px-4 font-mono text-label uppercase text-fg-muted transition-ui hover:border-border-strong hover:text-fg focus-ring motion-reduce:hidden"
-            >
-              {paused ? 'Play orbits' : 'Pause orbits'}
-            </button>
+              className="motion-reduce:hidden"
+            />
           </div>
         </div>
       </Container>
