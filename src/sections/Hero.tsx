@@ -38,8 +38,7 @@ function Constellation() {
         <text x="470" y="232" textAnchor="middle" fill="var(--color-highlight)" fontFamily="var(--font-mono)" fontSize="11" letterSpacing="1">NEXT</text>
       </g>
       <g className="hero-node" style={{ transformOrigin: `${core.x}px ${core.y}px` }}>
-        <rect x={core.x - 44} y={core.y - 44} width="88" height="88" rx="8" fill="var(--color-bg)" stroke="var(--color-fg)" strokeWidth="1.5" />
-        <image href="/logo.png" x={core.x - 33} y={core.y - 25} width="66" height="50" preserveAspectRatio="xMidYMid meet" />
+        <image href="/logo.png" x={core.x - 38} y={core.y - 29} width="76" height="57" preserveAspectRatio="xMidYMid meet" />
       </g>
     </svg>
   );
