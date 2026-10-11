@@ -8,6 +8,7 @@ import Journey from '../sections/Journey';
 import Explorer from '../sections/Explorer';
 import Ecosystem, { type EcoResource } from '../sections/Ecosystem';
 import MetricsBand from '../sections/MetricsBand';
+import TechMarquee from '../sections/TechMarquee';
 import CTA from '../sections/CTA';
 import { Container } from '../components';
 import { loadBaked } from '../lib/baked';
@@ -84,6 +85,7 @@ const resources: EcoResource[] = [
     </Container>
   </div>
   <Featured projects={projects} />
+  <TechMarquee />
   <Philosophy />
   <Journey stops={stops} />
   <Explorer client:visible projects={projects} />

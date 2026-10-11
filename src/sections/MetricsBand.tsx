@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { Stat, StatGroup } from '../components';
+import CountUp from '../components/CountUp';
 import { MOTION_OK_QUERY, duration, ease } from '../motion/tokens';
 import { formatCount } from '../lib/format';
 
@@ -56,7 +57,7 @@ export default function MetricsBand({ totals, fetchedAt }: { totals: MetricTotal
         {items.map((item) => (
           <Stat
             key={item.label}
-            value={<span data-count={item.value}>{formatCount(item.value)}</span>}
+            value={<CountUp value={item.value} />}
             label={item.label}
             detail={item.detail}
             accent="primary"

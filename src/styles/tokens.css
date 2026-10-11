@@ -189,6 +189,15 @@
   font-variant-numeric: tabular-nums;
 }
 
+@utility marquee-track {
+  animation: marquee-scroll 48s linear infinite;
+}
+@keyframes marquee-scroll {
+  to {
+    transform: translate(calc(-50% - 0.5rem));
+  }
+}
+
 @utility noise-overlay {
   position: fixed;
   inset: 0;
