@@ -1,10 +1,82 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import Hero from '../sections/Hero';
+import Featured from '../sections/Featured';
+import Philosophy from '../sections/Philosophy';
+import Journey from '../sections/Journey';
+import Explorer from '../sections/Explorer';
+import Ecosystem, { type EcoResource } from '../sections/Ecosystem';
+import MetricsBand from '../sections/MetricsBand';
+import CTA from '../sections/CTA';
+import { Container } from '../components';
+import { loadBaked } from '../lib/baked';
+import { joinProjects } from '../lib/projects';
+import bakedRaw from '../data/baked.json';
+
+const baked = loadBaked(bakedRaw);
+const repoEntries = await getCollection('repos');
+const projects = joinProjects(
+  baked,
+  repoEntries.map((e) => ({ slug: e.id, data: e.data })),
+);
+const stops = (await getCollection('timeline'))
+  .map((e) => ({
+    date: e.data.date,
+    title: e.data.title,
+    description: e.data.description,
+    tags: e.data.tags,
+    current: e.data.current,
+  }))
+  .sort((a, b) => a.date.localeCompare(b.date));
+
+const resources: EcoResource[] = [
+  {
+    kind: 'Organization',
+    label: 'ThanhNguyxnOrg on GitHub',
+    description: 'Home of every TNORG repository, issue tracker and discussion.',
+    url: 'https://github.com/ThanhNguyxnOrg',
+  },
+  ...baked.npm.map((p) => ({
+    kind: 'Package' as const,
+    label: `${p.name} ${p.version}`,
+    description: `${p.description} Downloaded ${p.downloads30d} times in the last 30 days.`,
+    url: `https://www.npmjs.com/package/${p.name}`,
+  })),
+  {
+    kind: 'Resource',
+    label: 'Control room',
+    description: 'Org profile and community files: contributing, support and security notes.',
+    url: 'https://github.com/ThanhNguyxnOrg/.github',
+  },
+];
 ---
 
 <Layout
   title="ThanhNguyxnOrg: Build. Explore. Evolve."
   description="ThanhNguyxnOrg is an independent technology practice building developer tools, AI workflows, and open source utilities."
 >
-  <p>Hello, TNORG.</p>
+  <Hero client:load />
+  <div class="border-b border-border">
+    <Container className="py-10">
+      <MetricsBand
+        client:visible
+        totals={{
+          repos: baked.totals.repos,
+          stars: baked.totals.stars,
+          downloads30d: baked.totals.downloads30d,
+          demos: baked.totals.demos,
+        }}
+        fetchedAt={baked.fetchedAt}
+      />
+    </Container>
+  </div>
+  <Featured projects={projects} />
+  <Philosophy />
+  <Journey stops={stops} />
+  <Explorer client:visible projects={projects} />
+  <Ecosystem resources={resources} fetchedAt={baked.fetchedAt} />
+  <div id="support" class="scroll-mt-20 border-t border-border">
+    <CTA />
+  </div>
 </Layout>

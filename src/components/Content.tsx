@@ -44,7 +44,7 @@ const statAccent: Record<StatAccent, string> = {
 };
 
 /** Metric display. Value is display type; label is mono; detail is optional context. */
-export function Stat({ value, label, detail, accent = 'none', className }: { value: string; label: string; detail?: string; accent?: StatAccent; className?: string }) {
+export function Stat({ value, label, detail, accent = 'none', className }: { value: ReactNode; label: string; detail?: string; accent?: StatAccent; className?: string }) {
   return (
     <div className={clsx('relative flex flex-col gap-2 pl-5', className)}>
       <span aria-hidden className={clsx('absolute left-0 top-1 h-[calc(100%-0.5rem)] w-0.5', statAccent[accent])} />
