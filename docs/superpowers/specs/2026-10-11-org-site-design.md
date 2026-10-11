@@ -1,7 +1,7 @@
 # Org Site Design Spec — ThanhNguyxnOrg (thanhnguyxnorg.github.io)
 
 **Date:** 2026-10-11. **Status:** awaiting human review (conversational design approved, spec not yet).
-**Stack:** Astro 7.3.8 + TypeScript 7 strict + React 19.3 islands + Tailwind 4.3.3 + GSAP 3.15 + zod 4.6.5.
+**Stack:** Astro 7.3.8 + TypeScript 6.0.3 strict + React 19.3 islands + Tailwind 4.3.3 + GSAP 3.15 + zod 4.6.5. (TS pinned to 6 because `astro check` officially rejects TS 7; verified live 2026-10-11.)
 **Sources:** `docs/research-org-site.md`, `docs/research-top6-history.md`, `GLOSSARY.md`, `design-system/thanhnguyxnorg/MASTER.md` (with overrides below).
 
 ## 1. Intent
