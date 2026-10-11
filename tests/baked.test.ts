@@ -16,6 +16,7 @@ const validRepo = {
   defaultBranch: "main",
   hasPages: false,
   demoUrl: null,
+  homepage: null,
   topics: ["ai-agents"],
 };
 

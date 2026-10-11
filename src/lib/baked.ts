@@ -13,6 +13,7 @@ export const BakedRepoSchema = z.object({
   defaultBranch: z.string(),
   hasPages: z.boolean(),
   demoUrl: z.url().nullable(),
+  homepage: z.url().nullable(),
   topics: z.array(z.string()),
   unverified: z.array(z.string()).default([]),
 });
