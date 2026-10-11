@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import Logo from './Logo';
+import CopyButton from './CopyButton';
 
 export type FooterColumn = { title: string; links: { label: string; href: string; external?: boolean }[] };
 export type SocialLink = { label: string; href: string; icon: ReactNode };
@@ -22,21 +23,24 @@ export default function SiteFooter({
         <div className="flex flex-col gap-5 lg:col-span-5">
           <Logo showDescriptor />
           <p className="max-w-measure text-body-sm text-fg-muted">{tagline}</p>
-          <ul className="flex gap-2" aria-label="Social links">
-            {socials.map((s) => (
-              <li key={s.label}>
-                <a
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${s.label} (opens in a new tab)`}
-                  className="inline-flex size-11 items-center justify-center rounded-md border border-border text-fg-muted transition-ui hover:border-border-strong hover:text-fg focus-ring [&>svg]:size-5"
-                >
-                  {s.icon}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <div className="flex gap-2">
+            <ul className="flex gap-2" aria-label="Social links">
+              {socials.map((s) => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${s.label} (opens in a new tab)`}
+                    className="inline-flex size-11 items-center justify-center rounded-md border border-border text-fg-muted transition-ui hover:border-border-strong hover:text-fg focus-ring [&>svg]:size-5"
+                  >
+                    {s.icon}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <CopyButton text="https://github.com/ThanhNguyxnOrg" label="Copy organization URL" />
+          </div>
         </div>
         <nav aria-label="Footer" className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7">
           {columns.map((col) => (

@@ -1,4 +1,5 @@
 export { default as Button, buttonClasses, type ButtonProps, type ButtonVariant, type ButtonSize } from './Button';
+export { default as CopyButton } from './CopyButton';
 export { default as IconButton, type IconButtonProps } from './IconButton';
 export { Badge, Tag, MetaLabel, type BadgeTone } from './Badge';
 export { default as Logo, LogoMark } from './Logo';
