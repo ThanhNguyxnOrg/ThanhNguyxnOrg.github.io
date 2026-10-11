@@ -78,4 +78,11 @@ describe("joinProjects", () => {
       joinProjects(baked(["a-repo"]), [{ slug: "a-repo", data: { ...entry, category: "Games" } }]),
     );
   });
+
+  it("prefers an explicit slug override for unglobbable filenames", () => {
+    const out = joinProjects(baked([".github"]), [
+      { slug: "github", data: { ...entry, slug: ".github" } },
+    ]);
+    assert.equal(out[0].name, ".github");
+  });
 });

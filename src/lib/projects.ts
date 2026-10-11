@@ -14,6 +14,11 @@ export const CategorySchema = z.enum([
 
 /** Hand-written layer: filenames are slugs, frontmatter carries voice, never numbers. */
 export const RepoEntrySchema = z.object({
+  /** Override when the filename cannot be the slug (e.g. dotfiles like `.github.md` are invisible to globs). */
+  slug: z
+    .string()
+    .regex(/^[a-z0-9.-]+$/)
+    .optional(),
   blurb: z.string().min(1).max(200),
   story: z.string().min(1).max(240).optional(),
   category: CategorySchema,
@@ -39,7 +44,10 @@ export function joinProjects(
   baked: BakedData,
   entries: { slug: string; data: unknown }[],
 ): FullProject[] {
-  const parsed = entries.map((e) => ({ slug: e.slug, ...RepoEntrySchema.parse(e.data) }));
+  const parsed = entries.map((e) => {
+    const data = RepoEntrySchema.parse(e.data);
+    return { slug: data.slug ?? e.slug, ...data };
+  });
   const seen = new Set<string>();
   for (const p of parsed) {
     if (seen.has(p.slug)) throw new Error(`duplicate repo slug ${p.slug}`);
