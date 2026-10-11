@@ -98,7 +98,7 @@ export default function Featured({ projects }: { projects: FullProject[] }) {
           {rest.length > 0 && (
             <div className="grid gap-6 lg:grid-cols-12">
               {rest.map((p, i) => (
-                <div data-reveal key={p.name} className={clsx(i % 2 === 0 ? 'lg:col-span-5' : 'lg:col-span-7')}>
+                <div data-reveal key={p.name} className={clsx('min-w-0', i % 2 === 0 ? 'lg:col-span-5' : 'lg:col-span-7')}>
                   {i % 2 === 0 ? <Poster p={p} /> : <Strip p={p} />}
                 </div>
               ))}
