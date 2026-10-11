@@ -178,6 +178,17 @@
     radial-gradient(40% 40% at 90% 20%, rgb(252 211 77 / 0.1), transparent 70%);
 }
 
+@utility text-gradient-gold {
+  background-image: linear-gradient(90deg, var(--color-gold-soft), var(--color-gold-bright));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
 @utility transition-ui {
   transition-property: color, background-color, border-color, box-shadow, transform, opacity;
   transition-duration: var(--duration-fast);

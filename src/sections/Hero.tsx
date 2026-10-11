@@ -9,18 +9,19 @@ gsap.registerPlugin(useGSAP);
 const { duration, ease, stagger, MOTION_OK_QUERY } = motionTokens;
 
 const RINGS = [
-  { r: 110, duration: 36 },
-  { r: 170, duration: 60 },
+  { r: 110, duration: 48 },
+  { r: 170, duration: 48 },
 ];
-// [ringIndex, angleDeg]: two most-starred orbit inside, rest outside.
+// [ringIndex, angleDeg]: one shared period makes the pattern rotate rigidly,
+// so the clearances verified below hold at every moment of the orbit.
 const ORBITS: [number, number][] = [
   [0, 160],
   [0, 340],
-  [1, 90],
-  [1, 215],
-  [1, 335],
+  [1, 80],
+  [1, 200],
+  [1, 320],
 ];
-const core = { x: 260, y: 220 };
+const core = { x: 260, y: 230 };
 
 /** Deterministic starfield: no Math.random, so SSR and hydration render identically. */
 function Starfield() {
@@ -80,7 +81,7 @@ function Constellation({ projects }: { projects: FullProject[] }) {
     };
   });
   return (
-    <svg viewBox="0 0 520 460" className="constellation h-auto w-full overflow-visible" aria-label="Map of top starred projects">
+    <svg viewBox="0 0 520 460" className="constellation tabular h-auto w-full overflow-visible" aria-label="Map of top starred projects">
       <defs>
         <radialGradient id="sunGlow">
           <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.22" />
@@ -163,7 +164,7 @@ export default function Hero({ projects }: { projects: FullProject[] }) {
           <h1 className="font-display text-display-2xl font-bold uppercase">
             {['Build.', 'Explore.', 'Evolve.'].map((w, i) => (
               <span key={w} className="block overflow-hidden pb-[0.06em]">
-                <span className={i === 1 ? 'hero-word block pl-[0.6em] text-fg-soft' : 'hero-word block'}>{w}</span>
+                <span className={i === 2 ? 'hero-word text-gradient-gold block' : i === 1 ? 'hero-word block pl-[0.6em] text-fg-soft' : 'hero-word block'}>{w}</span>
               </span>
             ))}
           </h1>
@@ -177,13 +178,12 @@ export default function Hero({ projects }: { projects: FullProject[] }) {
             </Button>
           </div>
         </div>
-        <div className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
+        <div className="relative mx-auto w-full min-w-0 max-w-md px-6 lg:col-span-5 lg:max-w-none">
           <Starfield />
-          <div className="relative">
+          <div className="relative overflow-visible">
             <Constellation projects={projects} />
           </div>
-          <div className="mt-4 flex items-center justify-between gap-4">
-            <p className="font-mono text-micro uppercase text-fg-subtle">Five most-starred repos in orbit. Number is the live star count.</p>
+          <div className="mt-4 flex justify-end">
             <IconButton
               label={paused ? 'Play orbits' : 'Pause orbits'}
               icon={paused ? <Play /> : <Pause />}
