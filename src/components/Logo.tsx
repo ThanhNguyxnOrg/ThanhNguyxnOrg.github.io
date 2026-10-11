@@ -12,7 +12,7 @@ export function LogoMark({ className, title = 'TNORG' }: { className?: string; t
       title={title}
       width={44}
       height={33}
-      className={clsx('h-8 w-auto shrink-0 rounded-[8px] border border-border bg-black', className)}
+      className={clsx('h-8 w-auto shrink-0 rounded-[8px]', className)}
     />
   );
 }

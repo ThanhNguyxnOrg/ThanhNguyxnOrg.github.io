@@ -54,27 +54,3 @@ export function MetaLabel({ index, children, className }: { index?: string; chil
   );
 }
 
-export type Status = 'active' | 'beta' | 'experimental' | 'archived';
-
-const statusMap: Record<Status, { label: string; dot: string; text: string }> = {
-  active: { label: 'Active', dot: 'bg-success rounded-full', text: 'text-success' },
-  beta: { label: 'Beta', dot: 'bg-secondary rounded-full', text: 'text-secondary' },
-  experimental: { label: 'Experimental', dot: 'bg-warning rotate-45', text: 'text-warning' },
-  archived: { label: 'Archived', dot: 'border border-fg-subtle rounded-full', text: 'text-fg-subtle' },
-};
-
-/** Project status: shape + label + color (never color alone). */
-export function StatusIndicator({ status, pulse, className }: { status: Status; pulse?: boolean; className?: string }) {
-  const s = statusMap[status];
-  return (
-    <span className={clsx('inline-flex items-center gap-2 font-mono text-label uppercase', s.text, className)}>
-      <span aria-hidden className="relative inline-flex size-2">
-        {pulse && status === 'active' && (
-          <span className="absolute inset-0 animate-ping rounded-full bg-success/60 motion-reduce:hidden" />
-        )}
-        <span className={clsx('relative size-2', s.dot)} />
-      </span>
-      {s.label}
-    </span>
-  );
-}

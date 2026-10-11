@@ -2,10 +2,6 @@ export function formatCount(n: number): string {
   return new Intl.NumberFormat("en-US").format(n);
 }
 
-export function formatDate(iso: string): string {
-  return iso.slice(0, 10);
-}
-
 /**
  * Presentation sanitizer for API-verbatim text (descriptions ship inside
  * island props, so they must satisfy the same ASCII gate as visible copy).

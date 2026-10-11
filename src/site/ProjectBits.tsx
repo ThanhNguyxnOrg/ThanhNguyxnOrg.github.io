@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { ArrowUpRight, ImageOff } from 'lucide-react';
-import { Badge, Button, GitHubMark, ProjectGlyph, type GlyphAccent, type GlyphPattern } from '../components';
+import { Button, GitHubMark, ProjectGlyph, type GlyphAccent, type GlyphPattern } from '../components';
 
 /**
  * Project visual. Generative glyph cover (no fake screenshots, no stock
@@ -51,8 +51,4 @@ export function ProjectActions({
       )}
     </div>
   );
-}
-
-export function DemoBadge() {
-  return <Badge tone="highlight">Demo</Badge>;
 }

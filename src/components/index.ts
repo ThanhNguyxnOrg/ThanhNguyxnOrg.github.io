@@ -1,15 +1,12 @@
 export { default as Button, buttonClasses, type ButtonProps, type ButtonVariant, type ButtonSize } from './Button';
 export { default as IconButton, type IconButtonProps } from './IconButton';
-export { default as TextLink, type TextLinkProps } from './TextLink';
-export { Badge, Tag, MetaLabel, StatusIndicator, type BadgeTone, type Status } from './Badge';
+export { Badge, Tag, MetaLabel, type BadgeTone } from './Badge';
 export { default as Logo, LogoMark } from './Logo';
 export { GitHubMark } from './BrandIcons';
 export { default as ProjectGlyph, type GlyphAccent, type GlyphPattern } from './ProjectGlyph';
-export { default as ProjectCard, ProjectMedia, type Project } from './ProjectCard';
-export { default as FeaturedProject } from './FeaturedProject';
 export { default as SearchField, type SearchFieldProps } from './SearchField';
 export { default as FilterGroup, ToggleChip, type FilterOption } from './FilterGroup';
-export { EmptyState, ErrorState, Skeleton, ProjectCardSkeleton } from './States';
+export { EmptyState } from './States';
 export { SectionHeader, Stat, StatGroup, Timeline, TimelineItem, CTASection, type StatAccent } from './Content';
 export { default as Container } from './Container';
 export { default as SiteNav, type NavItem } from './SiteNav';
