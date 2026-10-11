@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import clsx from 'clsx';
-import { MetaLabel, Tag } from './Badge';
+import { Tag } from './Badge';
 
 /**
  * Section header. Editorial by default: oversized title, optional

@@ -47,6 +47,7 @@ export const BakedDataSchema = z.object({
 
 export type BakedData = z.infer<typeof BakedDataSchema>;
 export type BakedRepo = z.infer<typeof BakedRepoSchema>;
+export type BakedNpm = z.infer<typeof BakedNpmSchema>;
 
 export function loadBaked(json: unknown): BakedData {
   return BakedDataSchema.parse(json);

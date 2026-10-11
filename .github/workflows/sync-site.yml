@@ -8,9 +8,14 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: sync-site-data
+  cancel-in-progress: false
+
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,6 +30,8 @@ jobs:
         run: node scripts/sync.ts --out src/data/baked.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Validate and build
+        run: npm test && npm run build
       - name: Commit on change
         run: |
           git diff --quiet src/data/baked.json && echo "no change" && exit 0

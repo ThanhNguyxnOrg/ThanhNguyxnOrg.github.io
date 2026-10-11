@@ -32,23 +32,6 @@ function Tags({ technologies }: { technologies: string[] }) {
   );
 }
 
-/** Lead: oversized, 7/5, media bleeds to the edge of the frame. */
-function Lead({ p }: { p: FullProject }) {
-  const v = viewOf(p);
-  return (
-    <article className="grid overflow-hidden rounded-xl border border-border bg-surface lg:grid-cols-12">
-      <ProjectVisual title={v.title} glyph={v.glyph} className="min-h-72 md:min-h-96 lg:col-span-7" />
-      <div className="flex flex-col gap-6 p-6 md:p-10 lg:col-span-5">
-        <MetaLabel>{v.category}</MetaLabel>
-        <h3 className="font-display text-display-xl font-bold text-fg">{v.title}</h3>
-        <p className="max-w-measure text-body-lg text-fg-soft">{v.summary}</p>
-        <Tags technologies={v.technologies} />
-        <div className="mt-auto pt-2"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} /></div>
-      </div>
-    </article>
-  );
-}
-
 /** Poster: tall, title-dominant, media as a framed inset. */
 function Poster({ p }: { p: FullProject }) {
   const v = viewOf(p);

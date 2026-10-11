@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+
 const failures = [];
 const warnings = [];
 
@@ -25,7 +27,7 @@ async function registry(pkg) {
   }
 }
 
-const html = await (await import("node:fs")).readFileSync("dist/index.html", "utf-8");
+const html = readFileSync("dist/index.html", "utf-8");
 const hrefs = [...new Set([...html.matchAll(/href="(https:\/\/[^"]+)"/g)].map((m) => m[1]))];
 console.log(`external urls in page: ${hrefs.length}`);
 

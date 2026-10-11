@@ -1,7 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { BakedDataSchema } from "../src/lib/baked.ts";
-import { formatCount, formatDate } from "../src/lib/format.ts";
+import { formatCount, formatDate, sanitizeText } from "../src/lib/format.ts";
 
 const validRepo = {
   name: "blendops",
@@ -66,5 +66,11 @@ describe("formatters", () => {
 
   it("keeps an ISO date as YYYY-MM-DD", () => {
     assert.equal(formatDate("2026-10-11"), "2026-10-11");
+  });
+
+  it("sanitizes API text to the ASCII gate", () => {
+    assert.equal(sanitizeText("prep — curated"), "prep - curated");
+    assert.equal(sanitizeText("🌐 A curated collection"), "A curated collection");
+    assert.equal(sanitizeText("plain text 123"), "plain text 123");
   });
 });

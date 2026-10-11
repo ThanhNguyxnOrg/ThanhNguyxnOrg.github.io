@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { BakedData, BakedRepo } from "./baked.ts";
+import { sanitizeText } from "./format.ts";
 
 export const CategorySchema = z.enum([
   "Developer Tools",
@@ -60,8 +61,9 @@ export function joinProjects(
     if (!b) throw new Error(`unknown repo ${p.slug}`);
     out.push({
       ...b,
-      blurb: p.blurb,
-      story: p.story ?? null,
+      description: sanitizeText(b.description),
+      blurb: sanitizeText(p.blurb),
+      story: p.story === undefined ? null : sanitizeText(p.story),
       category: p.category,
       accent: p.accent,
       pattern: p.pattern,

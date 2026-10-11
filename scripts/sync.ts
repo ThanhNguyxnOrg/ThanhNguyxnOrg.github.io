@@ -1,5 +1,5 @@
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { BakedDataSchema } from "../src/lib/baked.ts";
+import { BakedDataSchema, type BakedNpm } from "../src/lib/baked.ts";
 
 const ORG = "ThanhNguyxnOrg";
 const NPM_PACKAGES = ["archpulse", "production-backend-kit"];
@@ -18,6 +18,8 @@ export async function runSync(opts: {
   token?: string;
   outPath?: string;
   contentDir?: string;
+  /** Previous npm entries: kept (with a warning) when the registry is unreachable, so a blip never zeroes public numbers. */
+  prevNpm?: BakedNpm[];
 }) {
   const warnings: string[] = [];
   let requests = 0;
@@ -130,6 +132,13 @@ export async function runSync(opts: {
       downloads?: number;
     } | null;
     if (!meta || !dl || typeof dl.downloads !== "number") {
+      const prev = (opts.prevNpm ?? []).find((p) => p.name === pkg);
+      if (prev) {
+        warnings.push(`WARN npm ${pkg}: metadata incomplete, keeping previous v${prev.version}`);
+        npm.push(prev);
+        downloads30d += prev.downloads30d;
+        continue;
+      }
       warnings.push(`WARN npm ${pkg}: metadata incomplete, skipped`);
       continue;
     }
@@ -148,7 +157,11 @@ export async function runSync(opts: {
   if (opts.contentDir) {
     const files = readdirSync(opts.contentDir)
       .filter((f) => f.endsWith(".md"))
-      .map((f) => f.slice(0, -3).toLowerCase());
+      .map((f) => {
+        const text = readFileSync(`${opts.contentDir}/${f}`, "utf-8");
+        const m = text.match(/^slug:\s*["']?([^"'\s]+)["']?/m);
+        return (m?.[1] ?? f.slice(0, -3)).toLowerCase();
+      });
     const apiSlugs = new Set(repos.map((r) => r.name.toLowerCase()));
     for (const r of repos) {
       if (!files.includes(r.name.toLowerCase())) warnings.push(`WARN unknown repo ${r.name}`);
@@ -199,6 +212,12 @@ function arg(name: string, fallback: string) {
 
 if (process.argv[1]?.endsWith("sync.ts")) {
   const outPath = arg("out", "src/data/baked.json");
+  let prevNpm: BakedNpm[] | undefined;
+  try {
+    prevNpm = BakedDataSchema.parse(JSON.parse(readFileSync(outPath, "utf-8"))).npm;
+  } catch {
+    prevNpm = undefined;
+  }
   runSync({
     apiBase: arg("api-base", "https://api.github.com"),
     npmRegistryBase: "https://registry.npmjs.org",
@@ -207,6 +226,7 @@ if (process.argv[1]?.endsWith("sync.ts")) {
     token: process.env.GITHUB_TOKEN,
     outPath,
     contentDir: "src/content/repos",
+    prevNpm,
   }).then(
     (out) => {
       for (const w of out.warnings) console.log(w);

@@ -169,4 +169,32 @@ describe("sync", () => {
       await fx.close();
     }
   });
+
+  it("keeps previous npm numbers when the registry fails", async () => {
+    const routes = baseRoutes();
+    routes.set("/archpulse", { status: 500, body: {} });
+    routes.set("/downloads/point/last-month/archpulse", { status: 500, body: {} });
+    routes.set("/production-backend-kit", { status: 500, body: {} });
+    routes.set("/downloads/point/last-month/production-backend-kit", { status: 500, body: {} });
+    const fx = await startFixture(routes, new Set());
+    const prevNpm = [
+      { name: "archpulse", version: "0.5.3", description: "prev", keywords: [], downloads30d: 146 },
+      { name: "production-backend-kit", version: "1.1.2", description: "prev", keywords: [], downloads30d: 167 },
+    ];
+    try {
+      const out = await runSync({
+        apiBase: fx.base,
+        npmRegistryBase: fx.base,
+        npmDownloadsBase: fx.base,
+        pagesBase: fx.base,
+        contentDir: fakeContentDir(NAMES.map((n) => n.toLowerCase())),
+        prevNpm,
+      });
+      assert.equal(out.data.npm.length, 2);
+      assert.equal(out.data.totals.downloads30d, 313);
+      assert.ok(out.warnings.some((w) => w.includes("keeping previous")));
+    } finally {
+      await fx.close();
+    }
+  });
 });
