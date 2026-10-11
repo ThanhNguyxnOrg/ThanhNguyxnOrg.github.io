@@ -3,40 +3,57 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ArrowRight } from 'lucide-react';
 import { Button, Container, GitHubMark, motionTokens } from '../components';
+import type { FullProject } from '../lib/projects';
 
 gsap.registerPlugin(useGSAP);
 const { duration, ease, stagger, MOTION_OK_QUERY } = motionTokens;
 
-const nodes = [
-  { id: 'tools', x: 92, y: 96, r: 30, label: 'tools', c: 'var(--color-primary)' },
-  { id: 'libs', x: 404, y: 70, r: 22, label: 'libraries', c: 'var(--color-secondary)' },
-  { id: 'apps', x: 430, y: 330, r: 34, label: 'apps', c: 'var(--color-primary)' },
-  { id: 'exp', x: 110, y: 380, r: 24, label: 'experiments', c: 'var(--color-highlight)' },
+const slots = [
+  { x: 92, y: 96 },
+  { x: 404, y: 70 },
+  { x: 430, y: 330 },
+  { x: 110, y: 380 },
+  { x: 300, y: 390 },
 ];
 const core = { x: 260, y: 220 };
 
-/** "Constellation" motif: the practice at the core, linked to what it ships, plus one unformed next node. */
-function Constellation() {
+function nodeRadius(stars: number) {
+  if (stars >= 3) return 34;
+  if (stars === 2) return 28;
+  return 22;
+}
+
+/** Project map: five real top-starred repositories orbiting the practice. Size encodes stars, gold means a live demo exists, every node links out. */
+function Constellation({ projects }: { projects: FullProject[] }) {
+  const nodes = projects.slice(0, 5).map((p, i) => ({ p, ...slots[i % slots.length] }));
   return (
-    <svg viewBox="0 0 520 460" className="h-auto w-full overflow-visible" aria-hidden>
+    <svg viewBox="0 0 520 460" className="h-auto w-full overflow-visible" aria-label="Map of top starred projects">
       <circle cx={core.x} cy={core.y} r="170" fill="none" stroke="var(--color-border)" strokeDasharray="2 6" />
       <circle cx={core.x} cy={core.y} r="110" fill="none" stroke="var(--color-border-strong)" />
-      {nodes.map((n) => (
-        <path key={n.id} className="hero-link" d={`M${core.x} ${core.y} Q ${(core.x + n.x) / 2 + 30} ${(core.y + n.y) / 2 - 30} ${n.x} ${n.y}`} fill="none" stroke={n.c} strokeOpacity=".7" strokeWidth="1.5" pathLength={1} strokeDasharray="1" />
+      {nodes.map(({ p, x, y }) => (
+        <path key={p.name} className="hero-link" d={`M${core.x} ${core.y} Q ${(core.x + x) / 2 + 30} ${(core.y + y) / 2 - 30} ${x} ${y}`} fill="none" stroke="var(--color-primary)" strokeOpacity=".7" strokeWidth="1.5" pathLength={1} strokeDasharray="1" />
       ))}
-      <path className="hero-link" d={`M${core.x} ${core.y} L 470 190`} fill="none" stroke="var(--color-highlight)" strokeWidth="1.5" strokeDasharray="4 5" />
-      {nodes.map((n) => (
-        <g key={n.id} className="hero-node" style={{ transformOrigin: `${n.x}px ${n.y}px` }}>
-          <circle cx={n.x} cy={n.y} r={n.r} fill="var(--color-surface)" stroke={n.c} strokeWidth="1.5" />
-          <circle cx={n.x} cy={n.y} r="4" fill={n.c} />
-          <text x={n.x} y={n.y + n.r + 18} textAnchor="middle" fill="var(--color-fg-muted)" fontFamily="var(--font-mono)" fontSize="11" letterSpacing="1">{n.label.toUpperCase()}</text>
-        </g>
-      ))}
-      <g className="hero-node" style={{ transformOrigin: '470px 190px' }}>
-        <rect x="458" y="178" width="24" height="24" fill="none" stroke="var(--color-highlight)" strokeDasharray="3 3" transform="rotate(45 470 190)" />
-        <rect x="465" y="185" width="10" height="10" fill="var(--color-highlight)" className="animate-pulse motion-reduce:animate-none" transform="rotate(45 470 190)" />
-        <text x="470" y="232" textAnchor="middle" fill="var(--color-highlight)" fontFamily="var(--font-mono)" fontSize="11" letterSpacing="1">NEXT</text>
-      </g>
+      {nodes.map(({ p, x, y }) => {
+        const r = nodeRadius(p.stars);
+        const c = p.demoUrl ? 'var(--color-primary)' : 'var(--color-secondary)';
+        return (
+          <a
+            key={p.name}
+            href={p.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${p.name} repository, ${p.stars} ${p.stars === 1 ? 'star' : 'stars'}${p.demoUrl ? ', live demo available' : ''}`}
+            className="focus-ring rounded-sm"
+          >
+            <g className="hero-node" style={{ transformOrigin: `${x}px ${y}px` }}>
+              <circle cx={x} cy={y} r={r} fill="var(--color-surface)" stroke={c} strokeWidth="1.5" />
+              <circle cx={x} cy={y} r="4" fill={c} />
+              <text x={x} y={y + r + 18} textAnchor="middle" fill="var(--color-fg-muted)" fontFamily="var(--font-mono)" fontSize="11" letterSpacing="1">{p.name.toUpperCase()}</text>
+              <text x={x} y={y + r + 34} textAnchor="middle" fill="var(--color-fg-subtle)" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="1">{p.stars} {p.stars === 1 ? 'STAR' : 'STARS'}</text>
+            </g>
+          </a>
+        );
+      })}
       <g className="hero-node" style={{ transformOrigin: `${core.x}px ${core.y}px` }}>
         <image href="/logo.png" x={core.x - 38} y={core.y - 29} width="76" height="57" preserveAspectRatio="xMidYMid meet" />
       </g>
@@ -44,7 +61,7 @@ function Constellation() {
   );
 }
 
-export default function Hero() {
+export default function Hero({ projects }: { projects: FullProject[] }) {
   const scope = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -86,7 +103,7 @@ export default function Hero() {
           </div>
         </div>
         <div className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
-          <Constellation />
+          <Constellation projects={projects} />
         </div>
       </Container>
     </div>
