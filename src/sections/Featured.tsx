@@ -17,8 +17,6 @@ function viewOf(p: FullProject) {
     summary: p.story ?? p.blurb,
     category: p.category,
     technologies: p.topics.slice(0, 6),
-    repoHref: p.repoUrl,
-    href: p.demoUrl ?? undefined,
     glyph: { pattern: p.pattern, accent: p.accent } as const,
   };
 }

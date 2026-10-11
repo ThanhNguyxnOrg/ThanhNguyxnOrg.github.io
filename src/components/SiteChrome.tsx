@@ -17,7 +17,7 @@ function GitHubAction() {
       href={GITHUB_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex h-9 items-center gap-2 whitespace-nowrap rounded-md bg-primary-fill px-4 text-body-sm font-semibold text-on-primary transition-ui hover:bg-primary-fill-hover focus-ring"
+      className="inline-flex h-11 items-center gap-2 whitespace-nowrap rounded-md bg-primary-fill px-4 text-body-sm font-semibold text-on-primary transition-ui hover:bg-primary-fill-hover focus-ring"
     >
       <GitHubMark className="size-4" /> GitHub
     </a>

@@ -2,7 +2,7 @@ import { ArrowUpRight, Database } from 'lucide-react';
 import { SectionHeader } from '../components';
 
 export type EcoResource = {
-  kind: 'Organization' | 'Package' | 'Resource';
+  kind: 'Organization' | 'Package' | 'People' | 'Resource';
   label: string;
   description: string;
   url: string | null;
@@ -16,7 +16,7 @@ export default function Ecosystem({ resources, fetchedAt }: { resources: EcoReso
           <SectionHeader
             className="lg:grid-cols-1"
             title={<span id="eco-title">Where the code lives.</span>}
-            description="Repositories, packages and resources. Every number below was verified; destinations without proof stay unlinked."
+            description="Repositories, packages, people and resources. Every number below was verified; destinations without proof stay unlinked. Releases and repository automation run through the ThanhNguyxnAgent bot."
           />
           <div className="flex gap-3 rounded-lg border border-dashed border-border-strong p-4">
             <Database aria-hidden className="mt-0.5 size-4 shrink-0 text-fg-subtle" />
