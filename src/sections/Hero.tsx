@@ -22,6 +22,37 @@ const ORBITS: [number, number][] = [
 ];
 const core = { x: 260, y: 220 };
 
+/** Deterministic starfield: no Math.random, so SSR and hydration render identically. */
+function Starfield() {
+  const dots = Array.from({ length: 46 }, (_, i) => ({
+    left: `${(i * 37 + 7) % 100}%`,
+    top: `${(i * 53 + 11) % 100}%`,
+    size: i % 3 === 0 ? 2 : 1,
+    gold: i % 6 === 0,
+    delay: `${((i * 0.37) % 4).toFixed(2)}s`,
+    duration: `${(2.6 + (i % 5) * 0.7).toFixed(2)}s`,
+  }));
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      {dots.map((d, i) => (
+        <span
+          key={i}
+          className="absolute animate-twinkle rounded-full motion-reduce:animate-none"
+          style={{
+            left: d.left,
+            top: d.top,
+            width: d.size,
+            height: d.size,
+            backgroundColor: d.gold ? 'var(--color-gold-soft)' : 'var(--color-fg)',
+            animationDelay: d.delay,
+            animationDuration: d.duration,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function nodeRadius(stars: number) {
   if (stars >= 3) return 34;
   if (stars === 2) return 28;
@@ -147,7 +178,10 @@ export default function Hero({ projects }: { projects: FullProject[] }) {
           </div>
         </div>
         <div className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
-          <Constellation projects={projects} />
+          <Starfield />
+          <div className="relative">
+            <Constellation projects={projects} />
+          </div>
           <div className="mt-4 flex items-center justify-between gap-4">
             <p className="font-mono text-micro uppercase text-fg-subtle">Five most-starred repos in orbit. Number is the live star count.</p>
             <IconButton
