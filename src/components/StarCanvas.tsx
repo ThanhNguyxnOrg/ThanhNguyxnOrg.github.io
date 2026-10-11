@@ -20,6 +20,15 @@ export default function StarCanvas({ density = 150 }: { density?: number }) {
     let raf = 0;
     let w = 0;
     let h = 0;
+    let visible = true;
+    const io = new IntersectionObserver(
+      (entries) => {
+        visible = entries.some((e) => e.isIntersecting);
+        if (visible && !raf) raf = requestAnimationFrame(frame);
+      },
+      { threshold: 0 },
+    );
+    io.observe(canvas);
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -46,6 +55,8 @@ export default function StarCanvas({ density = 150 }: { density?: number }) {
     let last = performance.now();
 
     const frame = (now: number) => {
+      raf = 0;
+      if (!visible) return;
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
       ctx.fillStyle = '#080b14';
@@ -80,6 +91,8 @@ export default function StarCanvas({ density = 150 }: { density?: number }) {
     raf = requestAnimationFrame(frame);
     return () => {
       cancelAnimationFrame(raf);
+      raf = 0;
+      io.disconnect();
       window.removeEventListener('resize', resize);
     };
   }, [density]);

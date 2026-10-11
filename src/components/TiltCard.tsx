@@ -1,4 +1,5 @@
 import { useRef, type CSSProperties, type ReactNode, type MouseEvent } from 'react';
+import { prefersReducedMotion } from '../motion/tokens';
 import { shouldTilt } from '../lib/enhance';
 
 /** 3D tilt wrapper: rotate ±max deg on fine pointer only, static otherwise. */
@@ -8,6 +9,7 @@ export default function TiltCard({ children, max = 7 }: { children: ReactNode; m
   const onMove = (e: MouseEvent<HTMLDivElement>) => {
     const el = ref.current;
     if (!el) return;
+    if (prefersReducedMotion()) return;
     if (!shouldTilt(false, window.matchMedia('(pointer: fine)').matches)) return;
     const rect = el.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;

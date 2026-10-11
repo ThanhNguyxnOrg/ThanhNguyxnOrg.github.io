@@ -84,13 +84,13 @@ const resources: EcoResource[] = [
       />
     </Container>
   </div>
-  <Featured projects={projects} />
+  <Featured client:visible projects={projects} />
   <TechMarquee />
   <Philosophy />
-  <Journey stops={stops} />
+  <Journey client:visible stops={stops} />
   <Explorer client:visible projects={projects} />
   <Ecosystem resources={resources} fetchedAt={baked.fetchedAt} />
   <div id="support" class="scroll-mt-20 border-t border-border">
-    <CTA />
+    <CTA client:visible />
   </div>
 </Layout>

@@ -29,7 +29,7 @@ export default function TimelineBeam() {
   }, []);
 
   return (
-    <div ref={ref} aria-hidden className="pointer-events-none absolute bottom-0 left-4 top-0 w-[2px] motion-reduce:hidden">
+    <div ref={ref} aria-hidden className="pointer-events-none absolute bottom-0 left-4 top-0 w-[2px]">
       <svg className="h-full w-full" preserveAspectRatio="none" viewBox="0 0 2 1000">
         <line x1="1" y1="0" x2="1" y2="1000" stroke="#1F2537" strokeWidth="2" />
         <path d="M1 0 V1000" fill="none" stroke="#f59e0b" strokeWidth="2" />
