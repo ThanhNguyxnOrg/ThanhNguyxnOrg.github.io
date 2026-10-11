@@ -1,0 +1,46 @@
+# ThanhNguyxnOrg
+
+> Independent technology practice building developer tools, AI workflows, and open source utilities. 16 public repositories, 10 stars, 7 forks, 0 open issues, 5 live demos, 2 npm packages with 313 downloads in 30 days (snapshot 2026-10-11).
+
+ThanhNguyxnOrg is not a company. It is a working base and long-term archive for projects that matter to its maintainers. Numbers on this page refresh daily from the GitHub and npm APIs; each figure carries its fetch date on the site. Nothing here is invented: thin histories stay thin, dead links stay unlinked.
+
+## Projects
+
+- [blendops](https://github.com/ThanhNguyxnOrg/blendops): AI-native Blender workflow and skill pack, org-native sprint April to May 2026.
+- [lumeo](https://github.com/ThanhNguyxnOrg/lumeo): Bilingual captions and live AI dubbing for YouTube, now at v2.0.6.
+- [apidex-hub](https://github.com/ThanhNguyxnOrg/apidex-hub): Curated free-API catalog with a daily dead-link hygiene pipeline.
+- [awesome-cert-sherpa](https://github.com/ThanhNguyxnOrg/awesome-cert-sherpa): Community IT cert prep with 1,590+ original practice questions.
+- [Snapbooth](https://github.com/ThanhNguyxnOrg/Snapbooth): Private browser photobooth, oldest repo, rebuilt as React studio in 2026.
+- [StepDSA](https://github.com/ThanhNguyxnOrg/StepDSA): Interactive DSA visualizer with a deterministic time-travel engine.
+- [cogmint](https://github.com/ThanhNguyxnOrg/cogmint): Dark control plane for Claude Code orchestration.
+- [ForgeHelm](https://github.com/ThanhNguyxnOrg/ForgeHelm): Chrome extension for bulk GitHub repository management.
+- [git-account-switcher](https://github.com/ThanhNguyxnOrg/git-account-switcher): One-command Git identity and CLI auth switcher.
+- [judgeloom-core](https://github.com/ThanhNguyxnOrg/judgeloom-core): Competitive programming judge on Django and Postgres.
+- [lagvex](https://github.com/ThanhNguyxnOrg/lagvex): Game latency reducer with WinTun and Go relay.
+- [LayoutLingua](https://github.com/ThanhNguyxnOrg/LayoutLingua): PDF translator preserving layout, math and tables.
+- [Locsight](https://github.com/ThanhNguyxnOrg/Locsight): Codebase health analyzer on Rust and Tauri.
+- [PurgeKit](https://github.com/ThanhNguyxnOrg/PurgeKit): Developer-focused Windows uninstaller, v1.0.0 a day after landing.
+- [SkillGauge](https://github.com/ThanhNguyxnOrg/SkillGauge): Static auditor and leaderboard for agent skills.
+- [.github](https://github.com/ThanhNguyxnOrg/.github): Org profile and community files, the control room.
+
+## Live demos
+
+- [Snapbooth demo](https://thanhnguyxnorg.github.io/Snapbooth/): verified live.
+- [StepDSA demo](https://thanhnguyxnorg.github.io/StepDSA/): verified live.
+- [apidex-hub site](https://thanhnguyxnorg.github.io/apidex-hub/): verified live.
+- [awesome-cert-sherpa site](https://thanhnguyxnorg.github.io/awesome-cert-sherpa/): verified live.
+- [SkillGauge site](https://thanhnguyxnorg.github.io/SkillGauge/): verified live.
+
+## Packages
+
+- [archpulse 0.5.3](https://www.npmjs.com/package/archpulse): living architecture diagrams, 146 downloads in 30 days.
+- [production-backend-kit 1.1.2](https://www.npmjs.com/package/production-backend-kit): backend patterns and checklists, 167 downloads in 30 days.
+
+## Docs
+
+- [Org profile](https://github.com/ThanhNguyxnOrg/.github/blob/main/profile/README.md): showcase top 6 and full project list.
+- [Projects](https://github.com/ThanhNguyxnOrg/.github/blob/main/docs/projects.md): every repository with maturity notes.
+- [Stack](https://github.com/ThanhNguyxnOrg/.github/blob/main/docs/stack.md): languages and platforms that ship.
+- [Philosophy](https://github.com/ThanhNguyxnOrg/.github/blob/main/docs/philosophy.md): visible, organized, honest growth.
+- [Migration note](https://github.com/ThanhNguyxnOrg/.github/blob/main/docs/migration.md): second-life policy for older work.
+- [Support](https://github.com/ThanhNguyxnOrg/.github/blob/main/SUPPORT.md): best-effort tiers and how to get help.

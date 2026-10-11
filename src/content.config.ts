@@ -1,9 +1,10 @@
 import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
 import { z } from "zod";
 import { RepoEntrySchema } from "./lib/projects.ts";
 
 const timeline = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.md", base: "./src/content/timeline" }),
   schema: z.object({
     date: z.string().regex(/^\d{4}-\d{2}$/),
     title: z.string().min(1).max(80),
@@ -14,7 +15,7 @@ const timeline = defineCollection({
 });
 
 const repos = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.md", base: "./src/content/repos" }),
   schema: RepoEntrySchema,
 });
 
