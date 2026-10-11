@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ArrowRight, Pause, Play } from 'lucide-react';
 import { Button, Container, GitHubMark, IconButton, motionTokens } from '../components';
+import StarCanvas from '../components/StarCanvas';
 import type { FullProject } from '../lib/projects';
 
 gsap.registerPlugin(useGSAP);
@@ -157,6 +158,7 @@ export default function Hero({ projects }: { projects: FullProject[] }) {
 
   return (
     <div ref={scope} className="relative overflow-hidden border-b border-border">
+      <StarCanvas density={150} />
       <div aria-hidden className="absolute inset-0 bg-aurora" />
       <div aria-hidden className="absolute inset-0 bg-blueprint [mask-image:radial-gradient(ellipse_at_70%_30%,black,transparent_70%)]" />
       <Container className="relative grid gap-12 pb-16 pt-16 md:pb-24 md:pt-24 lg:grid-cols-12 lg:items-center lg:gap-6">
