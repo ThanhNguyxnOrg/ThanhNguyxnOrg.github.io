@@ -1,4 +1,3 @@
-import { readFileSync } from "node:fs";
 import { z } from "zod";
 import type { BakedData, BakedRepo } from "./baked.ts";
 import { sanitizeText } from "./format.ts";
@@ -26,7 +25,6 @@ export const RepoEntrySchema = z.object({
   category: CategorySchema,
   accent: z.enum(["primary", "secondary", "highlight"]),
   pattern: z.enum(["orbit", "grid", "stack", "wave"]),
-  image: z.string().startsWith("/brand/").optional(),
 });
 
 export type RepoEntry = z.infer<typeof RepoEntrySchema>;
@@ -36,7 +34,6 @@ export type FullProject = BakedRepo & {
   category: z.infer<typeof CategorySchema>;
   accent: "primary" | "secondary" | "highlight";
   pattern: "orbit" | "grid" | "stack" | "wave";
-  image: string | null;
 };
 
 /**
@@ -62,14 +59,6 @@ export function joinProjects(
   for (const p of parsed) {
     const b = bySlug.get(p.slug);
     if (!b) throw new Error(`unknown repo ${p.slug}`);
-    if (p.image) {
-      const fsPath = `public${p.image}`;
-      try {
-        readFileSync(fsPath);
-      } catch {
-        throw new Error(`missing image file ${fsPath} for ${p.slug}`);
-      }
-    }
     out.push({
       ...b,
       description: sanitizeText(b.description),
@@ -78,7 +67,6 @@ export function joinProjects(
       category: p.category,
       accent: p.accent,
       pattern: p.pattern,
-      image: p.image ?? null,
     });
   }
   for (const b of baked.repos) {

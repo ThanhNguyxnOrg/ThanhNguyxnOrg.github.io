@@ -47,7 +47,7 @@ function Poster({ p }: { p: FullProject }) {
     <article className="card-ticks relative flex h-full flex-col gap-6 overflow-hidden rounded-xl border border-border bg-surface p-6 md:p-8">
       <MetaLabel>{v.category}</MetaLabel>
       <h3 className="font-display text-display-lg font-bold text-fg">{v.title}</h3>
-      <ProjectVisual title={v.title} glyph={v.glyph} image={p.image} className="aspect-[2/1] overflow-hidden rounded-lg border border-border" />
+      <ProjectVisual title={v.title} glyph={v.glyph} className="aspect-[2/1] overflow-hidden rounded-lg border border-border" />
       <p className="text-body text-fg-muted">{v.summary}</p>
       <Tags technologies={v.technologies} />
       <div className="mt-auto"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
@@ -60,7 +60,7 @@ function Strip({ p }: { p: FullProject }) {
   const v = viewOf(p);
   return (
     <article className="flex h-full flex-col gap-5 overflow-hidden rounded-xl border border-border bg-surface p-6 md:p-8">
-      <ProjectVisual title={v.title} glyph={v.glyph} image={p.image} className="aspect-[2/1] overflow-hidden rounded-lg border border-border" />
+      <ProjectVisual title={v.title} glyph={v.glyph} className="aspect-[2/1] overflow-hidden rounded-lg border border-border" />
       <MetaLabel>{v.category}</MetaLabel>
       <h3 className="font-display text-display-lg font-bold text-fg">{v.title}</h3>
       <p className="text-body text-fg-muted">{v.summary}</p>
@@ -85,7 +85,7 @@ export default function Featured({ projects }: { projects: FullProject[] }) {
           <div data-reveal>
             <TiltCard max={7}>
             <article className="border-gold-hover card-ticks grid overflow-hidden rounded-xl border bg-surface lg:grid-cols-12">
-              <ProjectVisual title={lead.name} glyph={{ pattern: lead.pattern, accent: lead.accent }} image={lead.image} className="aspect-[2/1] lg:col-span-7" />
+              <ProjectVisual title={lead.name} glyph={{ pattern: lead.pattern, accent: lead.accent }} className="aspect-[2/1] overflow-hidden rounded-lg border border-border lg:col-span-7" />
               <div className="flex flex-col gap-6 p-6 md:p-10 lg:col-span-5">
                 <MetaLabel>{lead.category}</MetaLabel>
                 <h3 className="font-display text-display-xl font-bold text-fg">{lead.name}</h3>

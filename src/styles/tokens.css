@@ -233,10 +233,6 @@
   color: transparent;
 }
 
-@utility image-frame {
-  box-shadow: 0 0 0 1px rgb(245 158 11 / 0.22), 0 16px 48px -16px rgb(0 0 0 / 0.6);
-}
-
 @utility tabular {
   font-variant-numeric: tabular-nums;
 }
