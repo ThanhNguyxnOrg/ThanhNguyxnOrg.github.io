@@ -6,18 +6,22 @@ import { ProjectActions, ProjectVisual } from '../site/ProjectBits';
 
 function SyncStats({ p }: { p: FullProject }) {
   return (
-    <dl className="grid grid-cols-3 gap-4 border-y border-border py-5">
-      {[
-        { value: String(p.stars), label: p.stars === 1 ? 'star' : 'stars' },
-        { value: String(p.forks), label: p.forks === 1 ? 'fork' : 'forks' },
-        { value: p.pushedAt.slice(0, 10), label: 'last push' },
-      ].map((h) => (
-        <div key={h.label} className="flex flex-col-reverse gap-1">
-          <dt className="font-mono text-micro uppercase text-fg-subtle">{h.label}</dt>
-          <dd className="font-display text-display-md font-semibold text-fg tabular whitespace-nowrap">{h.value}</dd>
-        </div>
-      ))}
-    </dl>
+    <div className="border-y border-border py-5">
+      <dl className="grid grid-cols-2 gap-4">
+        {[
+          { value: String(p.stars), label: p.stars === 1 ? 'star' : 'stars' },
+          { value: String(p.forks), label: p.forks === 1 ? 'fork' : 'forks' },
+        ].map((h) => (
+          <div key={h.label} className="flex flex-col-reverse gap-1">
+            <dt className="font-mono text-micro uppercase text-fg-subtle">{h.label}</dt>
+            <dd className="font-display text-display-md font-semibold text-fg tabular">{h.value}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="mt-3 font-mono text-micro uppercase text-fg-subtle tabular">
+        Last push <span className="text-fg-soft">{p.pushedAt.slice(0, 10)}</span>
+      </p>
+    </div>
   );
 }
 

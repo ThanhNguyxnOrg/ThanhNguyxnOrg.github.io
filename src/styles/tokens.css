@@ -185,10 +185,6 @@
 }
 
 /* Decor3: caret, target flash, counters, balance base, ruler, notch, legal separators. */
-@utility ruler-ticks {
-  background-image: repeating-linear-gradient(to bottom, rgb(245 158 11 / 0.25) 0 1px, transparent 1px 28px);
-}
-
 @utility cta-notch {
   clip-path: polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px);
 }

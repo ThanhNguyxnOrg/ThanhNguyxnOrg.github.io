@@ -16,7 +16,7 @@ describe("decor3 max", () => {
   it("wires philosophy counters, explorer gutter, journey ruler", () => {
     assert.ok(readFileSync("src/sections/Philosophy.tsx", "utf-8").includes("principles"), "counter scope");
     assert.ok(readFileSync("src/sections/Explorer.tsx", "utf-8").includes("scrollbar-gutter"), "stable gutter");
-    assert.ok(readFileSync("src/sections/Journey.tsx", "utf-8").includes("ruler-ticks"), "ruler placed");
+    assert.ok(readFileSync("src/sections/Journey.tsx", "utf-8").includes("sticky top-24"), "panel placed");
   });
   it("footer bottom uses css separators, no hardcoded strings", () => {
     const f = readFileSync("src/components/SiteFooter.tsx", "utf-8");
