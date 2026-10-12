@@ -40,6 +40,7 @@ export const BakedTotalsSchema = z.object({
 
 export const BakedDataSchema = z.object({
   fetchedAt: z.string(),
+  foundedAt: z.string().nullable(),
   totals: BakedTotalsSchema,
   repos: z.array(BakedRepoSchema),
   npm: z.array(BakedNpmSchema),

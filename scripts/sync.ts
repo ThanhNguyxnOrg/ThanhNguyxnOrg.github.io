@@ -56,7 +56,7 @@ export async function runSync(opts: {
   const org = await gh(`/orgs/${ORG}`);
   if (org.status !== 200 || org.json === null) throw new Error(`org fetch failed: ${org.status}`);
   noteQuota(org.quota);
-  const orgData = org.json as { public_repos: number; followers: number };
+  const orgData = org.json as { public_repos: number; followers: number; created_at?: string };
 
   const list = await gh(`/orgs/${ORG}/repos?per_page=100`);
   if (list.status !== 200 || !Array.isArray(list.json)) throw new Error(`repos fetch failed: ${list.status}`);
@@ -174,6 +174,7 @@ export async function runSync(opts: {
   const languages = [...new Set(repos.map((r) => r.language))].sort();
   const data = BakedDataSchema.parse({
     fetchedAt: new Date().toISOString().slice(0, 10),
+    foundedAt: typeof orgData.created_at === "string" ? orgData.created_at.slice(0, 10) : null,
     totals: {
       repos: repos.length,
       stars: repos.reduce((s, r) => s + r.stars, 0),

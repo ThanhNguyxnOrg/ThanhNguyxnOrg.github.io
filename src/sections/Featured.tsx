@@ -4,13 +4,22 @@ import TiltCard from '../components/TiltCard';
 import type { FullProject } from '../lib/projects';
 import { ProjectActions, ProjectVisual } from '../site/ProjectBits';
 
-const LEAD_HIGHLIGHTS: Record<string, { value: string; label: string }[]> = {
-  blendops: [
-    { value: '48', label: 'skills' },
-    { value: '26', label: 'install targets' },
-    { value: '189', label: 'commits' },
-  ],
-};
+function SyncStats({ p }: { p: FullProject }) {
+  return (
+    <dl className="grid grid-cols-3 gap-4 border-y border-border py-5">
+      {[
+        { value: String(p.stars), label: p.stars === 1 ? 'star' : 'stars' },
+        { value: String(p.forks), label: p.forks === 1 ? 'fork' : 'forks' },
+        { value: p.pushedAt.slice(0, 10), label: 'last push' },
+      ].map((h) => (
+        <div key={h.label} className="flex flex-col-reverse gap-1">
+          <dt className="font-mono text-micro uppercase text-fg-subtle">{h.label}</dt>
+          <dd className="font-display text-display-md font-semibold text-fg tabular">{h.value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
 
 function viewOf(p: FullProject) {
   return {
@@ -38,7 +47,7 @@ function Poster({ p }: { p: FullProject }) {
     <article className="card-ticks relative flex h-full flex-col gap-6 overflow-hidden rounded-xl border border-border bg-surface p-6 md:p-8">
       <MetaLabel>{v.category}</MetaLabel>
       <h3 className="font-display text-display-lg font-bold text-fg">{v.title}</h3>
-      <ProjectVisual title={v.title} glyph={v.glyph} className="aspect-[4/3] overflow-hidden rounded-lg border border-border" />
+      <ProjectVisual title={v.title} glyph={v.glyph} image={p.image} className="aspect-[4/3] overflow-hidden rounded-lg border border-border" />
       <p className="text-body text-fg-muted">{v.summary}</p>
       <Tags technologies={v.technologies} />
       <div className="mt-auto"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
@@ -58,7 +67,7 @@ function Strip({ p }: { p: FullProject }) {
         <Tags technologies={v.technologies} />
         <div className="mt-auto pt-2"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
       </div>
-      <ProjectVisual title={v.title} glyph={v.glyph} className="order-first min-h-48 md:order-none md:col-span-2" />
+      <ProjectVisual title={v.title} glyph={v.glyph} image={p.image} className="order-first min-h-48 md:order-none md:col-span-2" />
     </article>
   );
 }
@@ -66,7 +75,6 @@ function Strip({ p }: { p: FullProject }) {
 export default function Featured({ projects }: { projects: FullProject[] }) {
   const [lead, ...rest] = projects.slice(0, 6);
   if (!lead) return null;
-  const highlights = LEAD_HIGHLIGHTS[lead.name];
   return (
     <section id="projects" aria-labelledby="featured-title" className="scroll-mt-20">
       <div className="mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
@@ -79,21 +87,12 @@ export default function Featured({ projects }: { projects: FullProject[] }) {
           <div data-reveal>
             <TiltCard max={7}>
             <article className="border-gold-hover card-ticks grid overflow-hidden rounded-xl border bg-surface lg:grid-cols-12">
-              <ProjectVisual title={lead.name} glyph={{ pattern: lead.pattern, accent: lead.accent }} className="min-h-72 md:min-h-96 lg:col-span-7" />
+              <ProjectVisual title={lead.name} glyph={{ pattern: lead.pattern, accent: lead.accent }} image={lead.image} className="min-h-72 md:min-h-96 lg:col-span-7" />
               <div className="flex flex-col gap-6 p-6 md:p-10 lg:col-span-5">
                 <MetaLabel>{lead.category}</MetaLabel>
                 <h3 className="font-display text-display-xl font-bold text-fg">{lead.name}</h3>
                 <p className="max-w-measure text-body-lg text-fg-soft">{lead.story ?? lead.blurb}</p>
-                {highlights && (
-                  <dl className="grid grid-cols-3 gap-4 border-y border-border py-5">
-                    {highlights.map((h) => (
-                      <div key={h.label} className="flex flex-col-reverse gap-1">
-                        <dt className="font-mono text-micro uppercase text-fg-subtle">{h.label}</dt>
-                        <dd className="font-display text-display-md font-semibold text-fg">{h.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                )}
+                <SyncStats p={lead} />
                 <div className="mt-auto pt-2"><ProjectActions repoUrl={lead.repoUrl} demoUrl={lead.demoUrl} /></div>
               </div>
             </article>

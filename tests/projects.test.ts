@@ -6,6 +6,7 @@ import type { BakedData } from "../src/lib/baked.ts";
 function baked(names: string[]): BakedData {
   return {
     fetchedAt: "2026-10-11",
+    foundedAt: null,
     totals: {
       repos: names.length,
       stars: 0,

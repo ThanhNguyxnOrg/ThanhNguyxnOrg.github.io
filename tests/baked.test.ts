@@ -22,6 +22,7 @@ const validRepo = {
 
 const validDoc = {
   fetchedAt: "2026-10-11",
+  foundedAt: "2026-04-09",
   totals: {
     repos: 16,
     stars: 10,

@@ -97,7 +97,7 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
               <ol className="flex flex-col divide-y divide-border">
                 {results.map((p) => (
                   <li key={p.name} className="group grid gap-5 py-6 sm:grid-cols-[8rem_1fr] md:gap-8">
-                    <ProjectVisual title={p.name} glyph={{ pattern: p.pattern, accent: p.accent }} label={false} className="hidden aspect-square overflow-hidden rounded-md border border-border sm:block" />
+                    <ProjectVisual title={p.name} glyph={{ pattern: p.pattern, accent: p.accent }} image={p.image} label={false} className="hidden aspect-square overflow-hidden rounded-md border border-border sm:block" />
                     <div className="flex flex-col gap-3">
                       <p className="font-display text-title font-semibold text-fg">{p.name}</p>
                       <p className="max-w-reading text-body-sm text-fg-muted">{p.blurb}</p>

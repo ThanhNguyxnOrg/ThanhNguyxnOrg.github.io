@@ -10,7 +10,7 @@ export type JourneyStop = {
 };
 
 /** Second-life journey: dated stops, oldest first. Dates are the sequence. */
-export default function Journey({ stops }: { stops: JourneyStop[] }) {
+export default function Journey({ stops, repoCount }: { stops: JourneyStop[]; repoCount: number }) {
   return (
     <section id="journey" aria-labelledby="journey-title" className="scroll-mt-20 border-t border-border">
       <div className="relative mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
@@ -23,7 +23,7 @@ export default function Journey({ stops }: { stops: JourneyStop[] }) {
           <Timeline>
             {stops.map((s) => (
               <div data-reveal key={`${s.date}-${s.title}`}>
-                <TimelineItem date={s.date} title={s.title} description={s.description} tags={s.tags} current={s.current} />
+                <TimelineItem date={s.date} title={s.title} description={s.description.replace('{count}', String(repoCount))} tags={s.tags} current={s.current} />
               </div>
             ))}
           </Timeline>

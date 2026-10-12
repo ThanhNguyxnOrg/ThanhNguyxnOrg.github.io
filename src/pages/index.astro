@@ -90,7 +90,7 @@ const resources: EcoResource[] = [
   <Featured client:visible projects={projects} />
   <TechMarquee />
   <Philosophy />
-  <Journey client:visible stops={stops} />
+  <Journey client:visible stops={stops} repoCount={baked.totals.repos} />
   <Explorer client:visible projects={projects} />
   <Ecosystem client:visible resources={resources} fetchedAt={baked.fetchedAt} />
   <div id="support" class="scroll-mt-20 border-t border-border">

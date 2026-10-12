@@ -1,6 +1,6 @@
 ---
 date: "2026-05"
-title: "The sprint"
-description: "BlendOps lands 174 of its 189 commits in two months, growing from MVP scaffold to a 48-skill pack."
-tags: ["blendops"]
+title: "The sprint and second lives"
+description: "BlendOps grows from MVP scaffold to a skill pack in two months; cert-sherpa is rewritten from Docusaurus to a Vite SPA and Snapbooth is rebuilt as a React studio."
+tags: ["blendops", "awesome-cert-sherpa", "snapbooth"]
 ---
