@@ -13,7 +13,7 @@ export type JourneyStop = {
 };
 
 const ORG_URL = 'https://github.com/ThanhNguyxnOrg';
-const ORG_LOGO = '/logo.png';
+const ORG_BOARD = '/brand/org-github.png';
 
 /** Second-life journey: dated stops left, sticky repo panel right. Dates are the sequence. */
 export default function Journey({
@@ -48,8 +48,8 @@ export default function Journey({
   const tag = stop?.tags?.[0];
   const project = tag ? projects.find((p) => p.name.toLowerCase() === tag.toLowerCase()) : undefined;
   const panel = project
-    ? { image: project.image ?? ORG_LOGO, name: project.name, url: project.repoUrl, label: 'View repository' }
-    : { image: ORG_LOGO, name: 'ThanhNguyxnOrg', url: ORG_URL, label: 'Visit organization' };
+    ? { image: project.image ?? ORG_BOARD, name: project.name, url: project.repoUrl, label: 'View repository' }
+    : { image: ORG_BOARD, name: 'ThanhNguyxnOrg', url: ORG_URL, label: 'Visit organization' };
 
   return (
     <section id="journey" aria-labelledby="journey-title" className="scroll-mt-20 border-t border-border">
