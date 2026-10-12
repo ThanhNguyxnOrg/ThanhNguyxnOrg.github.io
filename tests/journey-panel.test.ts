@@ -21,6 +21,6 @@ describe("journey panel", () => {
   it("keeps sync stats compact without overflow", () => {
     const feat = readFileSync("src/sections/Featured.tsx", "utf-8");
     assert.ok(feat.includes("grid-cols-2"), "two stats");
-    assert.ok(feat.includes("Last push"), "date on its own line");
+    assert.ok(feat.includes("Updated"), "date on its own line");
   });
 });

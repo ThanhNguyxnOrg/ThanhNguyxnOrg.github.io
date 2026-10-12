@@ -19,7 +19,7 @@ function SyncStats({ p }: { p: FullProject }) {
         ))}
       </dl>
       <p className="mt-3 font-mono text-micro uppercase text-fg-subtle tabular">
-        Last push <span className="text-fg-soft">{p.pushedAt.slice(0, 10)}</span>
+        Updated <span className="text-fg-soft">{p.pushedAt.slice(0, 10)}</span>
       </p>
     </div>
   );
