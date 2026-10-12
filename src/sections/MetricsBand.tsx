@@ -18,7 +18,7 @@ export default function MetricsBand({ totals, fetchedAt }: { totals: MetricTotal
   ];
 
   return (
-    <div>
+    <div className="rounded-xl border border-border bg-surface/60 px-6 py-8 md:px-10">
       <StatGroup>
         {items.map((item) => (
           <Stat

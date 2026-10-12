@@ -20,7 +20,7 @@ export default function Philosophy() {
             <li data-reveal key={p.verb} className={`relative flex flex-col gap-4 border-b border-border py-8 md:px-6 lg:border-b-0${i % 2 === 0 ? ' md:border-r lg:border-r' : ''}${i === 1 ? ' lg:border-r' : ''}${i === 0 ? ' md:pl-0' : ''}`}>
               <span className={`font-display text-display-lg font-bold ${p.tone}`}>{p.verb}</span>
               <span className="font-display text-title font-semibold text-fg">{p.line}</span>
-              <span className="text-body-sm text-fg-muted">{p.body}</span>
+              <span className="principle-body text-body-sm text-fg-muted">{p.body}</span>
             </li>
           ))}
         </Reveal>

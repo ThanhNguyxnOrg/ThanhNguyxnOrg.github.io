@@ -45,6 +45,7 @@ export default function SiteFooter({
         <nav aria-label="Footer" className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7">
           {columns.map((col) => (
             <div key={col.title} className="flex flex-col gap-4">
+              <span aria-hidden className="block h-0.5 w-6 bg-primary/70" />
               <p className="font-mono text-label uppercase text-fg-subtle">{col.title}</p>
               <ul className="flex flex-col gap-1">
                 {col.links.map((l) => (

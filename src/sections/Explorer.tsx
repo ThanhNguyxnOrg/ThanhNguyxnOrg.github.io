@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SearchX, X } from 'lucide-react';
 import { Button, EmptyState, FilterGroup, SearchField, SectionHeader, Tag, ToggleChip } from '../components';
 import type { FullProject } from '../lib/projects';
@@ -6,12 +6,15 @@ import { ProjectActions, ProjectVisual } from '../site/ProjectBits';
 
 type Sort = 'default' | 'az';
 
+const PAGE = 8;
+
 export default function Explorer({ projects }: { projects: FullProject[] }) {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('all');
   const [tags, setTags] = useState<string[]>([]);
   const [sort, setSort] = useState<Sort>('default');
   const [showAllTags, setShowAllTags] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(PAGE);
 
   const categories = useMemo(() => [...new Set(projects.map((p) => p.category))], [projects]);
   const tagCounts = useMemo(() => {
@@ -37,7 +40,11 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
     ...(category !== 'all' ? [{ key: 'c', label: category, clear: () => setCategory('all') }] : []),
     ...tags.map((t) => ({ key: `t-${t}`, label: `#${t}`, clear: () => setTags((s) => s.filter((x) => x !== t)) })),
   ];
-  const reset = () => { setQuery(''); setCategory('all'); setTags([]); setSort('default'); setShowAllTags(false); };
+  const reset = () => { setQuery(''); setCategory('all'); setTags([]); setSort('default'); setShowAllTags(false); setVisibleCount(PAGE); };
+
+  useEffect(() => {
+    setVisibleCount(PAGE);
+  }, [query, category, tags, sort]);
 
   return (
     <section id="archive" aria-labelledby="archive-title" className="relative scroll-mt-20 border-t border-border">
@@ -94,8 +101,9 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
             {results.length === 0 ? (
               <EmptyState icon={<SearchX />} title="Nothing in the lab matches" description="Try a different term or remove a filter." action={<Button variant="secondary" size="sm" onClick={reset}>Reset filters</Button>} />
             ) : (
-              <ol className="flex flex-col divide-y divide-border">
-                {results.map((p) => (
+              <>
+                <ol className="flex flex-col divide-y divide-border">
+                  {results.slice(0, visibleCount).map((p) => (
                   <li key={p.name} className="group grid gap-5 py-6 sm:grid-cols-[8rem_1fr] md:gap-8">
                     <ProjectVisual title={p.name} glyph={{ pattern: p.pattern, accent: p.accent }} image={p.logo ?? p.image} compact label={false} className="hidden aspect-square overflow-hidden rounded-md sm:block" />
                     <div className="flex flex-col gap-3">
@@ -105,8 +113,20 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
                       <div className="pt-1"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
                     </div>
                   </li>
-                ))}
-              </ol>
+                  ))}
+                </ol>
+                {results.length > PAGE && (
+                  <div className="pt-2">
+                    {visibleCount >= results.length ? (
+                      <Button variant="secondary" size="sm" onClick={() => setVisibleCount(PAGE)}>Show fewer</Button>
+                    ) : (
+                      <Button variant="secondary" size="sm" onClick={() => setVisibleCount((v) => v + PAGE)}>
+                        Show all {results.length} projects
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>

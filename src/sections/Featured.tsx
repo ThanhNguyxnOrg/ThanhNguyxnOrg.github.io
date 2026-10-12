@@ -54,7 +54,7 @@ function Poster({ p }: { p: FullProject }) {
       <ProjectVisual title={v.title} glyph={v.glyph} image={p.image} className="aspect-[2/1] overflow-hidden rounded-lg border border-border" />
       <p className="text-body text-fg-muted">{v.summary}</p>
       <Tags technologies={v.technologies} />
-      <div className="mt-auto"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
+      <div className="mt-auto border-t border-border pt-5"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
     </article>
   );
 }
@@ -69,7 +69,7 @@ function Strip({ p }: { p: FullProject }) {
       <h3 className="font-display text-display-lg font-bold text-fg">{v.title}</h3>
       <p className="text-body text-fg-muted">{v.summary}</p>
       <Tags technologies={v.technologies} />
-      <div className="mt-auto pt-2"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
+      <div className="mt-auto border-t border-border pt-5"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
     </article>
   );
 }

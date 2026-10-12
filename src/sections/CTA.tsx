@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react';
 /** Closing band: support tiers plus the two actions that matter. One per page. */
 export default function CTA() {
   return (
-    <GlowSection className="cta-notch mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
+    <GlowSection className="cta-notch outline outline-1 outline-[#f59e0b]/40 outline-offset-8 md:outline-offset-12 mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
       <CTASection
         title="Use it. Fork it. Make it better."
         description="Personal workspace, best effort. Active work gets priority review; archives may not update. Start with an issue."

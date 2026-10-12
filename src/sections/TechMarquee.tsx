@@ -23,7 +23,7 @@ export default function TechMarquee() {
       </div>
     );
   return (
-    <div className="overflow-hidden border-b border-border" role="presentation">
+    <div className="overflow-hidden border-b border-border mask-x-from-85% mask-x-to-95%" role="presentation">
       <div className="marquee-track flex w-max py-4 motion-reduce:[animation:none]">
         {row(false)}
         {row(true)}

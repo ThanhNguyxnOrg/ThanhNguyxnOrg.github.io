@@ -78,7 +78,7 @@ export default function SiteNav({
         />
       </nav>
       <div id={panelId} hidden={!open} className="border-t border-border bg-bg md:hidden">
-        <ul className="flex flex-col px-5 py-4">
+        <ul className="flex flex-col divide-y divide-border px-5 py-4">
           {items.map((item) => (
             <li key={item.href}>
               <a
@@ -87,6 +87,7 @@ export default function SiteNav({
                 onClick={() => setOpen(false)}
                 className="flex items-baseline gap-4 rounded-sm py-3 font-display text-display-md font-semibold text-fg-soft transition-ui hover:text-fg focus-ring aria-[current=page]:text-fg"
               >
+                {item.href === currentHref && <span aria-hidden className="w-0.5 self-stretch bg-primary" />}
                 {item.label}
               </a>
             </li>

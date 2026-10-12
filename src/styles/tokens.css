@@ -215,6 +215,11 @@
     margin-inline: 0.75rem;
     color: rgb(245 158 11 / 0.55);
   }
+  .principle-body::after {
+    content: " ∎";
+    color: rgb(245 158 11 / 0.6);
+    font-size: 0.8em;
+  }
 }
 
 @utility divider-orn {  border: none;
