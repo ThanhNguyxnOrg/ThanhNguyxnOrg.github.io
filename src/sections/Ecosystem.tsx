@@ -25,7 +25,7 @@ export default function Ecosystem({ resources, fetchedAt }: { resources: EcoReso
         <hr className="divider-orn lg:col-span-12" data-glyph="+" />
         <div className="flex flex-col gap-8 lg:sticky lg:top-24 lg:col-span-5 lg:self-start">
           <SectionHeader
-            className="lg:grid-cols-1"
+            stacked
             title={<span id="eco-title">Where the code lives.</span>}
             description="Repositories, packages, people and resources. Every number below was verified."
           />

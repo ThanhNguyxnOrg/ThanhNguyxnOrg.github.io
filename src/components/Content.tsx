@@ -11,21 +11,23 @@ export function SectionHeader({
   description,
   action,
   as: H = 'h2',
+  stacked = false,
   className,
 }: {
   title: ReactNode;
   description?: ReactNode;
   action?: ReactNode;
   as?: 'h1' | 'h2' | 'h3';
+  stacked?: boolean;
   className?: string;
 }) {
   return (
-    <header className={clsx('grid gap-6 lg:grid-cols-12 lg:items-end', className)}>
-      <div className="flex flex-col gap-4 lg:col-span-8">
+    <header className={clsx('grid gap-6', stacked ? 'grid-cols-1' : 'lg:grid-cols-12 lg:items-end', className)}>
+      <div className={clsx('flex flex-col gap-4', !stacked && 'lg:col-span-8')}>
         <H className="font-display text-display-xl font-semibold text-balance text-fg">{title}</H>
       </div>
       {(description || action) && (
-        <div className="flex flex-col items-start gap-5 lg:col-span-4">
+        <div className={clsx('flex flex-col items-start gap-5', !stacked && 'lg:col-span-4')}>
           {description && <p className="max-w-measure text-body-lg text-fg-muted">{description}</p>}
           {action}
         </div>
