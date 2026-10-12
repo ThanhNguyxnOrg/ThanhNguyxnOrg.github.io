@@ -1,0 +1,56 @@
+﻿---
+import { getCollection, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Philosophy from '../sections/Philosophy';
+import Ecosystem from '../sections/Ecosystem';
+import CTA from '../sections/CTA';
+import { loadSiteData } from '../lib/site-data';
+
+const { baked, resources } = await loadSiteData();
+const docs = await getCollection('docs');
+const doc = (slug: string) => docs.find((d) => d.id.replace(/\.md$/, '') === slug);
+const migrationEntry = doc('migration');
+const stackEntry = doc('stack');
+if (!migrationEntry || !stackEntry) throw new Error('missing docs entries');
+const Migration = (await render(migrationEntry)).Content;
+const Stack = (await render(stackEntry)).Content;
+
+const langCounts = new Map<string, number>();
+for (const r of baked.repos) langCounts.set(r.language, (langCounts.get(r.language) ?? 0) + 1);
+const langs = [...langCounts.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<Layout
+  title="About — ThanhNguyxnOrg"
+  description="Principles, migration notes, and the live tech stack behind ThanhNguyxnOrg."
+  currentPath="/about"
+>
+  <Philosophy />
+  <section aria-labelledby="migration-title" class="scroll-mt-20 border-t border-border">
+    <div class="mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
+      <div class="docs-prose max-w-reading">
+        <Migration />
+      </div>
+    </div>
+  </section>
+  <section aria-labelledby="stack-title" class="scroll-mt-20 border-t border-border">
+    <div class="mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
+      <h2 id="stack-title" class="font-display text-display-xl font-semibold text-balance text-fg">The stack, live.</h2>
+      <ul class="mt-8 flex flex-wrap gap-2" aria-label="Languages by repository count">
+        {langs.map(([lang, n]) => (
+          <li class="rounded-pill border border-border-strong px-3 py-1.5 font-mono text-label uppercase text-fg-muted tabular">
+            {lang} <span class="text-primary-text">{n}</span>
+          </li>
+        ))}
+      </ul>
+      <div class="docs-prose mt-10 max-w-reading">
+        <Stack />
+      </div>
+    </div>
+  </section>
+  <Ecosystem client:visible resources={resources} fetchedAt={baked.fetchedAt} />
+  <div id="support" class="scroll-mt-20 border-t border-border">
+    <CTA client:visible />
+  </div>
+</Layout>
+

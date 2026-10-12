@@ -19,4 +19,12 @@ const repos = defineCollection({
   schema: RepoEntrySchema,
 });
 
-export const collections = { repos, timeline };
+const docs = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/docs" }),
+  schema: z.object({
+    title: z.string().min(1).max(80),
+    origin: z.string().min(1),
+  }),
+});
+
+export const collections = { repos, timeline, docs };
