@@ -16,6 +16,12 @@ describe("brand images", () => {
     }
     assert.ok(checked >= 16, `expected 16 images, checked ${checked}`);
   });
+  it("uses the fresh org logo and icons", () => {
+    const logo = readFileSync("public/logo.png");
+    assert.ok(logo.length > 100000, "logo is the new artwork");
+    assert.ok(existsSync("public/favicon.ico"), "favicon exists");
+    assert.ok(existsSync("public/apple-touch-icon.png"), "touch icon exists");
+  });
   it("uses the org logo for the .github entry", () => {
     const text = readFileSync("src/content/repos/github.md", "utf-8");
     assert.ok(text.includes('image: "/logo.png"'), "org logo");

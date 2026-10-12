@@ -13,7 +13,7 @@ export type JourneyStop = {
 };
 
 const ORG_URL = 'https://github.com/ThanhNguyxnOrg';
-const ORG_BOARD = '/brand/org-github.png';
+const ORG_BOARD = '/brand/org-github.jpg';
 
 /** Second-life journey: dated stops left, sticky repo panel right. Dates are the sequence. */
 export default function Journey({

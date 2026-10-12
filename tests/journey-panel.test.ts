@@ -11,8 +11,8 @@ describe("journey panel", () => {
   });
   it("falls back to the org board for untagged stops", () => {
     const src = readFileSync("src/sections/Journey.tsx", "utf-8");
-    assert.ok(src.includes("/brand/org-github.png"), "org board fallback");
-    assert.ok(existsSync("public/brand/org-github.png"), "board file exists");
+    assert.ok(src.includes("/brand/org-github.jpg"), "org board fallback");
+    assert.ok(existsSync("public/brand/org-github.jpg"), "board file exists");
   });
   it("passes projects for panel lookup", () => {
     const index = readFileSync("src/pages/index.astro", "utf-8");
