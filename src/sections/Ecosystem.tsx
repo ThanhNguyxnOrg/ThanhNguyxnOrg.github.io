@@ -3,7 +3,7 @@ import { SectionHeader } from '../components';
 import CopyButton from '../components/CopyButton';
 
 export type EcoResource = {
-  kind: 'Organization' | 'Package' | 'People' | 'Resource';
+  kind: 'Organization' | 'Package' | 'People' | 'Resource' | 'Bot';
   label: string;
   description: string;
   url: string | null;
