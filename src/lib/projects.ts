@@ -27,6 +27,7 @@ export const RepoEntrySchema = z.object({
   accent: z.enum(["primary", "secondary", "highlight"]),
   pattern: z.enum(["orbit", "grid", "stack", "wave"]),
   image: z.string().startsWith("/").optional(),
+  logo: z.string().startsWith("/").optional(),
 });
 
 export type RepoEntry = z.infer<typeof RepoEntrySchema>;
@@ -37,6 +38,7 @@ export type FullProject = BakedRepo & {
   accent: "primary" | "secondary" | "highlight";
   pattern: "orbit" | "grid" | "stack" | "wave";
   image: string | null;
+  logo: string | null;
 };
 
 /**
@@ -79,6 +81,7 @@ export function joinProjects(
       accent: p.accent,
       pattern: p.pattern,
       image: p.image ?? null,
+      logo: p.logo ?? null,
     });
   }
   for (const b of baked.repos) {

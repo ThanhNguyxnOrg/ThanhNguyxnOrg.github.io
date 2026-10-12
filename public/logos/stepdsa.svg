@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 56" fill="none">
+  <defs>
+    <linearGradient id="logoPillar1" x1="0" y1="30" x2="0" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="logoPillar2" x1="16" y1="16" x2="16" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#0891B2" />
+    </linearGradient>
+    <linearGradient id="logoPillar3" x1="32" y1="2" x2="52" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left Monolithic Stepped Glyph (52x56 tight bounds) -->
+  <g id="brand-glyph">
+    <path d="M 0 30 L 14 30 L 14 56 L 0 56 Z" fill="url(#logoPillar1)" />
+    <path d="M 18 16 L 32 16 L 32 56 L 18 56 Z" fill="url(#logoPillar2)" />
+    <path d="M 36 2 L 54 20 L 54 56 L 36 56 Z" fill="url(#logoPillar3)" />
+    <!-- Algorithmic Precision Cut -->
+    <path d="M 0 28 L 18 14 L 36 0 L 54 18" stroke="#0B0F19" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 0 28 L 18 14 L 36 0 L 54 18" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9" />
+  </g>
+
+  <!-- Brand Typography -->
+  <g transform="translate(70, 0)">
+    <text x="0" y="34" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-weight="800" font-size="32" fill="#F8FAFC" letter-spacing="-0.8">
+      Step<tspan fill="#10B981">DSA</tspan>
+    </text>
+    <text x="1.5" y="50" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="9" fill="#94A3B8" letter-spacing="2.6">
+      TIME-TRAVEL ENGINE
+    </text>
+  </g>
+</svg>

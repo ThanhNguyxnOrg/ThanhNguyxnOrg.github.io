@@ -20,6 +20,20 @@ describe("brand images", () => {
     const text = readFileSync("src/content/repos/github.md", "utf-8");
     assert.ok(text.includes('image: "/logo.png"'), "org logo");
   });
+  it("explorer prefers logos with board fallback", () => {
+    const ex = readFileSync("src/sections/Explorer.tsx", "utf-8");
+    assert.ok(ex.includes("p.logo ?? p.image"), "logo first, board fallback");
+    let logos = 0;
+    for (const f of readdirSync("src/content/repos")) {
+      if (!f.endsWith(".md")) continue;
+      const text = readFileSync(`src/content/repos/${f}`, "utf-8");
+      const m = text.match(/^logo:\s*"([^"]+)"/m);
+      if (!m) continue;
+      assert.ok(existsSync(`public${m[1]}`), `missing ${m[1]} for ${f}`);
+      logos += 1;
+    }
+    assert.ok(logos >= 11, `expected 11 logos, found ${logos}`);
+  });
   it("shows whole boards in compact thumbs", () => {
     const bits = readFileSync("src/site/ProjectBits.tsx", "utf-8");
     assert.ok(bits.includes("object-contain"), "contain for thumbs");
