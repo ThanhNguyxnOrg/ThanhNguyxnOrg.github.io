@@ -23,7 +23,7 @@ export function ProjectVisual({
   label?: boolean;
 }) {
   return (
-    <div className={clsx('group relative', image && 'image-frame', className)}>
+    <div className={clsx('group relative', image && !compact && 'image-frame', className)}>
       {image ? (
         <>
           <img

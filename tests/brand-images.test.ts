@@ -34,6 +34,12 @@ describe("brand images", () => {
     }
     assert.ok(logos >= 15, `expected 15 logos, found ${logos}`);
   });
+  it("keeps compact thumbs frameless", () => {
+    const bits = readFileSync("src/site/ProjectBits.tsx", "utf-8");
+    assert.ok(bits.includes("!compact && 'image-frame'"), "no glow ring on thumbs");
+    const ex = readFileSync("src/sections/Explorer.tsx", "utf-8");
+    assert.ok(!ex.includes("rounded-md border border-border"), "no thumb border");
+  });
   it("shows whole boards in compact thumbs", () => {
     const bits = readFileSync("src/site/ProjectBits.tsx", "utf-8");
     assert.ok(bits.includes("object-contain"), "contain for thumbs");
