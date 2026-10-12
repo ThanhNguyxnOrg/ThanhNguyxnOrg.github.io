@@ -16,3 +16,10 @@ describe("projects page", () => {
     assert.ok(readFileSync("src/sections/Explorer.tsx", "utf-8").includes("previewHref"));
   });
 });
+describe("journey page", () => {
+  it("renders full timeline on /journey and teaser on home", async () => {
+    const { readFileSync } = await import("node:fs");
+    assert.ok(readFileSync("src/pages/journey.astro", "utf-8").includes("<Journey"));
+    assert.ok(readFileSync("src/sections/Journey.tsx", "utf-8").includes("limit"));
+  });
+});

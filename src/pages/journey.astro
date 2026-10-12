@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Journey from '../sections/Journey';
+import CTA from '../sections/CTA';
+import { loadSiteData } from '../lib/site-data';
+
+const { baked, projects, stops } = await loadSiteData();
+---
+
+<Layout
+  title="Journey — ThanhNguyxnOrg"
+  description="Where each ThanhNguyxnOrg project came from, and what it became."
+  currentPath="/journey"
+>
+  <Journey client:visible stops={stops} repoCount={baked.totals.repos} foundedAt={baked.foundedAt ?? '2026-04-09'} projects={projects} />
+  <div id="support" class="scroll-mt-20 border-t border-border">
+    <CTA client:visible />
+  </div>
+</Layout>

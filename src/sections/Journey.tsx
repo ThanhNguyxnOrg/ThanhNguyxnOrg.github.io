@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import { Reveal, SectionHeader, Timeline, TimelineItem } from '../components';
+import { Button, Reveal, SectionHeader, Timeline, TimelineItem } from '../components';
 import TimelineBeam from './TimelineBeam';
 import type { FullProject } from '../lib/projects';
 
@@ -21,13 +21,16 @@ export default function Journey({
   repoCount,
   foundedAt,
   projects,
+  limit,
 }: {
   stops: JourneyStop[];
   repoCount: number;
   foundedAt: string;
   projects: FullProject[];
+  limit?: number;
 }) {
-  const [active, setActive] = useState(() => Math.max(0, stops.findIndex((s) => s.current)));
+  const shown = limit ? stops.slice(0, limit) : stops;
+  const [active, setActive] = useState(() => Math.max(0, shown.findIndex((s) => s.current)));
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -44,9 +47,9 @@ export default function Journey({
     );
     items.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, [stops.length]);
+  }, [shown.length]);
 
-  const stop = stops[active] ?? stops[0];
+  const stop = shown[active] ?? shown[0];
   const tag = stop?.tags?.[0];
   const project = tag ? projects.find((p) => p.name.toLowerCase() === tag.toLowerCase()) : undefined;
   const panel = project
@@ -64,7 +67,7 @@ export default function Journey({
         <div className="mt-14 grid gap-10 lg:grid-cols-12">
           <Reveal className="max-w-reading lg:col-span-7">
             <Timeline>
-              {stops.map((s, i) => (
+              {shown.map((s, i) => (
                 <div data-reveal data-stop={i} key={`${s.date}-${s.title}`}>
                   <TimelineItem date={s.date} title={s.title} description={s.description.replace('{count}', String(repoCount)).replace('{founded}', foundedAt)} tags={s.tags} current={s.current} />
                 </div>
@@ -88,6 +91,11 @@ export default function Journey({
             </div>
           </aside>
         </div>
+        {limit && stops.length > limit && (
+          <div className="mt-10">
+            <Button href="/journey" size="lg" variant="secondary">Full journey</Button>
+          </div>
+        )}
       </div>
     </section>
   );
