@@ -78,7 +78,7 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
             </div>
           </aside>
 
-          <div className="flex min-w-0 flex-col gap-5 lg:col-span-8">
+          <div className="flex min-w-0 flex-col gap-5 [scrollbar-gutter:stable] lg:col-span-8">
             <div className="flex min-h-11 flex-wrap items-center gap-2 border-b border-border pb-4">
               <span className="mr-2 font-mono text-label uppercase text-fg-muted" aria-live="polite">
                 {results.length} of {projects.length} projects

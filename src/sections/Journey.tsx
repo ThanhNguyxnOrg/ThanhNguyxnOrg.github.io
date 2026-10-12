@@ -15,6 +15,7 @@ export default function Journey({ stops, repoCount }: { stops: JourneyStop[]; re
     <section id="journey" aria-labelledby="journey-title" className="scroll-mt-20 border-t border-border">
       <div className="relative mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
         <TimelineBeam />
+        <div aria-hidden className="ruler-ticks absolute inset-y-0 right-0 hidden w-14 mask-y-from-70% lg:block" />
         <SectionHeader
           title={<span id="journey-title">Second lives.</span>}
           description="Where each project came from, and what it became. Thin histories stay thin: nothing here is invented."

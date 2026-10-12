@@ -15,7 +15,7 @@ export default function Philosophy() {
       <div className="relative mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
         <hr className="divider-orn mb-14" data-glyph="◆" />
         <SectionHeader title={<span id="about-title">How the practice works.</span>} description="TNORG is not tied to one product category. These are the principles every project follows." />
-        <Reveal as="ol" stagger="base" className="mt-14 grid border-t border-border md:grid-cols-2 lg:grid-cols-4">
+        <Reveal as="ol" stagger="base" className="principles mt-14 grid border-t border-border md:grid-cols-2 lg:grid-cols-4">
           {principles.map((p, i) => (
             <li data-reveal key={p.verb} className={`relative flex flex-col gap-4 border-b border-border py-8 md:px-6 lg:border-b-0${i % 2 === 0 ? ' md:border-r lg:border-r' : ''}${i === 1 ? ' lg:border-r' : ''}${i === 0 ? ' md:pl-0' : ''}`}>
               <span className={`font-display text-display-lg font-bold ${p.tone}`}>{p.verb}</span>

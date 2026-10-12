@@ -72,12 +72,15 @@ export default function SiteFooter({
       <div className="border-t border-border">
         <div className="mx-auto flex w-full max-w-page flex-col justify-between gap-2 px-5 py-6 font-mono text-micro uppercase text-fg-subtle sm:flex-row md:px-8 lg:px-12">
           <span>{legal}</span>
-          <span>
-            Crew <a href="https://github.com/RealThanhNguyxn" target="_blank" rel="noopener noreferrer" className="underline decoration-border-strong underline-offset-4 hover:text-fg focus-ring">RealThanhNguyxn</a>
-            {' + '}
-            <a href="https://github.com/ThanhNguyxn07" target="_blank" rel="noopener noreferrer" className="underline decoration-border-strong underline-offset-4 hover:text-fg focus-ring">ThanhNguyxn07</a>
-            {' · shipped by ThanhNguyxnAgent'}
-          </span>
+          <ul className="legal flex flex-wrap items-center">
+            <li>
+              Crew <a href="https://github.com/RealThanhNguyxn" target="_blank" rel="noopener noreferrer" className="underline decoration-border-strong underline-offset-4 hover:text-fg focus-ring">RealThanhNguyxn</a>
+            </li>
+            <li>
+              <a href="https://github.com/ThanhNguyxn07" target="_blank" rel="noopener noreferrer" className="underline decoration-border-strong underline-offset-4 hover:text-fg focus-ring">ThanhNguyxn07</a>
+            </li>
+            <li>shipped by ThanhNguyxnAgent</li>
+          </ul>
           <span>Built in the open</span>
         </div>
       </div>
