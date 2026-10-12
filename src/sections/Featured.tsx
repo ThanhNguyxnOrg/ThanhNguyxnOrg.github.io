@@ -35,7 +35,7 @@ function Tags({ technologies }: { technologies: string[] }) {
 function Poster({ p }: { p: FullProject }) {
   const v = viewOf(p);
   return (
-    <article className="relative flex h-full flex-col gap-6 overflow-hidden rounded-xl border border-border bg-surface p-6 md:p-8">
+    <article className="card-ticks relative flex h-full flex-col gap-6 overflow-hidden rounded-xl border border-border bg-surface p-6 md:p-8">
       <MetaLabel>{v.category}</MetaLabel>
       <h3 className="font-display text-display-lg font-bold text-fg">{v.title}</h3>
       <ProjectVisual title={v.title} glyph={v.glyph} className="aspect-[4/3] overflow-hidden rounded-lg border border-border" />
@@ -78,7 +78,7 @@ export default function Featured({ projects }: { projects: FullProject[] }) {
         <Reveal className="mt-14 flex flex-col gap-6" stagger="loose">
           <div data-reveal>
             <TiltCard max={7}>
-            <article className="border-gold-hover grid overflow-hidden rounded-xl border bg-surface lg:grid-cols-12">
+            <article className="border-gold-hover card-ticks grid overflow-hidden rounded-xl border bg-surface lg:grid-cols-12">
               <ProjectVisual title={lead.name} glyph={{ pattern: lead.pattern, accent: lead.accent }} className="min-h-72 md:min-h-96 lg:col-span-7" />
               <div className="flex flex-col gap-6 p-6 md:p-10 lg:col-span-5">
                 <MetaLabel>{lead.category}</MetaLabel>

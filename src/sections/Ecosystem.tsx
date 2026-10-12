@@ -12,6 +12,7 @@ export default function Ecosystem({ resources, fetchedAt }: { resources: EcoReso
   return (
     <section id="packages" aria-labelledby="eco-title" className="scroll-mt-20 border-t border-border">
       <div className="mx-auto grid w-full max-w-page gap-12 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12 lg:px-12">
+        <hr className="divider-orn lg:col-span-12" data-glyph="+" />
         <div className="flex flex-col gap-8 lg:col-span-5">
           <SectionHeader
             className="lg:grid-cols-1"

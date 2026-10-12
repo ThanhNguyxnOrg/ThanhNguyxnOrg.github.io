@@ -10,8 +10,10 @@ const principles = [
 /** Principles of the practice, not a dated history. */
 export default function Philosophy() {
   return (
-    <section id="about" aria-labelledby="about-title" className="scroll-mt-20 border-t border-border bg-surface/40">
-      <div className="mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
+    <section id="about" aria-labelledby="about-title" className="relative scroll-mt-20 border-t border-border bg-surface/40">
+      <div aria-hidden className="bg-blueprint-fine absolute inset-0 mask-y-from-70%"></div>
+      <div className="relative mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
+        <hr className="divider-orn mb-14" data-glyph="◆" />
         <SectionHeader title={<span id="about-title">How the practice works.</span>} description="TNORG is not tied to one product category. These are the principles every project follows." />
         <Reveal as="ol" stagger="base" className="mt-14 grid border-t border-border md:grid-cols-2 lg:grid-cols-4">
           {principles.map((p, i) => (

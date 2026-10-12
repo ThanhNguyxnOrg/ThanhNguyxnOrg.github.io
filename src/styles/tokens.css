@@ -172,6 +172,58 @@
   background-size: 48px 48px;
 }
 
+@utility bg-blueprint-fine {
+  background-image:
+    linear-gradient(to right, rgb(245 158 11 / 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(245 158 11 / 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+@utility bg-dots-gold {
+  background-image: radial-gradient(rgb(245 158 11 / 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+@utility divider-orn {
+  border: none;
+  border-top: 1px solid rgb(245 158 11 / 0.25);
+  overflow: visible;
+  text-align: center;
+  &::after {
+    content: attr(data-glyph);
+    position: relative;
+    top: -0.7em;
+    padding: 0 12px;
+    background: var(--color-bg);
+    color: rgb(245 158 11 / 0.6);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+}
+
+@utility card-ticks {
+  position: relative;
+  &::before,
+  &::after {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1;
+    color: rgb(245 158 11 / 0.4);
+    pointer-events: none;
+  }
+  &::before {
+    content: '+';
+    top: -8px;
+    left: -6px;
+  }
+  &::after {
+    content: '+';
+    top: -8px;
+    right: -6px;
+  }
+}
+
 @utility bg-aurora {
   background:
     radial-gradient(60% 50% at 15% 0%, rgb(245 158 11 / 0.16), transparent 70%),

@@ -40,8 +40,9 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
   const reset = () => { setQuery(''); setCategory('all'); setTags([]); setSort('default'); setShowAllTags(false); };
 
   return (
-    <section id="archive" aria-labelledby="archive-title" className="scroll-mt-20 border-t border-border">
-      <div className="mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
+    <section id="archive" aria-labelledby="archive-title" className="relative scroll-mt-20 border-t border-border">
+      <div aria-hidden className="bg-dots-gold absolute inset-0 mask-y-from-70%"></div>
+      <div className="relative mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
         <SectionHeader title={<span id="archive-title">The full index.</span>} description="Search and filter every project record. Same verified data source as the featured section." />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-12">
