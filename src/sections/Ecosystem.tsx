@@ -23,11 +23,11 @@ export default function Ecosystem({ resources, fetchedAt }: { resources: EcoReso
     <section id="packages" aria-labelledby="eco-title" className="scroll-mt-20 border-t border-border">
       <div className="mx-auto grid w-full max-w-page gap-12 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12 lg:px-12">
         <hr className="divider-orn lg:col-span-12" data-glyph="+" />
-        <div className="flex flex-col gap-8 lg:col-span-5">
+        <div className="flex flex-col gap-8 lg:sticky lg:top-24 lg:col-span-5 lg:self-start">
           <SectionHeader
             className="lg:grid-cols-1"
             title={<span id="eco-title">Where the code lives.</span>}
-            description="Repositories, packages, people and resources. Every number below was verified; destinations without proof stay unlinked. Releases and repository automation run through the ThanhNguyxnAgent bot."
+            description="Repositories, packages, people and resources. Every number below was verified."
           />
           <div className="flex gap-3 rounded-lg border border-dashed border-border-strong p-4">
             <Database aria-hidden className="mt-0.5 size-4 shrink-0 text-fg-subtle" />
@@ -71,7 +71,7 @@ export default function Ecosystem({ resources, fetchedAt }: { resources: EcoReso
                       </span>
                     )}
                   </span>
-                  <span className="text-body-sm text-fg-muted">{r.description}</span>
+                  <span className="text-body-sm text-fg-muted line-clamp-2">{r.description}</span>
                   {r.package && (
                     <span className="mt-1 inline-flex w-fit items-center gap-2 rounded-md border border-border bg-bg px-2 py-1">
                       <code className="font-mono text-body-sm text-fg">npm i {r.package}</code>
@@ -86,7 +86,7 @@ export default function Ecosystem({ resources, fetchedAt }: { resources: EcoReso
                 )}
               </>
             );
-            const cls = 'grid grid-cols-[2.5rem_1fr_auto] items-start gap-4 border-b border-border py-5';
+            const cls = 'grid grid-cols-[2.5rem_1fr_auto] items-start gap-4 border-b border-border py-5 transition-ui hover:shadow-[inset_2px_0_0_0_var(--color-primary)]';
             return (
               <li key={r.label}>
                 {r.url ? (
