@@ -32,7 +32,7 @@ describe("brand images", () => {
       assert.ok(existsSync(`public${m[1]}`), `missing ${m[1]} for ${f}`);
       logos += 1;
     }
-    assert.ok(logos >= 11, `expected 11 logos, found ${logos}`);
+    assert.ok(logos >= 15, `expected 15 logos, found ${logos}`);
   });
   it("shows whole boards in compact thumbs", () => {
     const bits = readFileSync("src/site/ProjectBits.tsx", "utf-8");
