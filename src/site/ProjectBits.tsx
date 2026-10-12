@@ -3,23 +3,41 @@ import { ArrowUpRight, ImageOff } from 'lucide-react';
 import { Button, GitHubMark, ProjectGlyph, type GlyphAccent, type GlyphPattern } from '../components';
 
 /**
- * Project visual. Generative glyph cover (no fake screenshots, no stock
+ * Project visual. Real brand image when the entry declares one;
+ * otherwise the generative glyph cover (no fake screenshots, no stock
  * imagery posing as UI). Labeled only where the label adds information.
  */
 export function ProjectVisual({
   title,
   glyph,
+  image = null,
   className,
   label = true,
 }: {
   title: string;
   glyph: { pattern: GlyphPattern; accent: GlyphAccent };
+  image?: string | null;
   className?: string;
   label?: boolean;
 }) {
   return (
-    <div className={clsx('group relative', className)}>
-      <ProjectGlyph pattern={glyph.pattern} accent={glyph.accent} className="absolute inset-0 transition-transform duration-[600ms] motion-safe:group-hover:scale-[1.04]" />
+    <div className={clsx('group relative', image && 'image-frame', className)}>
+      {image ? (
+        <>
+          <img
+            src={image}
+            alt=""
+            loading="lazy"
+            className="absolute inset-0 size-full object-cover transition-transform duration-[600ms] motion-safe:group-hover:scale-[1.04]"
+          />
+          <div aria-hidden className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/60 to-transparent" />
+          <span aria-hidden className="absolute bottom-3 right-3 rounded-xs bg-bg/80 px-2 py-1 font-mono text-micro uppercase text-fg-subtle backdrop-blur">
+            1280×640
+          </span>
+        </>
+      ) : (
+        <ProjectGlyph pattern={glyph.pattern} accent={glyph.accent} className="absolute inset-0" />
+      )}
       {label && (
         <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-xs bg-bg/80 px-2 py-1 font-mono text-micro uppercase text-fg-subtle backdrop-blur">
           <ImageOff aria-hidden className="size-3" /> {title}
