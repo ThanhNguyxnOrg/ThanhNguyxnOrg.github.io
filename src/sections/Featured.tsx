@@ -55,19 +55,17 @@ function Poster({ p }: { p: FullProject }) {
   );
 }
 
-/** Strip: wide, typographic, media as a narrow band on the right. */
+/** Strip: stacked like Poster (2:1 boards need full width), kept distinct by column span. */
 function Strip({ p }: { p: FullProject }) {
   const v = viewOf(p);
   return (
-    <article className="grid h-full overflow-hidden rounded-xl border border-border bg-surface md:grid-cols-5">
-      <div className="flex flex-col gap-5 p-6 md:col-span-3 md:p-8">
-        <MetaLabel>{v.category}</MetaLabel>
-        <h3 className="font-display text-display-lg font-bold text-fg">{v.title}</h3>
-        <p className="text-body text-fg-muted">{v.summary}</p>
-        <Tags technologies={v.technologies} />
-        <div className="mt-auto pt-2"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
-      </div>
-      <ProjectVisual title={v.title} glyph={v.glyph} image={p.image} className="order-first min-h-48 md:order-none md:col-span-2" />
+    <article className="flex h-full flex-col gap-5 overflow-hidden rounded-xl border border-border bg-surface p-6 md:p-8">
+      <ProjectVisual title={v.title} glyph={v.glyph} image={p.image} className="aspect-[2/1] overflow-hidden rounded-lg border border-border" />
+      <MetaLabel>{v.category}</MetaLabel>
+      <h3 className="font-display text-display-lg font-bold text-fg">{v.title}</h3>
+      <p className="text-body text-fg-muted">{v.summary}</p>
+      <Tags technologies={v.technologies} />
+      <div className="mt-auto pt-2"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
     </article>
   );
 }

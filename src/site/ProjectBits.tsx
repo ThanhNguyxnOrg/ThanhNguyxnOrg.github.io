@@ -21,9 +21,20 @@ export function ProjectVisual({
   label?: boolean;
 }) {
   return (
-    <div className={clsx('relative', className)}>
+    <div className={clsx('group relative', image && 'image-frame', className)}>
       {image ? (
-        <img src={image} alt="" loading="lazy" className="absolute inset-0 size-full object-cover" />
+        <>
+          <img
+            src={image}
+            alt=""
+            loading="lazy"
+            className="absolute inset-0 size-full object-cover transition-transform duration-[600ms] motion-safe:group-hover:scale-[1.04]"
+          />
+          <div aria-hidden className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/60 to-transparent" />
+          <span aria-hidden className="absolute bottom-3 right-3 rounded-xs bg-bg/80 px-2 py-1 font-mono text-micro uppercase text-fg-subtle backdrop-blur">
+            1280×640
+          </span>
+        </>
       ) : (
         <ProjectGlyph pattern={glyph.pattern} accent={glyph.accent} className="absolute inset-0" />
       )}

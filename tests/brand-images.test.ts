@@ -16,10 +16,14 @@ describe("brand images", () => {
     }
     assert.ok(checked >= 15, `expected 15 images, checked ${checked}`);
   });
-  it("frames match the 2:1 brand boards without cropping", () => {
-    const src = readFileSync("src/sections/Featured.tsx", "utf-8");
-    assert.ok(src.includes("aspect-[2/1]"), "frames are 2:1");
-    assert.ok(!src.includes("aspect-[4/3]"), "no 4:3 crop frames");
+  it("stacks narrow cards and decorates image frames", () => {
+    const feat = readFileSync("src/sections/Featured.tsx", "utf-8");
+    assert.ok(!feat.includes("md:col-span-2"), "no stretched side band");
+    const bits = readFileSync("src/site/ProjectBits.tsx", "utf-8");
+    assert.ok(bits.includes("from-black/60"), "scrim");
+    assert.ok(bits.includes("image-frame"), "frame glow");
+    assert.ok(bits.includes("group-hover:scale"), "hover zoom");
+    assert.ok(bits.includes("1280×640"), "format badge");
   });
   it("no hardcoded lead highlights remain", () => {
     const src = readFileSync("src/sections/Featured.tsx", "utf-8");
