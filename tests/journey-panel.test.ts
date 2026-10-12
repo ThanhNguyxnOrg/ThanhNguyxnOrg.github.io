@@ -24,9 +24,10 @@ describe("journey panel", () => {
     const index = readFileSync("src/pages/index.astro", "utf-8");
     assert.ok(index.includes("projects={projects}"), "projects wired");
   });
-  it("keeps sync stats compact without overflow", () => {
+  it("keeps sync stats to stars and forks only", () => {
     const feat = readFileSync("src/sections/Featured.tsx", "utf-8");
     assert.ok(feat.includes("grid-cols-2"), "two stats");
-    assert.ok(feat.includes("Updated"), "date on its own line");
+    assert.ok(!feat.includes("Updated"), "no date line");
+    assert.ok(!feat.includes("Since"), "no since line");
   });
 });

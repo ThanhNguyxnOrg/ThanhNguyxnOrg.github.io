@@ -18,10 +18,6 @@ function SyncStats({ p }: { p: FullProject }) {
           </div>
         ))}
       </dl>
-      <p className="mt-3 font-mono text-micro uppercase text-fg-subtle tabular">
-        Updated <span className="text-fg-soft">{p.pushedAt.slice(0, 10)}</span>
-        {' · '}Since <span className="text-fg-soft">{p.createdAt.slice(0, 10)}</span>
-      </p>
     </div>
   );
 }
@@ -89,14 +85,18 @@ export default function Featured({ projects }: { projects: FullProject[] }) {
         <Reveal className="mt-14 flex flex-col gap-6" stagger="loose">
           <div data-reveal>
             <TiltCard max={7}>
-            <article className="border-gold-hover card-ticks grid overflow-hidden rounded-xl border bg-surface lg:grid-cols-12">
-              <ProjectVisual title={lead.name} glyph={{ pattern: lead.pattern, accent: lead.accent }} image={lead.image} className="aspect-[2/1] lg:col-span-7" />
-              <div className="flex flex-col gap-6 p-6 md:p-10 lg:col-span-5">
-                <MetaLabel>{lead.category}</MetaLabel>
-                <h3 className="font-display text-display-xl font-bold text-fg">{lead.name}</h3>
-                <p className="max-w-measure text-body-lg text-fg-soft">{lead.story ?? lead.blurb}</p>
-                <SyncStats p={lead} />
-                <div className="mt-auto pt-2"><ProjectActions repoUrl={lead.repoUrl} demoUrl={lead.demoUrl} /></div>
+            <article className="border-gold-hover card-ticks overflow-hidden rounded-xl border bg-surface">
+              <ProjectVisual title={lead.name} glyph={{ pattern: lead.pattern, accent: lead.accent }} image={lead.image} className="aspect-[2/1] overflow-hidden border-b border-border" />
+              <div className="grid gap-6 p-6 md:p-10 lg:grid-cols-12">
+                <div className="flex flex-col gap-6 lg:col-span-7">
+                  <MetaLabel>{lead.category}</MetaLabel>
+                  <h3 className="font-display text-display-xl font-bold text-fg">{lead.name}</h3>
+                  <p className="max-w-measure text-body-lg text-fg-soft">{lead.story ?? lead.blurb}</p>
+                </div>
+                <div className="flex flex-col gap-6 lg:col-span-5">
+                  <SyncStats p={lead} />
+                  <div className="mt-auto pt-2"><ProjectActions repoUrl={lead.repoUrl} demoUrl={lead.demoUrl} /></div>
+                </div>
               </div>
             </article>
             </TiltCard>

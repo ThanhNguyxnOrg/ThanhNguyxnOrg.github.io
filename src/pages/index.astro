@@ -5,7 +5,6 @@ import Featured from '../sections/Featured';
 import Philosophy from '../sections/Philosophy';
 import Journey from '../sections/Journey';
 import Explorer from '../sections/Explorer';
-import Ecosystem from '../sections/Ecosystem';
 import MetricsBand from '../sections/MetricsBand';
 import TechMarquee from '../sections/TechMarquee';
 import CTA from '../sections/CTA';
@@ -39,7 +38,6 @@ const { baked, projects, stops, resources } = await loadSiteData();
   <Philosophy />
   <Journey client:visible stops={stops} repoCount={baked.totals.repos} foundedAt={baked.foundedAt ?? '2026-04-09'} projects={projects} limit={3} />
   <Explorer client:visible projects={projects} limit={4} previewHref="/projects" />
-  <Ecosystem client:visible resources={resources} fetchedAt={baked.fetchedAt} />
   <div id="support" class="scroll-mt-20 border-t border-border">
     <CTA client:visible />
   </div>

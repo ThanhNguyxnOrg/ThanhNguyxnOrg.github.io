@@ -215,6 +215,36 @@
     margin-inline: 0.75rem;
     color: rgb(245 158 11 / 0.55);
   }
+  .docs-prose > h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-display-md);
+    font-weight: 600;
+    color: var(--color-fg);
+    text-wrap: balance;
+    margin-bottom: 1rem;
+  }
+  .docs-prose > h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-fg);
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .docs-prose > p, .docs-prose > ul {
+    color: var(--color-fg-muted);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+  }
+  .docs-prose > ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+  .docs-prose blockquote {
+    border-left: 2px solid var(--color-primary);
+    padding-left: 1rem;
+    color: var(--color-fg-soft);
+    margin-bottom: 1rem;
+  }
   .principle-body::after {
     content: " ∎";
     color: rgb(245 158 11 / 0.6);
