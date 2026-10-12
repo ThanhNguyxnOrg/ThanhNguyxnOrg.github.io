@@ -9,3 +9,10 @@ describe("nav", () => {
     assert.ok(!layout.includes('href="#projects"'), "no bare anchor");
   });
 });
+describe("projects page", () => {
+  it("renders full index on /projects and teaser on home", async () => {
+    const { readFileSync } = await import("node:fs");
+    assert.ok(readFileSync("src/pages/projects.astro", "utf-8").includes("<Explorer"));
+    assert.ok(readFileSync("src/sections/Explorer.tsx", "utf-8").includes("previewHref"));
+  });
+});

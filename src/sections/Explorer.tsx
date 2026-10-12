@@ -8,7 +8,29 @@ type Sort = 'default' | 'az';
 
 const PAGE = 8;
 
-export default function Explorer({ projects }: { projects: FullProject[] }) {
+function ProjectRow({ p }: { p: FullProject }) {
+  return (
+    <li key={p.name} className="group grid gap-5 py-6 sm:grid-cols-[8rem_1fr] md:gap-8">
+      <ProjectVisual title={p.name} glyph={{ pattern: p.pattern, accent: p.accent }} image={p.logo ?? p.image} compact label={false} className="hidden aspect-square overflow-hidden rounded-md sm:block" />
+      <div className="flex flex-col gap-3">
+        <p className="font-display text-title font-semibold text-fg">{p.name}</p>
+        <p className="max-w-reading text-body-sm text-fg-muted">{p.blurb}</p>
+        {p.topics.length > 0 && <div className="flex flex-wrap gap-1.5">{p.topics.slice(0, 6).map((t) => <Tag key={t}>{t}</Tag>)}</div>}
+        <div className="pt-1"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
+      </div>
+    </li>
+  );
+}
+
+export default function Explorer({
+  projects,
+  limit,
+  previewHref,
+}: {
+  projects: FullProject[];
+  limit?: number;
+  previewHref?: string;
+}) {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('all');
   const [tags, setTags] = useState<string[]>([]);
@@ -46,12 +68,26 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
     setVisibleCount(PAGE);
   }, [query, category, tags, sort]);
 
+  const preview = limit ? [...projects].sort((a, b) => b.pushedAt.localeCompare(a.pushedAt)).slice(0, limit) : null;
+
   return (
     <section id="archive" aria-labelledby="archive-title" className="relative scroll-mt-20 border-t border-border">
       <div aria-hidden className="bg-dots-gold absolute inset-0 mask-y-from-70%"></div>
       <div className="relative mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
         <SectionHeader title={<span id="archive-title">The full index.</span>} description="Search and filter every project record. Same verified data source as the featured section." />
 
+        {preview ? (
+          <>
+            <ol className="mt-14 flex flex-col divide-y divide-border border-t border-border">
+              {preview.map((p) => <ProjectRow key={p.name} p={p} />)}
+            </ol>
+            {previewHref && (
+              <div className="mt-6">
+                <Button href={previewHref} size="lg" variant="secondary">Browse all {projects.length} projects</Button>
+              </div>
+            )}
+          </>
+        ) : (
         <div className="mt-14 grid gap-10 lg:grid-cols-12">
           <aside className="flex min-w-0 flex-col gap-8 lg:sticky lg:top-24 lg:col-span-4 lg:self-start" aria-label="Filters">
             <SearchField label="Search" value={query} onValueChange={setQuery} placeholder="Name or summary..." />
@@ -103,17 +139,7 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
             ) : (
               <>
                 <ol className="flex flex-col divide-y divide-border">
-                  {results.slice(0, visibleCount).map((p) => (
-                  <li key={p.name} className="group grid gap-5 py-6 sm:grid-cols-[8rem_1fr] md:gap-8">
-                    <ProjectVisual title={p.name} glyph={{ pattern: p.pattern, accent: p.accent }} image={p.logo ?? p.image} compact label={false} className="hidden aspect-square overflow-hidden rounded-md sm:block" />
-                    <div className="flex flex-col gap-3">
-                      <p className="font-display text-title font-semibold text-fg">{p.name}</p>
-                      <p className="max-w-reading text-body-sm text-fg-muted">{p.blurb}</p>
-                      {p.topics.length > 0 && <div className="flex flex-wrap gap-1.5">{p.topics.slice(0, 6).map((t) => <Tag key={t}>{t}</Tag>)}</div>}
-                      <div className="pt-1"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
-                    </div>
-                  </li>
-                  ))}
+                  {results.slice(0, visibleCount).map((p) => <ProjectRow key={p.name} p={p} />)}
                 </ol>
                 {results.length > PAGE && (
                   <div className="pt-2">
@@ -130,6 +156,7 @@ export default function Explorer({ projects }: { projects: FullProject[] }) {
             )}
           </div>
         </div>
+        )}
       </div>
     </section>
   );

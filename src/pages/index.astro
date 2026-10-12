@@ -38,7 +38,7 @@ const { baked, projects, stops, resources } = await loadSiteData();
   <TechMarquee />
   <Philosophy />
   <Journey client:visible stops={stops} repoCount={baked.totals.repos} foundedAt={baked.foundedAt ?? '2026-04-09'} projects={projects} />
-  <Explorer client:visible projects={projects} />
+  <Explorer client:visible projects={projects} limit={4} previewHref="/projects" />
   <Ecosystem client:visible resources={resources} fetchedAt={baked.fetchedAt} />
   <div id="support" class="scroll-mt-20 border-t border-border">
     <CTA client:visible />
