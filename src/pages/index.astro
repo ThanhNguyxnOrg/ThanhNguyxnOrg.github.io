@@ -40,8 +40,11 @@ const resources: EcoResource[] = [
   },
   ...baked.npm.map((p) => ({
     kind: 'Package' as const,
-    label: `${p.name} ${p.version}`,
-    description: `${p.description} Downloaded ${p.downloads30d} times in the last 30 days.`,
+    label: p.name,
+    version: `v${p.version}`,
+    downloads: p.downloads30d,
+    package: p.name,
+    description: p.description,
     url: `https://www.npmjs.com/package/${p.name}`,
   })),
   {
@@ -89,7 +92,7 @@ const resources: EcoResource[] = [
   <Philosophy />
   <Journey client:visible stops={stops} />
   <Explorer client:visible projects={projects} />
-  <Ecosystem resources={resources} fetchedAt={baked.fetchedAt} />
+  <Ecosystem client:visible resources={resources} fetchedAt={baked.fetchedAt} />
   <div id="support" class="scroll-mt-20 border-t border-border">
     <CTA client:visible />
   </div>
