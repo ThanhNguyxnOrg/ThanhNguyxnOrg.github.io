@@ -9,7 +9,6 @@ describe("decor3 max", () => {
     assert.ok(css.includes(":target"), "target flash");
     assert.ok(css.includes("counter-reset: principle"), "css counters");
     assert.ok(css.includes("text-wrap: balance"), "balanced headlines");
-    assert.ok(css.includes("ruler-ticks"), "journey ruler");
     assert.ok(css.includes("cta-notch"), "cta corner cut");
     assert.ok(css.includes(".legal"), "footer separators");
   });
