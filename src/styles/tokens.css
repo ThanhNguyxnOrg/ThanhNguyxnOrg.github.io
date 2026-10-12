@@ -202,26 +202,22 @@
 }
 
 @utility card-ticks {
-  position: relative;
-  &::before,
-  &::after {
-    position: absolute;
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    line-height: 1;
-    color: rgb(245 158 11 / 0.4);
-    pointer-events: none;
-  }
-  &::before {
-    content: '+';
-    top: -8px;
-    left: -6px;
-  }
-  &::after {
-    content: '+';
-    top: -8px;
-    right: -6px;
-  }
+  background-image:
+    linear-gradient(rgb(245 158 11 / 0.4), rgb(245 158 11 / 0.4)),
+    linear-gradient(rgb(245 158 11 / 0.4), rgb(245 158 11 / 0.4)),
+    linear-gradient(rgb(245 158 11 / 0.4), rgb(245 158 11 / 0.4)),
+    linear-gradient(rgb(245 158 11 / 0.4), rgb(245 158 11 / 0.4)),
+    linear-gradient(rgb(245 158 11 / 0.4), rgb(245 158 11 / 0.4)),
+    linear-gradient(rgb(245 158 11 / 0.4), rgb(245 158 11 / 0.4)),
+    linear-gradient(rgb(245 158 11 / 0.4), rgb(245 158 11 / 0.4)),
+    linear-gradient(rgb(245 158 11 / 0.4), rgb(245 158 11 / 0.4));
+  background-repeat: no-repeat;
+  background-size: 9px 1px, 1px 9px, 9px 1px, 1px 9px, 9px 1px, 1px 9px, 9px 1px, 1px 9px;
+  background-position:
+    left 10px top 14px, left 14px top 10px,
+    right 10px top 14px, right 14px top 10px,
+    left 10px bottom 14px, left 14px bottom 10px,
+    right 10px bottom 14px, right 14px bottom 10px;
 }
 
 @utility bg-aurora {
