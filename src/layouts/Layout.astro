@@ -6,9 +6,10 @@ import { SiteFooterBlock, SiteHeader } from '../components/SiteChrome';
 interface Props {
   title: string;
   description: string;
+  currentPath?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, currentPath } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
@@ -41,11 +42,12 @@ const year = new Date().getFullYear();
     </a>
     <SiteHeader
       client:load
+      currentHref={currentPath}
       items={[
-        { label: 'Projects', href: '#projects' },
-        { label: 'Journey', href: '#journey' },
-        { label: 'Packages', href: '#packages' },
-        { label: 'Support', href: '#support' },
+        { label: 'Projects', href: '/projects' },
+        { label: 'Journey', href: '/journey' },
+        { label: 'About', href: '/about' },
+        { label: 'Support', href: '/#support' },
       ]}
     />
     <main id="main">
@@ -62,9 +64,10 @@ const year = new Date().getFullYear();
         {
           title: 'Site',
           links: [
-            { label: 'Projects', href: '#projects' },
-            { label: 'Journey', href: '#journey' },
-            { label: 'Packages', href: '#packages' },
+            { label: 'Projects', href: '/projects' },
+            { label: 'Journey', href: '/journey' },
+            { label: 'About', href: '/about' },
+            { label: 'Support', href: '/#support' },
           ],
         },
         {

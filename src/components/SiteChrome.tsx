@@ -25,8 +25,8 @@ function GitHubAction() {
 }
 
 /** Interactive header island (mobile menu needs JS). Server-renders its HTML. */
-export function SiteHeader({ items }: { items: NavItem[] }) {
-  return <SiteNav items={items} action={<GitHubAction />} />;
+export function SiteHeader({ items, currentHref }: { items: NavItem[]; currentHref?: string }) {
+  return <SiteNav items={items} currentHref={currentHref} action={<GitHubAction />} />;
 }
 
 /** Static footer. No client directive: zero JavaScript. */
