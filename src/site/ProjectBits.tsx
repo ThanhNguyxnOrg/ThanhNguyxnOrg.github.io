@@ -11,12 +11,14 @@ export function ProjectVisual({
   title,
   glyph,
   image = null,
+  compact = false,
   className,
   label = true,
 }: {
   title: string;
   glyph: { pattern: GlyphPattern; accent: GlyphAccent };
   image?: string | null;
+  compact?: boolean;
   className?: string;
   label?: boolean;
 }) {
@@ -28,12 +30,17 @@ export function ProjectVisual({
             src={image}
             alt=""
             loading="lazy"
-            className="absolute inset-0 size-full object-cover transition-transform duration-[600ms] motion-safe:group-hover:scale-[1.04]"
+            className={clsx(
+              'absolute inset-0 size-full transition-transform duration-[600ms] motion-safe:group-hover:scale-[1.04]',
+              compact ? 'bg-surface object-contain' : 'object-cover',
+            )}
           />
           <div aria-hidden className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/60 to-transparent" />
-          <span aria-hidden className="absolute bottom-3 right-3 rounded-xs bg-bg/80 px-2 py-1 font-mono text-micro uppercase text-fg-subtle backdrop-blur">
-            1280×640
-          </span>
+          {!compact && (
+            <span aria-hidden className="absolute bottom-3 right-3 rounded-xs bg-bg/80 px-2 py-1 font-mono text-micro uppercase text-fg-subtle backdrop-blur">
+              1280×640
+            </span>
+          )}
         </>
       ) : (
         <ProjectGlyph pattern={glyph.pattern} accent={glyph.accent} className="absolute inset-0" />

@@ -16,6 +16,11 @@ describe("brand images", () => {
     }
     assert.ok(checked >= 15, `expected 15 images, checked ${checked}`);
   });
+  it("shows whole boards in compact thumbs", () => {
+    const bits = readFileSync("src/site/ProjectBits.tsx", "utf-8");
+    assert.ok(bits.includes("object-contain"), "contain for thumbs");
+    assert.ok(bits.includes("compact"), "compact flag");
+  });
   it("stacks narrow cards and decorates image frames", () => {
     const feat = readFileSync("src/sections/Featured.tsx", "utf-8");
     assert.ok(!feat.includes("md:col-span-2"), "no stretched side band");
