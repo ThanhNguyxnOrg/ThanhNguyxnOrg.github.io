@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import Hero from '../sections/Hero';
 import Featured from '../sections/Featured';
 import Philosophy from '../sections/Philosophy';
 import Journey from '../sections/Journey';
@@ -11,9 +10,7 @@ import MetricsBand from '../sections/MetricsBand';
 import TechMarquee from '../sections/TechMarquee';
 import CTA from '../sections/CTA';
 import { Container } from '../components';
-import { loadBaked } from '../lib/baked';
-import { joinProjects } from '../lib/projects';
-import bakedRaw from '../data/baked.json';
+import { loadSiteData } from '../lib/site-data';
 
 const baked = loadBaked(bakedRaw);
 const repoEntries = await getCollection('repos');
