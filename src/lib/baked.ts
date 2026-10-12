@@ -10,6 +10,7 @@ export const BakedRepoSchema = z.object({
   forks: z.number().int().nonnegative(),
   openIssues: z.number().int().nonnegative(),
   pushedAt: z.string(),
+  createdAt: z.string(),
   defaultBranch: z.string(),
   hasPages: z.boolean(),
   demoUrl: z.url().nullable(),

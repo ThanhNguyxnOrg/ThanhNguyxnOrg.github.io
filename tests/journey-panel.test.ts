@@ -14,6 +14,12 @@ describe("journey panel", () => {
     assert.ok(src.includes("/brand/org-github.jpg"), "org board fallback");
     assert.ok(existsSync("public/brand/org-github.jpg"), "board file exists");
   });
+  it("wires live founded date into the timeline", () => {
+    const j = readFileSync("src/sections/Journey.tsx", "utf-8");
+    assert.ok(j.includes("foundedAt"), "founded prop");
+    const index = readFileSync("src/pages/index.astro", "utf-8");
+    assert.ok(index.includes("baked.foundedAt"), "founded from baked");
+  });
   it("passes projects for panel lookup", () => {
     const index = readFileSync("src/pages/index.astro", "utf-8");
     assert.ok(index.includes("projects={projects}"), "projects wired");

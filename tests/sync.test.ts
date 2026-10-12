@@ -36,6 +36,7 @@ function repoEntry(name: string, extra: Record<string, unknown> = {}) {
     forks_count: 0,
     open_issues_count: 0,
     pushed_at: "2026-10-10T00:00:00Z",
+    created_at: "2026-04-09T00:00:00Z",
     default_branch: "main",
     has_pages: false,
     homepage: null,

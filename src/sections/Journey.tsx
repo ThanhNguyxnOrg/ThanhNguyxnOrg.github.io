@@ -19,10 +19,12 @@ const ORG_BOARD = '/brand/org-github.jpg';
 export default function Journey({
   stops,
   repoCount,
+  foundedAt,
   projects,
 }: {
   stops: JourneyStop[];
   repoCount: number;
+  foundedAt: string;
   projects: FullProject[];
 }) {
   const [active, setActive] = useState(() => Math.max(0, stops.findIndex((s) => s.current)));
@@ -64,7 +66,7 @@ export default function Journey({
             <Timeline>
               {stops.map((s, i) => (
                 <div data-reveal data-stop={i} key={`${s.date}-${s.title}`}>
-                  <TimelineItem date={s.date} title={s.title} description={s.description.replace('{count}', String(repoCount))} tags={s.tags} current={s.current} />
+                  <TimelineItem date={s.date} title={s.title} description={s.description.replace('{count}', String(repoCount)).replace('{founded}', foundedAt)} tags={s.tags} current={s.current} />
                 </div>
               ))}
             </Timeline>

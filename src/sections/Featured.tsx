@@ -20,6 +20,7 @@ function SyncStats({ p }: { p: FullProject }) {
       </dl>
       <p className="mt-3 font-mono text-micro uppercase text-fg-subtle tabular">
         Updated <span className="text-fg-soft">{p.pushedAt.slice(0, 10)}</span>
+        {' · '}Since <span className="text-fg-soft">{p.createdAt.slice(0, 10)}</span>
       </p>
     </div>
   );

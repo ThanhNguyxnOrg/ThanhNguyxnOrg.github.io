@@ -13,6 +13,7 @@ const validRepo = {
   forks: 0,
   openIssues: 0,
   pushedAt: "2026-09-21T15:15:14Z",
+  createdAt: "2026-04-09T00:00:00Z",
   defaultBranch: "main",
   hasPages: false,
   demoUrl: null,

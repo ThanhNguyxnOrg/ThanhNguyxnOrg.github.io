@@ -111,6 +111,7 @@ export async function runSync(opts: {
       forks: (r.forks_count as number) ?? 0,
       openIssues: (r.open_issues_count as number) ?? 0,
       pushedAt: r.pushed_at as string,
+      createdAt: r.created_at as string,
       defaultBranch: r.default_branch as string,
       hasPages: r.has_pages === true,
       demoUrl,
