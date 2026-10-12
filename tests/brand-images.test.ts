@@ -16,6 +16,11 @@ describe("brand images", () => {
     }
     assert.ok(checked >= 15, `expected 15 images, checked ${checked}`);
   });
+  it("frames match the 2:1 brand boards without cropping", () => {
+    const src = readFileSync("src/sections/Featured.tsx", "utf-8");
+    assert.ok(src.includes("aspect-[2/1]"), "frames are 2:1");
+    assert.ok(!src.includes("aspect-[4/3]"), "no 4:3 crop frames");
+  });
   it("no hardcoded lead highlights remain", () => {
     const src = readFileSync("src/sections/Featured.tsx", "utf-8");
     assert.ok(!src.includes("LEAD_HIGHLIGHTS"), "highlights removed");

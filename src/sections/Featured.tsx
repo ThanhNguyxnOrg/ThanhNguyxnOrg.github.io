@@ -14,7 +14,7 @@ function SyncStats({ p }: { p: FullProject }) {
       ].map((h) => (
         <div key={h.label} className="flex flex-col-reverse gap-1">
           <dt className="font-mono text-micro uppercase text-fg-subtle">{h.label}</dt>
-          <dd className="font-display text-display-md font-semibold text-fg tabular">{h.value}</dd>
+          <dd className="font-display text-display-md font-semibold text-fg tabular whitespace-nowrap">{h.value}</dd>
         </div>
       ))}
     </dl>
@@ -47,7 +47,7 @@ function Poster({ p }: { p: FullProject }) {
     <article className="card-ticks relative flex h-full flex-col gap-6 overflow-hidden rounded-xl border border-border bg-surface p-6 md:p-8">
       <MetaLabel>{v.category}</MetaLabel>
       <h3 className="font-display text-display-lg font-bold text-fg">{v.title}</h3>
-      <ProjectVisual title={v.title} glyph={v.glyph} image={p.image} className="aspect-[4/3] overflow-hidden rounded-lg border border-border" />
+      <ProjectVisual title={v.title} glyph={v.glyph} image={p.image} className="aspect-[2/1] overflow-hidden rounded-lg border border-border" />
       <p className="text-body text-fg-muted">{v.summary}</p>
       <Tags technologies={v.technologies} />
       <div className="mt-auto"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
@@ -87,7 +87,7 @@ export default function Featured({ projects }: { projects: FullProject[] }) {
           <div data-reveal>
             <TiltCard max={7}>
             <article className="border-gold-hover card-ticks grid overflow-hidden rounded-xl border bg-surface lg:grid-cols-12">
-              <ProjectVisual title={lead.name} glyph={{ pattern: lead.pattern, accent: lead.accent }} image={lead.image} className="min-h-72 md:min-h-96 lg:col-span-7" />
+              <ProjectVisual title={lead.name} glyph={{ pattern: lead.pattern, accent: lead.accent }} image={lead.image} className="aspect-[2/1] lg:col-span-7" />
               <div className="flex flex-col gap-6 p-6 md:p-10 lg:col-span-5">
                 <MetaLabel>{lead.category}</MetaLabel>
                 <h3 className="font-display text-display-xl font-bold text-fg">{lead.name}</h3>
