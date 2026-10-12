@@ -12,11 +12,11 @@ describe("ecosystem rows", () => {
     assert.ok(src.includes(".png"), "avatars");
   });
   it("links the automation bot app", () => {
-    const index = readFileSync("src/pages/index.astro", "utf-8");
-    assert.ok(index.includes("https://github.com/apps/thanhnguyxnagent"), "bot url");
+    const lib = readFileSync("src/lib/site-data.ts", "utf-8");
+    assert.ok(lib.includes("https://github.com/apps/thanhnguyxnagent"), "bot url");
   });
   it("passes package data from baked npm", () => {
-    const index = readFileSync("src/pages/index.astro", "utf-8");
-    assert.ok(index.includes("package:"), "package field");
+    const lib = readFileSync("src/lib/site-data.ts", "utf-8");
+    assert.ok(lib.includes("package:"), "package field");
   });
 });
