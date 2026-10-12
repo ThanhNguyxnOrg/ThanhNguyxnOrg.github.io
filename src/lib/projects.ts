@@ -26,7 +26,7 @@ export const RepoEntrySchema = z.object({
   category: CategorySchema,
   accent: z.enum(["primary", "secondary", "highlight"]),
   pattern: z.enum(["orbit", "grid", "stack", "wave"]),
-  image: z.string().startsWith("/brand/").optional(),
+  image: z.string().startsWith("/").optional(),
 });
 
 export type RepoEntry = z.infer<typeof RepoEntrySchema>;

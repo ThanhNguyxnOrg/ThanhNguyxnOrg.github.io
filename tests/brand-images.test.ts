@@ -14,7 +14,11 @@ describe("brand images", () => {
       assert.ok(existsSync(`public${m[1]}`), `missing ${m[1]} for ${f}`);
       checked += 1;
     }
-    assert.ok(checked >= 15, `expected 15 images, checked ${checked}`);
+    assert.ok(checked >= 16, `expected 16 images, checked ${checked}`);
+  });
+  it("uses the org logo for the .github entry", () => {
+    const text = readFileSync("src/content/repos/github.md", "utf-8");
+    assert.ok(text.includes('image: "/logo.png"'), "org logo");
   });
   it("shows whole boards in compact thumbs", () => {
     const bits = readFileSync("src/site/ProjectBits.tsx", "utf-8");
