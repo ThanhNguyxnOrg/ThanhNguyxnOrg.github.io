@@ -17,7 +17,7 @@ export default function CTA() {
             <Button size="lg" variant="ghost" href="https://github.com/ThanhNguyxnOrg" target="_blank" rel="noopener noreferrer" iconStart={<GitHubMark className="size-4" />}>
               Follow on GitHub
             </Button>
-            <Button size="lg" variant="ghost" href="#archive">
+            <Button size="lg" variant="ghost" href="/projects">
               Browse the index
             </Button>
           </>
