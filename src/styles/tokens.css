@@ -464,6 +464,25 @@
   .project-card:has(img) .project-label {
     display: none;
   }
+  .side-rail {
+    display: flex;
+    gap: 1rem;
+    align-items: stretch;
+    min-height: 22rem;
+  }
+  .side-rail-label {
+    writing-mode: vertical-rl;
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgb(245 158 11 / 0.55);
+  }
+  .side-rail-ticks {
+    width: 3.5rem;
+    background-image: repeating-linear-gradient(to bottom, rgb(245 158 11 / 0.25) 0 1px, transparent 1px 28px);
+    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+  }
 }
 
 @utility image-frame {
