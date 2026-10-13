@@ -1,2 +1,8 @@
 ﻿# SDD ledger — plan: docs/superpowers/plans/2026-10-12-multipage.md
 Pre-flight: T1 produces loadSiteData; T3/T4 consume it + teaser props defined in their own tasks; T5 consumes Ecosystem as-is; T6 consumes dist. No conflicts.
+Task 1: complete
+Task 2: complete
+Task 3: complete
+Task 4: complete
+Task 5: complete
+Task 6: complete
