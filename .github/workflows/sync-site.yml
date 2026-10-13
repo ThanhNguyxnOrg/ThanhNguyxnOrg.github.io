@@ -31,7 +31,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Validate and build
-        run: npm test && npm run build
+        run: npm run build && npm test && node scripts/check-dist.mjs
       - name: Commit on change
         run: |
           git diff --quiet src/data/baked.json && echo "no change" && exit 0
