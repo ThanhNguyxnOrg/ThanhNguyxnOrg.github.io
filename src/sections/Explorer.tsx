@@ -108,7 +108,7 @@ export default function Explorer({
                     type="button"
                     onClick={() => setShowAllTags((v) => !v)}
                     aria-expanded={showAllTags}
-                    className="self-start font-mono text-label uppercase text-fg-muted underline decoration-border-strong underline-offset-4 transition-ui hover:text-fg focus-ring"
+                    className="self-start font-mono text-label text-fg-muted underline decoration-border-strong underline-offset-4 transition-ui hover:text-fg focus-ring"
                   >
                     {showAllTags ? 'Show fewer' : `Show all ${tagCounts.length} topics`}
                   </button>

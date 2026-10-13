@@ -10,6 +10,7 @@ export function LogoMark({ className, title = 'ThanhNguyxnOrg' }: { className?: 
       src="/logo.png"
       alt=""
       title={title}
+      decoding="async"
       width={44}
       height={33}
       className={clsx('h-8 w-auto shrink-0 rounded-[8px]', className)}

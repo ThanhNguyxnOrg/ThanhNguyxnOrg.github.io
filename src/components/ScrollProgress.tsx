@@ -25,12 +25,11 @@ export default function ScrollProgress() {
     };
   }, []);
 
-  if (prefersReducedMotion()) return null;
   return (
     <div
       ref={ref}
       aria-hidden
-      className="fixed inset-x-0 top-0 z-50 h-[3px] origin-left scale-x-0 bg-gradient-to-r from-[#f59e0b] to-[#fcd34d]"
+      className="fixed inset-x-0 top-0 z-50 h-[3px] origin-left scale-x-0 bg-gradient-to-r from-[#f59e0b] to-[#fcd34d] motion-reduce:hidden"
     />
   );
 }
