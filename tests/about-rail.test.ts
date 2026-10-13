@@ -12,5 +12,8 @@ describe("about side rail", () => {
     const css = readFileSync("src/styles/tokens.css", "utf-8");
     assert.ok(css.includes("side-rail"), "rail utility");
     assert.ok(css.includes("writing-mode"), "vertical label");
+    assert.ok(css.includes("side-rail-plate"), "plate stamp");
+    assert.ok(css.includes("side-rail-ghost"), "ghost glyph");
+    assert.ok(css.includes("side-rail-meter"), "meter band");
   });
 });

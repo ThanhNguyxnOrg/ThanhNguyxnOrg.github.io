@@ -466,9 +466,46 @@
   }
   .side-rail {
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-height: 34rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    background-image:
+      linear-gradient(to right, rgb(245 158 11 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(245 158 11 / 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+    box-shadow: 0 0 0 1px rgb(245 158 11 / 0.12), 0 16px 48px -16px rgb(0 0 0 / 0.6);
+    padding: 1.25rem;
+  }
+  .side-rail-plate {
+    align-self: flex-start;
+    border: 1px solid rgb(245 158 11 / 0.4);
+    background: rgb(245 158 11 / 0.07);
+    padding: 0.5rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-primary-text);
+  }
+  .side-rail-ghost {
+    align-self: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(7rem, 9vw, 11rem);
+    line-height: 1;
+    color: rgb(245 158 11 / 0.1);
+    -webkit-text-stroke: 1px rgb(245 158 11 / 0.4);
+    user-select: none;
+  }
+  .side-rail-meter {
+    display: flex;
     gap: 1rem;
     align-items: stretch;
-    min-height: 22rem;
+    min-height: 12rem;
   }
   .side-rail-label {
     writing-mode: vertical-rl;
@@ -476,12 +513,16 @@
     font-size: var(--text-micro);
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: rgb(245 158 11 / 0.55);
+    color: rgb(245 158 11 / 0.65);
   }
   .side-rail-ticks {
-    width: 3.5rem;
-    background-image: repeating-linear-gradient(to bottom, rgb(245 158 11 / 0.25) 0 1px, transparent 1px 28px);
-    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+    flex: 1;
+    background-image:
+      linear-gradient(to right, rgb(245 158 11 / 0.5) 0 1px, transparent 1px),
+      repeating-linear-gradient(to bottom, rgb(245 158 11 / 0.45) 0 1px, transparent 1px 12px);
+    background-size: 1px 100%, auto;
+    background-repeat: no-repeat, repeat;
+    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
   }
 }
 

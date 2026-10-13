@@ -38,9 +38,13 @@ const langMax = Math.max(...langs.map(([, n]) => n));
       </div>
       </div>
       <aside aria-hidden="true" class="hidden lg:col-span-5 lg:block">
-        <div class="side-rail sticky top-32">
-          <span class="side-rail-label">Migration</span>
-          <span class="side-rail-ticks"></span>
+        <div class="side-rail card-ticks sticky top-32">
+          <span class="side-rail-plate">Migration</span>
+          <span class="side-rail-ghost">→</span>
+          <span class="side-rail-meter">
+            <span class="side-rail-label">A second life</span>
+            <span class="side-rail-ticks"></span>
+          </span>
         </div>
       </aside>
     </div>
@@ -66,9 +70,13 @@ const langMax = Math.max(...langs.map(([, n]) => n));
       </div>
       </div>
       <aside aria-hidden="true" class="hidden lg:col-span-5 lg:block">
-        <div class="side-rail sticky top-32">
-          <span class="side-rail-label">Stack</span>
-          <span class="side-rail-ticks"></span>
+        <div class="side-rail card-ticks sticky top-32">
+          <span class="side-rail-plate">Stack</span>
+          <span class="side-rail-ghost">{'{…}'}</span>
+          <span class="side-rail-meter">
+            <span class="side-rail-label">What ships</span>
+            <span class="side-rail-ticks"></span>
+          </span>
         </div>
       </aside>
     </div>
