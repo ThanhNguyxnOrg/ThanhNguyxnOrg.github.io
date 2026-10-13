@@ -31,7 +31,7 @@ export default function FilterGroup({
             aria-pressed={active}
             onClick={() => onChange(o.value)}
             className={clsx(
-              'inline-flex h-9 shrink-0 items-center gap-2 rounded-pill border px-4 text-body-sm font-medium transition-ui focus-ring',
+              'inline-flex min-h-11 shrink-0 items-center gap-2 rounded-pill border px-4 text-body-sm font-medium transition-ui focus-ring',
               active
                 ? 'border-fg bg-fg text-bg'
                 : 'border-border-strong text-fg-muted hover:border-fg-subtle hover:text-fg',
@@ -56,7 +56,7 @@ export function ToggleChip({ pressed, onPressedChange, children }: { pressed: bo
       aria-pressed={pressed}
       onClick={() => onPressedChange(!pressed)}
       className={clsx(
-        'inline-flex h-8 items-center gap-1.5 rounded-xs border px-2.5 font-mono text-label transition-ui focus-ring',
+        'inline-flex min-h-11 items-center gap-1.5 rounded-xs border px-2.5 font-mono text-label transition-ui focus-ring',
         pressed ? 'border-secondary bg-secondary/10 text-secondary' : 'border-border text-fg-muted hover:border-border-strong hover:text-fg',
       )}
     >

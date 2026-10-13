@@ -11,6 +11,8 @@ interface Props {
 
 const { title, description, currentPath } = Astro.props;
 const year = new Date().getFullYear();
+const site = 'https://thanhnguyxnorg.github.io';
+const canonical = `${site}${currentPath ?? Astro.url.pathname ?? '/'}`;
 ---
 
 <!doctype html>
@@ -20,15 +22,34 @@ const year = new Date().getFullYear();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#080b14" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="ThanhNguyxnOrg" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image" content="https://thanhnguyxnorg.github.io/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="describedby" href="/llms.txt" />
-    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://thanhnguyxnorg.github.io/og-image.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="alternate" type="text/plain" title="LLM context" href="/llms.txt" />
+    <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'ThanhNguyxnOrg',
+        url: 'https://thanhnguyxnorg.github.io',
+        logo: 'https://thanhnguyxnorg.github.io/logo.png',
+      })}
+    />
     <title>{title}</title>
   </head>
   <body>

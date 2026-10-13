@@ -30,6 +30,7 @@ export function ProjectVisual({
             src={image}
             alt=""
             loading="lazy"
+            decoding="async"
             className={clsx(
               'absolute inset-0 size-full transition-transform duration-[600ms] motion-safe:group-hover:scale-[1.04]',
               compact ? 'bg-surface object-contain' : 'object-cover',

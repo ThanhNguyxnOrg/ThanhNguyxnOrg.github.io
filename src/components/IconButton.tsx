@@ -9,7 +9,7 @@ export type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: 'sm' | 'md';
 };
 
-/** Square icon-only button. 44px touch target at `md`. */
+/** Square icon-only button. 44px touch target at every size. */
 const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
   { label, icon, variant = 'ghost', size = 'md', className, type = 'button', ...rest },
   ref,
@@ -22,7 +22,7 @@ const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconB
       title={label}
       className={clsx(
         'inline-flex shrink-0 items-center justify-center rounded-md transition-ui focus-ring disabled:pointer-events-none disabled:opacity-40 [&>svg]:size-5',
-        size === 'md' ? 'size-11' : 'size-9',
+        size === 'md' ? 'size-11' : 'size-11',
         variant === 'secondary'
           ? 'border border-border-strong bg-surface text-fg hover:border-secondary hover:text-secondary'
           : 'text-fg-muted hover:bg-surface-raised hover:text-fg',

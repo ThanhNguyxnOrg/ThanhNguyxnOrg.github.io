@@ -12,6 +12,7 @@ const { baked, projects, stops } = await loadSiteData();
   description="Where each ThanhNguyxnOrg project came from, and what it became."
   currentPath="/journey"
 >
+  <h1 class="sr-only">Journey — where each ThanhNguyxnOrg project came from and what it became</h1>
   <Journey client:visible stops={stops} repoCount={baked.totals.repos} foundedAt={baked.foundedAt ?? '2026-04-09'} projects={projects} />
   <div id="support" class="scroll-mt-20 border-t border-border">
     <CTA client:visible />
