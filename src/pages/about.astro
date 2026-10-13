@@ -27,13 +27,15 @@ const langs = [...langCounts.entries()].sort((a, b) => b[1] - a[1]);
 >
   <Philosophy />
   <section aria-labelledby="migration-title" class="scroll-mt-20 border-t border-border">
+    <div aria-hidden class="docs-progress sticky top-0"></div>
     <div class="mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
-      <div class="docs-prose max-w-reading">
+      <div class="docs-prose dropcap-framed prose-migration max-w-reading">
         <Migration />
       </div>
     </div>
   </section>
   <section aria-labelledby="stack-title" class="scroll-mt-20 border-t border-border">
+    <div aria-hidden class="docs-progress sticky top-0"></div>
     <div class="mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
       <h2 id="stack-title" class="font-display text-display-xl font-semibold text-balance text-fg">The stack, live.</h2>
       <ul class="mt-8 flex flex-wrap gap-2" aria-label="Languages by repository count">
