@@ -18,6 +18,7 @@ const Stack = (await render(stackEntry)).Content;
 const langCounts = new Map<string, number>();
 for (const r of baked.repos) langCounts.set(r.language, (langCounts.get(r.language) ?? 0) + 1);
 const langs = [...langCounts.entries()].sort((a, b) => b[1] - a[1]);
+const langMax = Math.max(...langs.map(([, n]) => n));
 ---
 
 <Layout
@@ -40,10 +41,14 @@ const langs = [...langCounts.entries()].sort((a, b) => b[1] - a[1]);
     <div aria-hidden class="docs-progress sticky top-0"></div>
     <div class="mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
       <h2 id="stack-title" class="font-display text-display-xl font-semibold text-balance text-fg">The stack, live.</h2>
-      <ul class="mt-8 flex flex-wrap gap-2" aria-label="Languages by repository count">
+      <ul class="mt-8 flex flex-col gap-3" aria-label="Languages by repository count">
         {langs.map(([lang, n]) => (
-          <li class="rounded-pill border border-border-strong px-3 py-1.5 font-mono text-label uppercase text-fg-muted tabular">
-            {lang} <span class="text-primary-text">{n}</span>
+          <li class="lang-bar grid grid-cols-[7rem_1fr_2.5rem] items-center gap-4">
+            <span class="font-mono text-label uppercase text-fg-muted tabular">{lang}</span>
+            <span class="h-1.5 overflow-hidden rounded-full bg-border" aria-hidden="true">
+              <span class="block h-full rounded-full bg-gradient-to-r from-[#f59e0b] to-[#fcd34d]" style={`width: ${Math.round((n / langMax) * 100)}%`}></span>
+            </span>
+            <span class="font-mono text-label text-primary-text tabular">{n}</span>
           </li>
         ))}
       </ul>
