@@ -13,7 +13,13 @@ describe("about side rail", () => {
     assert.ok(css.includes("side-rail"), "rail utility");
     assert.ok(css.includes("writing-mode"), "vertical label");
     assert.ok(css.includes("side-rail-plate"), "plate stamp");
-    assert.ok(css.includes("side-rail-ghost"), "ghost glyph");
+    assert.ok(css.includes("side-rail-figure"), "photo frame");
+    assert.ok(css.includes("rail-drift"), "photo drift effect");
     assert.ok(css.includes("side-rail-meter"), "meter band");
+  });
+  it("rails use local brand photos", () => {
+    const about = readFileSync("src/pages/about.astro", "utf-8");
+    assert.ok(about.includes("/brand/org-github.jpg"), "migration photo");
+    assert.ok(about.includes("/brand/cogmint.png"), "stack photo");
   });
 });
