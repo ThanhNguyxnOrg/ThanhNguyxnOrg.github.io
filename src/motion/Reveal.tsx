@@ -15,6 +15,12 @@ export type RevealProps = {
   /** `scroll` waits for viewport entry; `mount` plays immediately (hero only). */
   trigger?: 'scroll' | 'mount';
   y?: keyof typeof distance;
+  /**
+   * Entrance shape. `rise` (default) is the single y+fade used everywhere;
+   * `settle` is a quieter scale .985→1 + small y for the Featured lead only.
+   * Transform/opacity only; gated by MOTION_OK_QUERY like `rise`.
+   */
+  variant?: 'rise' | 'settle';
 };
 
 /**
@@ -29,6 +35,7 @@ export default function Reveal({
   stagger = 'base',
   trigger = 'scroll',
   y = 'md',
+  variant = 'rise',
 }: RevealProps) {
   const scope = useRef<HTMLElement>(null);
 
@@ -38,6 +45,20 @@ export default function Reveal({
       mm.add(MOTION_OK_QUERY, () => {
         const marked = gsap.utils.toArray<HTMLElement>('[data-reveal]', scope.current);
         const targets = marked.length ? marked : [scope.current!];
+        if (variant === 'settle') {
+          gsap.from(targets, {
+            y: distance.sm,
+            scale: 0.985,
+            autoAlpha: 0,
+            duration: duration.slow,
+            ease: ease.out,
+            stagger: staggerTokens[stagger],
+            clearProps: 'transform,opacity,visibility',
+            scrollTrigger:
+              trigger === 'scroll' ? { trigger: scope.current, start: 'top 85%', once: true } : undefined,
+          });
+          return;
+        }
         gsap.from(targets, {
           y: distance[y],
           autoAlpha: 0,

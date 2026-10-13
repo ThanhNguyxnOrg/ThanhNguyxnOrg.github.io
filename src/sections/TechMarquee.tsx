@@ -6,7 +6,7 @@ export default function TechMarquee() {
     hidden ? (
       <div aria-hidden="true" className="flex shrink-0 items-center gap-8 pr-8">
         {ITEMS.map((t) => (
-          <span key={t} className="font-mono text-label uppercase text-fg-subtle">
+          <span key={t} className="font-mono text-label text-fg-subtle">
             <span className="mr-2 text-primary-text">◆</span>
             {t}
           </span>
@@ -15,7 +15,7 @@ export default function TechMarquee() {
     ) : (
       <div className="flex shrink-0 items-center gap-8 pr-8">
         {ITEMS.map((t) => (
-          <span key={t} className="font-mono text-label uppercase text-fg-subtle">
+          <span key={t} className="font-mono text-label text-fg-subtle">
             <span className="mr-2 text-primary-text">◆</span>
             {t}
           </span>

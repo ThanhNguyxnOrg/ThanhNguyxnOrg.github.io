@@ -100,7 +100,8 @@ export default function Featured({ projects }: { projects: FullProject[] }) {
           description="A rotating selection of projects, ranked by stars. Every record below is verified data, no invented claims."
           className="lamp-cone"
         />
-        <Reveal className="mt-14 flex flex-col gap-6" stagger="loose">
+        <div className="mt-14 flex flex-col gap-6">
+          <Reveal variant="settle" stagger="loose">
           <div data-reveal>
             <TiltCard max={7}>
             <article className="border-gold-hover card-ticks overflow-hidden rounded-xl border bg-surface">
@@ -119,16 +120,17 @@ export default function Featured({ projects }: { projects: FullProject[] }) {
             </article>
             </TiltCard>
           </div>
+          </Reveal>
           {rest.length > 0 && (
-            <div className="focus-dim grid gap-6 lg:grid-cols-12">
+            <Reveal className="focus-dim grid gap-6 lg:grid-cols-12" stagger="loose">
               {rest.map((p, i) => (
                 <div data-reveal key={p.name} className={clsx('min-w-0', i % 2 === 0 ? 'lg:col-span-5' : 'lg:col-span-7')}>
                   {i % 2 === 0 ? <Poster p={p} /> : <Strip p={p} />}
                 </div>
               ))}
-            </div>
+            </Reveal>
           )}
-        </Reveal>
+        </div>
       </div>
     </section>
   );
