@@ -1,11 +1,11 @@
 {
-  "fetchedAt": "2026-10-12",
+  "fetchedAt": "2026-10-13",
   "foundedAt": "2026-04-09",
   "totals": {
-    "repos": 16,
+    "repos": 17,
     "stars": 10,
     "forks": 7,
-    "openIssues": 0,
+    "openIssues": 1,
     "languages": [
       "Go",
       "JavaScript",
@@ -16,7 +16,7 @@
       "Vue"
     ],
     "packages": 2,
-    "demos": 5,
+    "demos": 6,
     "downloads30d": 311,
     "followers": 8
   },
@@ -64,7 +64,7 @@
       "stars": 2,
       "forks": 2,
       "openIssues": 0,
-      "pushedAt": "2026-10-12T13:37:15Z",
+      "pushedAt": "2026-10-12T14:10:33Z",
       "createdAt": "2026-05-10T02:58:10Z",
       "defaultBranch": "main",
       "hasPages": false,
@@ -93,7 +93,7 @@
       "stars": 1,
       "forks": 1,
       "openIssues": 0,
-      "pushedAt": "2026-10-12T06:07:01Z",
+      "pushedAt": "2026-10-13T05:12:55Z",
       "createdAt": "2026-05-07T06:43:42Z",
       "defaultBranch": "main",
       "hasPages": true,
@@ -126,8 +126,8 @@
       "license": "MIT",
       "stars": 1,
       "forks": 2,
-      "openIssues": 0,
-      "pushedAt": "2026-10-12T06:36:06Z",
+      "openIssues": 1,
+      "pushedAt": "2026-10-13T09:41:47Z",
       "createdAt": "2026-05-17T13:53:41Z",
       "defaultBranch": "main",
       "hasPages": true,
@@ -513,6 +513,24 @@
         "static-analysis",
         "static-auditor"
       ],
+      "unverified": []
+    },
+    {
+      "name": "ThanhNguyxnOrg.github.io",
+      "repoUrl": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
+      "description": "Org site: build, explore, evolve.",
+      "language": "TypeScript",
+      "license": null,
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "pushedAt": "2026-10-13T13:33:22Z",
+      "createdAt": "2026-10-13T13:31:35Z",
+      "defaultBranch": "main",
+      "hasPages": true,
+      "demoUrl": "https://thanhnguyxnorg.github.io/ThanhNguyxnOrg.github.io/",
+      "homepage": "https://thanhnguyxnorg.github.io/",
+      "topics": [],
       "unverified": []
     }
   ],
