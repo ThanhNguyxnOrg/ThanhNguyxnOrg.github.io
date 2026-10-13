@@ -29,7 +29,9 @@ const langs = [...langCounts.entries()].sort((a, b) => b[1] - a[1]);
   <section aria-labelledby="migration-title" class="scroll-mt-20 border-t border-border">
     <div aria-hidden class="docs-progress sticky top-0"></div>
     <div class="mx-auto w-full max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12">
-      <div class="docs-prose dropcap-framed prose-migration max-w-reading">
+      <p class="font-mono text-label uppercase text-primary-text">Migration</p>
+      <h2 id="migration-title" class="mt-3 font-display text-display-xl font-semibold text-balance text-fg">Migration & Legacy Note</h2>
+      <div class="docs-prose dropcap-framed prose-migration mt-10 max-w-reading">
         <Migration />
       </div>
     </div>
