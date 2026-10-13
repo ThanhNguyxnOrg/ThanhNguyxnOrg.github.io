@@ -30,6 +30,7 @@ const { baked, projects, stops } = await loadSiteData();
           demos: baked.totals.demos,
         }}
         fetchedAt={baked.fetchedAt}
+        stars={projects.map((p) => p.stars)}
       />
     </Container>
   </div>

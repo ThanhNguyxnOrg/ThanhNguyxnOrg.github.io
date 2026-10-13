@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { GitFork, Star } from 'lucide-react';
 import { MetaLabel, Reveal, SectionHeader, Tag } from '../components';
 import TiltCard from '../components/TiltCard';
 import type { FullProject } from '../lib/projects';
@@ -19,6 +20,19 @@ function SyncStats({ p }: { p: FullProject }) {
         ))}
       </dl>
     </div>
+  );
+}
+
+function StatChips({ p }: { p: FullProject }) {
+  return (
+    <p className="stat-chip flex flex-wrap gap-x-4 font-mono text-micro uppercase text-fg-muted tabular">
+      <span aria-label={`${p.stars} stars`} className="inline-flex items-center gap-1.5">
+        <Star aria-hidden className="size-3 text-primary-text" /> {p.stars}
+      </span>
+      <span aria-label={`${p.forks} forks`} className="inline-flex items-center gap-1.5">
+        <GitFork aria-hidden className="size-3 text-primary-text" /> {p.forks}
+      </span>
+    </p>
   );
 }
 
@@ -48,6 +62,7 @@ function Poster({ p }: { p: FullProject }) {
     <article className="card-ticks relative flex h-full flex-col gap-6 overflow-hidden rounded-xl border border-border bg-surface p-6 md:p-8">
       <MetaLabel>{v.category}</MetaLabel>
       <h3 className="font-display text-display-lg font-bold text-fg title-shadow">{v.title}</h3>
+      <StatChips p={p} />
       <ProjectVisual title={v.title} glyph={v.glyph} image={p.image} className="aspect-[2/1] overflow-hidden rounded-lg border border-border" />
       <p className="text-body text-fg-muted">{v.summary}</p>
       <Tags technologies={v.technologies} />
@@ -64,6 +79,7 @@ function Strip({ p }: { p: FullProject }) {
       <ProjectVisual title={v.title} glyph={v.glyph} image={p.image} className="aspect-[2/1] overflow-hidden rounded-lg border border-border" />
       <MetaLabel>{v.category}</MetaLabel>
       <h3 className="font-display text-display-lg font-bold text-fg title-shadow">{v.title}</h3>
+      <StatChips p={p} />
       <p className="text-body text-fg-muted">{v.summary}</p>
       <Tags technologies={v.technologies} />
       <div className="mt-auto border-t border-border pt-5"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>

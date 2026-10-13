@@ -74,14 +74,36 @@ export default function Journey({
               ))}
             </Timeline>
           </Reveal>
-          <aside className="hidden lg:col-span-5 lg:block">
+          <aside aria-label="Currently reading" className="hidden lg:col-span-5 lg:block">
             <div className="sticky top-24 overflow-hidden rounded-xl border border-border bg-surface transition-ui hover:border-border-strong">
               <img key={panel.image} src={panel.image} alt="" loading="lazy" className="aspect-[2/1] w-full object-cover" />
+              <div className="flex flex-col gap-2 border-t border-border p-4">
+                <p className="font-mono text-micro uppercase text-fg-muted tabular">
+                  <span className="text-primary-text">{stop?.date}</span>
+                  <span aria-hidden> · </span>
+                  <span>
+                    {shown.length > 0 ? `${active + 1} / ${shown.length}` : ''}
+                  </span>
+                </p>
+                <p className="font-display text-title font-semibold text-balance text-fg">{stop?.title}</p>
+                <div aria-hidden className="mt-1 flex items-center gap-2">
+                  {shown.map((s, i) => (
+                    <span
+                      key={`${s.date}-${i}`}
+                      className={
+                        i === active
+                          ? 'size-2 rotate-45 border border-highlight bg-highlight'
+                          : 'size-1.5 rotate-45 border border-fg-subtle bg-transparent opacity-60'
+                      }
+                    />
+                  ))}
+                </div>
+              </div>
               <a
                 href={panel.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between gap-3 p-4 focus-ring"
+                className="flex items-center justify-between gap-3 border-t border-border p-4 focus-ring"
               >
                 <p className="font-mono text-label uppercase text-fg-muted">{panel.name}</p>
                 <p className="inline-flex items-center gap-1 font-mono text-label uppercase text-primary-text">
