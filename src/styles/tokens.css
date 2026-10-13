@@ -415,6 +415,27 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@utility focus-dim {
+  & > * {
+    transition: opacity var(--duration-fast) var(--ease-out-expo);
+  }
+  &:hover > :not(:hover) {
+    opacity: 0.55;
+  }
+}
+
+@utility title-shadow {
+  text-shadow: 0 2px 24px rgb(0 0 0 / 0.45);
+}
+
+@layer base {
+  .project-card:has(img) .project-label {
+    display: none;
+  }
 }
 
 @utility image-frame {

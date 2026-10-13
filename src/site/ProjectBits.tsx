@@ -23,7 +23,7 @@ export function ProjectVisual({
   label?: boolean;
 }) {
   return (
-    <div className={clsx('group relative', image && !compact && 'image-frame', className)}>
+    <div className={clsx('group project-card relative', image && !compact && 'image-frame', className)}>
       {image ? (
         <>
           <img
@@ -46,7 +46,7 @@ export function ProjectVisual({
         <ProjectGlyph pattern={glyph.pattern} accent={glyph.accent} className="absolute inset-0" />
       )}
       {label && (
-        <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-xs bg-bg/80 px-2 py-1 font-mono text-micro uppercase text-fg-subtle backdrop-blur">
+        <span className="project-label absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-xs bg-bg/80 px-2 py-1 font-mono text-micro uppercase text-fg-subtle backdrop-blur">
           <ImageOff aria-hidden className="size-3" /> {title}
         </span>
       )}

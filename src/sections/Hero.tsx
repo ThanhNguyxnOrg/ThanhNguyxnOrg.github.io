@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { ArrowRight, Pause, Play } from 'lucide-react';
+import { ArrowRight, ChevronDown, Pause, Play } from 'lucide-react';
 import { Button, Container, GitHubMark, IconButton, motionTokens } from '../components';
 import StarCanvas from '../components/StarCanvas';
 import type { FullProject } from '../lib/projects';
@@ -196,6 +196,13 @@ export default function Hero({ projects }: { projects: FullProject[] }) {
           </div>
         </div>
       </Container>
+        <a
+          href="#projects"
+          aria-label="Scroll to projects"
+          className="absolute bottom-4 left-1/2 hidden -translate-x-1/2 rounded-full border border-border bg-bg/60 p-2 text-fg-muted backdrop-blur transition-ui hover:text-fg focus-ring md:block motion-reduce:hidden"
+        >
+          <ChevronDown aria-hidden className="size-5 motion-safe:animate-bounce" />
+        </a>
     </div>
   );
 }

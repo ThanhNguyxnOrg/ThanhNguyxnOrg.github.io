@@ -47,7 +47,7 @@ function Poster({ p }: { p: FullProject }) {
   return (
     <article className="card-ticks relative flex h-full flex-col gap-6 overflow-hidden rounded-xl border border-border bg-surface p-6 md:p-8">
       <MetaLabel>{v.category}</MetaLabel>
-      <h3 className="font-display text-display-lg font-bold text-fg">{v.title}</h3>
+      <h3 className="font-display text-display-lg font-bold text-fg title-shadow">{v.title}</h3>
       <ProjectVisual title={v.title} glyph={v.glyph} image={p.image} className="aspect-[2/1] overflow-hidden rounded-lg border border-border" />
       <p className="text-body text-fg-muted">{v.summary}</p>
       <Tags technologies={v.technologies} />
@@ -63,7 +63,7 @@ function Strip({ p }: { p: FullProject }) {
     <article className="flex h-full flex-col gap-5 overflow-hidden rounded-xl border border-border bg-surface p-6 md:p-8">
       <ProjectVisual title={v.title} glyph={v.glyph} image={p.image} className="aspect-[2/1] overflow-hidden rounded-lg border border-border" />
       <MetaLabel>{v.category}</MetaLabel>
-      <h3 className="font-display text-display-lg font-bold text-fg">{v.title}</h3>
+      <h3 className="font-display text-display-lg font-bold text-fg title-shadow">{v.title}</h3>
       <p className="text-body text-fg-muted">{v.summary}</p>
       <Tags technologies={v.technologies} />
       <div className="mt-auto border-t border-border pt-5"><ProjectActions repoUrl={p.repoUrl} demoUrl={p.demoUrl} size="sm" /></div>
@@ -90,7 +90,7 @@ export default function Featured({ projects }: { projects: FullProject[] }) {
               <div className="grid gap-6 p-6 md:p-10 lg:grid-cols-12">
                 <div className="flex flex-col gap-6 lg:col-span-7">
                   <MetaLabel>{lead.category}</MetaLabel>
-                  <h3 className="font-display text-display-xl font-bold text-fg">{lead.name}</h3>
+                  <h3 className="font-display text-display-xl font-bold text-fg title-shadow">{lead.name}</h3>
                   <p className="max-w-measure text-body-lg text-fg-soft">{lead.story ?? lead.blurb}</p>
                 </div>
                 <div className="flex flex-col gap-6 lg:col-span-5">
@@ -102,7 +102,7 @@ export default function Featured({ projects }: { projects: FullProject[] }) {
             </TiltCard>
           </div>
           {rest.length > 0 && (
-            <div className="grid gap-6 lg:grid-cols-12">
+            <div className="focus-dim grid gap-6 lg:grid-cols-12">
               {rest.map((p, i) => (
                 <div data-reveal key={p.name} className={clsx('min-w-0', i % 2 === 0 ? 'lg:col-span-5' : 'lg:col-span-7')}>
                   {i % 2 === 0 ? <Poster p={p} /> : <Strip p={p} />}
