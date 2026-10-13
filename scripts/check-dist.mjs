@@ -21,8 +21,12 @@ for (const [name, ch] of [["EM DASH", "—"], ["EN DASH", "–"]]) {
   else pass(`no ${name}`);
 }
 const odd = [...new Set([...html].filter((c) => c.codePointAt(0) > 127 && c !== "©"))];
-if (odd.length > 0) fail(`unexpected non-ASCII: ${odd.map((c) => `U+${c.codePointAt(0).toString(16)}`).join(",")}`);
-else pass("non-ASCII allowlist clean (only U+00A9)");
+// Intentional decor glyphs (design tokens, not accidents): § divider-orn,
+// ◆ philosophy/marquee markers, × dimension label, · legal separators.
+const allowed = new Set(["§", "◆", "×", "·"]);
+const unexpected = odd.filter((c) => !allowed.has(c));
+if (unexpected.length > 0) fail(`unexpected non-ASCII: ${unexpected.map((c) => `U+${c.codePointAt(0).toString(16)}`).join(",")}`);
+else pass("non-ASCII allowlist clean (only U+00A9 + decor)");
 
 // 2. No figma word anywhere in shipped text assets.
 function textFiles(dir, out = []) {
