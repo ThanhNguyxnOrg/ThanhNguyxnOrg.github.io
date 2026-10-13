@@ -254,6 +254,34 @@
     float: left;
     line-height: 0.9;
   }
+  .docs-prose.prose-h2 > h2 {
+    counter-increment: prose-h2;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 2rem;
+    margin-top: 3rem;
+  }
+  .docs-prose.prose-h2 > h2::before {
+    content: "0" counter(prose-h2);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.1em;
+    color: rgb(245 158 11 / 0.7);
+  }
+  .docs-prose {
+    counter-reset: prose-h2;
+  }
+  @media (min-width: 768px) {
+    .docs-prose ul {
+      columns: 2;
+      column-gap: 2.5rem;
+    }
+    .docs-prose ul > li {
+      break-inside: avoid;
+    }
+  }
   .docs-prose.prose-migration > p:last-of-type {
     text-align: center;
     font-family: var(--font-display);
