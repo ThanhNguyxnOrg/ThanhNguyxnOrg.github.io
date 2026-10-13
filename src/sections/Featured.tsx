@@ -26,11 +26,13 @@ function SyncStats({ p }: { p: FullProject }) {
 function StatChips({ p }: { p: FullProject }) {
   return (
     <p className="stat-chip flex flex-wrap gap-x-4 font-mono text-micro uppercase text-fg-muted tabular">
-      <span aria-label={`${p.stars} stars`} className="inline-flex items-center gap-1.5">
+      <span className="inline-flex items-center gap-1.5">
         <Star aria-hidden className="size-3 text-primary-text" /> {p.stars}
+        <span className="sr-only">stars</span>
       </span>
-      <span aria-label={`${p.forks} forks`} className="inline-flex items-center gap-1.5">
+      <span className="inline-flex items-center gap-1.5">
         <GitFork aria-hidden className="size-3 text-primary-text" /> {p.forks}
+        <span className="sr-only">forks</span>
       </span>
     </p>
   );

@@ -10,6 +10,7 @@ export type MetricTotals = {
 
 /** Star distribution sparkline. Static SVG, no motion; number alongside so color is never the only signal. */
 function Sparkline({ values }: { values: number[] }) {
+  if (values.length < 2) return null;
   const w = 120;
   const h = 28;
   const pad = 3;

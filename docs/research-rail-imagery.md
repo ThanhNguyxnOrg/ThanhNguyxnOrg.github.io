@@ -229,3 +229,17 @@ cho `github.md` — `src/content/repos/github.md:6`, `src/content/repos/skillgau
    `object-cover`, `loading="lazy"`; không cần `remotePatterns`/CSP mới (không có CSP — §2).
 5. **Đừng lặp lỗi `og-image`:** kèm test tồn tại file cho ảnh rail mới (pattern
    `brand-images.test.ts:6-18`), vì tiền lệ `Layout.astro:25` trỏ `/og-image.png` không tồn tại (§2).
+
+## 5. Quyết định build (ghi sau implement, commit `58083c4`)
+
+- **Migration rail** theo đúng phương án A: `/brand/org-github.jpg` (80.3 KB).
+- **Stack rail chệch khỏi §1.5/§3 (ghi nhận có chủ ý):** dùng `/brand/cogmint.png`
+  (127.2 KB) thay vì chờ ảnh user, vì user duyệt "làm đi" mà không gửi ảnh. Lý do chấp nhận:
+  board vẽ pipeline SESSION → AGENTS → SKILLS → SHIP, đọc được như minh họa trừu tượng cho
+  "What ships"; caption trong rail ghi đúng tên board ("Cogmint pipeline board") nên không phát
+  sinh claim sai; `aside` giữ `aria-hidden` + `alt=""` nên không giấu thông tin khỏi AT.
+  Khi nào có ảnh workspace của user, thay 1 dòng `src` ở `about.astro` là xong.
+- **Chệch khỏi §4.1 (có chủ ý):** có thêm caption chữ trong rail (plate + `side-rail-cap`).
+  Caption chỉ đặt tên thứ đang hiển thị, nằm trong `aside aria-hidden` nên không tạo nội dung
+  mới cho AT.
+- Thực đo hiệu năng: 2 ảnh tổng ~207 KB, `loading="lazy"`, chỉ fetch ở breakpoint `lg`.
