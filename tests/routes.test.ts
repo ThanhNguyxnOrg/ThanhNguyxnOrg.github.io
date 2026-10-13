@@ -23,3 +23,10 @@ describe("journey page", () => {
     assert.ok(readFileSync("src/sections/Journey.tsx", "utf-8").includes("limit"));
   });
 });
+describe("routes", () => {
+  it("every internal link resolves to a built page", async () => {
+    const { readFileSync, existsSync } = await import("node:fs");
+    assert.ok(readFileSync("src/pages/404.astro", "utf-8").includes("/projects"), "404 links somewhere useful");
+    for (const p of ["index.html", "projects/index.html", "journey/index.html", "about/index.html", "404.html"]) assert.ok(existsSync(`dist/${p}`), p);
+  });
+});

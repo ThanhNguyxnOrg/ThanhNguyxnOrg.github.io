@@ -1,8 +1,5 @@
 import type { APIRoute } from "astro";
-import { getCollection } from "astro:content";
-import { loadBaked } from "../lib/baked";
-import { joinProjects } from "../lib/projects";
-import bakedRaw from "../data/baked.json";
+import { loadSiteData } from "../lib/site-data";
 
 /**
  * llms.txt generated at build time from the single source, so its numbers
@@ -10,12 +7,7 @@ import bakedRaw from "../data/baked.json";
  * summary, detail paragraphs, H2 link lists. Links only verified URLs.
  */
 export const GET: APIRoute = async () => {
-  const baked = loadBaked(bakedRaw);
-  const entries = await getCollection("repos");
-  const projects = joinProjects(
-    baked,
-    entries.map((e) => ({ slug: e.id, data: e.data })),
-  );
+  const { baked, projects } = await loadSiteData();
   const t = baked.totals;
   const demos = projects.filter((p) => p.demoUrl !== null);
   const lines: string[] = [
@@ -38,6 +30,13 @@ export const GET: APIRoute = async () => {
     ...baked.npm.map(
       (p) => `- [${p.name} ${p.version}](https://www.npmjs.com/package/${p.name}): ${p.description}, ${p.downloads30d} downloads in 30 days.`,
     ),
+    "",
+    "## Site pages",
+    "",
+    "- [Home](https://thanhnguyxnorg.github.io/): hero, live metrics, top-6 projects.",
+    "- [Projects](https://thanhnguyxnorg.github.io/projects): full searchable index of every repository.",
+    "- [Journey](https://thanhnguyxnorg.github.io/journey): project histories and milestones.",
+    "- [About](https://thanhnguyxnorg.github.io/about): principles, migration note, live stack, ecosystem.",
     "",
     "## Docs",
     "",
