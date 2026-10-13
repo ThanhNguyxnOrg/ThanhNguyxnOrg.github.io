@@ -6,7 +6,7 @@ describe("prose decor", () => {
   it("frames the migration opener and quotes its closer", () => {
     const css = readFileSync("src/styles/tokens.css", "utf-8");
     assert.ok(css.includes(".dropcap-framed"), "dropcap scope");
-    assert.ok(css.includes("::first-line"), "small-caps first line");
+    assert.ok(!css.includes("::first-line"), "no shouty first line");
     assert.ok(css.includes(".prose-migration"), "pull-quote scope");
   });
   it("marks prose lists and styles code", () => {
