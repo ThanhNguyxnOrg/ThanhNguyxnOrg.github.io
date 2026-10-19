@@ -2,10 +2,10 @@
   "fetchedAt": "2026-10-19",
   "foundedAt": "2026-04-09",
   "totals": {
-    "repos": 18,
+    "repos": 19,
     "stars": 10,
     "forks": 8,
-    "openIssues": 4,
+    "openIssues": 5,
     "languages": [
       "C++",
       "Go",
@@ -18,7 +18,7 @@
     ],
     "packages": 2,
     "demos": 6,
-    "downloads30d": 294,
+    "downloads30d": 274,
     "followers": 8
   },
   "repos": [
@@ -127,8 +127,8 @@
       "license": "MIT",
       "stars": 1,
       "forks": 2,
-      "openIssues": 0,
-      "pushedAt": "2026-10-13T14:26:48Z",
+      "openIssues": 1,
+      "pushedAt": "2026-10-19T12:08:03Z",
       "createdAt": "2026-05-17T13:53:41Z",
       "defaultBranch": "main",
       "hasPages": true,
@@ -559,12 +559,30 @@
       "stars": 0,
       "forks": 0,
       "openIssues": 0,
-      "pushedAt": "2026-10-18T02:02:38Z",
+      "pushedAt": "2026-10-19T02:19:42Z",
       "createdAt": "2026-10-13T13:31:35Z",
       "defaultBranch": "main",
       "hasPages": true,
       "demoUrl": "https://thanhnguyxnorg.github.io/ThanhNguyxnOrg.github.io/",
       "homepage": "https://thanhnguyxnorg.github.io/",
+      "topics": [],
+      "unverified": []
+    },
+    {
+      "name": "WriteCanvas",
+      "repoUrl": "https://github.com/ThanhNguyxnOrg/WriteCanvas",
+      "description": "",
+      "language": "JavaScript",
+      "license": null,
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "pushedAt": "2026-10-19T13:18:51Z",
+      "createdAt": "2026-10-19T12:48:16Z",
+      "defaultBranch": "master",
+      "hasPages": false,
+      "demoUrl": null,
+      "homepage": null,
       "topics": [],
       "unverified": []
     }
@@ -586,7 +604,7 @@
         "github-action",
         "developer-tools"
       ],
-      "downloads30d": 121
+      "downloads30d": 107
     },
     {
       "name": "production-backend-kit",
@@ -603,7 +621,7 @@
         "best-practices",
         "ai-tools"
       ],
-      "downloads30d": 173
+      "downloads30d": 167
     }
   ]
 }
