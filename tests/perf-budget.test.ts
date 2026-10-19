@@ -3,10 +3,10 @@ import assert from "node:assert/strict";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-function pngWidth(f: string): number | null {
+function pngSize(f: string): { width: number; height: number } | null {
   const b = readFileSync(f);
   if (b.length < 24 || b.readUInt32BE(0) !== 0x89504e47) return null;
-  return b.readUInt32BE(16);
+  return { width: b.readUInt32BE(16), height: b.readUInt32BE(20) };
 }
 
 function images(dir: string): string[] {
@@ -23,10 +23,12 @@ describe("perf budget", () => {
   it("keeps served images within display budgets", () => {
     const over: string[] = [];
     for (const f of [...images("public/logos"), ...images("public/brand")]) {
-      const w = pngWidth(f);
-      if (w === null) continue;
-      const cap = isLogo(f) ? 256 : 1024;
-      if (w > cap) over.push(`${f} (${w}px)`);
+      const size = pngSize(f);
+      if (size === null) continue;
+      const logo = isLogo(f);
+      const cap = logo ? 256 : 1024;
+      if (size.width > cap || size.height > cap) over.push(`${f} (${size.width}x${size.height})`);
+      if (!logo && (size.width !== 1024 || size.height !== 512)) over.push(`${f} (theme must be 1024x512)`);
     }
     assert.deepEqual(over, [], "oversized images");
   });

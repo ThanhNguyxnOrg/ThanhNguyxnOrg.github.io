@@ -44,7 +44,6 @@ Astro pages + React islands → dist/ → GitHub Pages
   `/projects` (search + filters), `/journey` (full timeline),
   `/about` (principles, migration, live stack, ecosystem), `/404`, `/llms.txt`.
 - Design tokens live in one place: `src/styles/tokens.css`.
-- Full operator manual: [`docs/site-handbook.md`](docs/site-handbook.md).
 
 ## Adding content
 
@@ -52,7 +51,13 @@ Astro pages + React islands → dist/ → GitHub Pages
 
 1. Create `src/content/repos/<slug>.md` (see `github.md` for the pattern,
    `slug:` override for special names like `.github`).
-2. Run `node scripts/sync.ts --out src/data/baked.json`, then test + build.
+2. Add `public/logos/<slug>.png` (max 256px) and `public/brand/<slug>.png`
+   (1024x512). `npm run brand:sync` normalizes raster assets automatically;
+   `npm run build` runs it too. SVG logos are left untouched.
+3. Run `node scripts/sync.ts --out src/data/baked.json`, then test + build.
+
+`npm run brand:check` verifies formats without writing anything (CI uses the
+same rules through tests and the sync workflow).
 
 Timeline entries go in `src/content/timeline/*.md`, prose in `src/content/docs/*.md`
 — schemas in `src/content.config.ts`.

@@ -19,7 +19,7 @@ describe("about side rail", () => {
   });
   it("rails use local brand photos", () => {
     const about = readFileSync("src/pages/about.astro", "utf-8");
-    assert.ok(about.includes("/brand/org-github.jpg"), "migration photo");
+    assert.ok(about.includes("/brand/org-github.png"), "migration photo");
     assert.ok(about.includes("/brand/cogmint.png"), "stack photo");
     assert.ok(about.includes("side-rail-cap"), "photo captions");
     assert.ok(about.includes("side-rail-live"), "live marker on stack");
