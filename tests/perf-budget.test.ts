@@ -15,13 +15,17 @@ function images(dir: string): string[] {
     .map((f) => join(dir, f));
 }
 
+function isLogo(path: string): boolean {
+  return path.split(/[\\/]/).includes("logos");
+}
+
 describe("perf budget", () => {
   it("keeps served images within display budgets", () => {
     const over: string[] = [];
     for (const f of [...images("public/logos"), ...images("public/brand")]) {
       const w = pngWidth(f);
       if (w === null) continue;
-      const cap = f.includes("public/logos") ? 256 : 1024;
+      const cap = isLogo(f) ? 256 : 1024;
       if (w > cap) over.push(`${f} (${w}px)`);
     }
     assert.deepEqual(over, [], "oversized images");
