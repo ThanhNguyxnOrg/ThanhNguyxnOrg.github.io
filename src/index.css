@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Outfit', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --color-obsidian: #07090f;
+  --color-surface: #0d111c;
+  --color-surface-raised: #141a29;
+  --color-border-subtle: #1e263b;
+  --color-border-strong: #2d3854;
+  --color-gold: #f59e0b;
+  --color-gold-soft: #fcd34d;
+  --color-gold-deep: #b45309;
+}
+
+@layer base {
+  html {
+    background-color: #07090f;
+    color: #f4f5fa;
+    color-scheme: dark;
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    overflow-x: clip;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid #fcd34d;
+    outline-offset: 3px;
+  }
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.bg-blueprint-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.bg-gold-grid {
+  background-image:
+    linear-gradient(to right, rgba(245, 158, 11, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245, 158, 11, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.card-corner-ticks {
+  background-image:
+    linear-gradient(rgba(245, 158, 11, 0.45), rgba(245, 158, 11, 0.45)),
+    linear-gradient(rgba(245, 158, 11, 0.45), rgba(245, 158, 11, 0.45)),
+    linear-gradient(rgba(245, 158, 11, 0.45), rgba(245, 158, 11, 0.45)),
+    linear-gradient(rgba(245, 158, 11, 0.45), rgba(245, 158, 11, 0.45)),
+    linear-gradient(rgba(245, 158, 11, 0.45), rgba(245, 158, 11, 0.45)),
+    linear-gradient(rgba(245, 158, 11, 0.45), rgba(245, 158, 11, 0.45)),
+    linear-gradient(rgba(245, 158, 11, 0.45), rgba(245, 158, 11, 0.45)),
+    linear-gradient(rgba(245, 158, 11, 0.45), rgba(245, 158, 11, 0.45));
+  background-repeat: no-repeat;
+  background-size: 10px 1px, 1px 10px, 10px 1px, 1px 10px, 10px 1px, 1px 10px, 10px 1px, 1px 10px;
+  background-position:
+    left 12px top 12px, left 12px top 12px,
+    right 12px top 12px, right 12px top 12px,
+    left 12px bottom 12px, left 12px bottom 12px,
+    right 12px bottom 12px, right 12px bottom 12px;
+}
+
+@keyframes marquee-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-slide 42s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

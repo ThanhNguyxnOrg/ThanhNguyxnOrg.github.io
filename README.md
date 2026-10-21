@@ -1,77 +1,66 @@
 # ThanhNguyxnOrg.github.io
 
-[![Deploy to GitHub Pages](https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io/actions/workflows/deploy.yml)
-![Astro](https://img.shields.io/badge/Astro-7-ff5d01?logo=astro&logoColor=white)
-![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=black)
+[![Sync telemetry and deploy](https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io/actions/workflows/sync-org-data.yml/badge.svg)](https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io/actions/workflows/sync-org-data.yml)
 
-Org site for **ThanhNguyxnOrg** — *Build. Explore. Evolve.*
+Org site for **ThanhNguyxnOrg** · *Build. Explore. Evolve.*
 
 Live: **https://thanhnguyxnorg.github.io/**
 
-An independent technology practice building developer tools in the open.
-Every number on the site is verified data baked from the GitHub API and npm —
-no invented claims. Every story is hand-written. One gold accent, dark-first.
+An independent technology practice building developer tools, AI workflows, and open-source utilities. The site is an interactive 3D showcase and engineering index. Repository counts, stars, forks, languages, demos, and npm downloads are baked from the GitHub API and npm Registry, then refreshed live in the browser.
+
+## Stack
+
+- Vite 8 + React 19 + TypeScript
+- Tailwind CSS 4
+- Three.js orbital scene
+- Motion + Lucide icons
+- Node test runner via `tsx`
 
 ## Quickstart
 
-Prerequisite: Node.js 22.
+Requires Node.js 22.
 
 ```bash
 npm ci
-npm run dev      # local dev server
-npm test         # 96 tests (~1s)
-npm run build    # static build to dist/
-npx astro check  # type check
-node scripts/check-dist.mjs  # dist hygiene (glyphs, anchors, files, meta)
+npm run dev       # http://localhost:3000
+npm test          # logic + data integrity tests
+npm run lint      # TypeScript check
+npm run build     # production build to dist/
+npm run preview   # preview the production build
 ```
 
-## How it works
+## Sync
+
+```bash
+npm run sync      # bake GitHub + npm telemetry into src/data/liveSnapshot.json
+npm run brand:sync   # normalize logo/theme assets
+npm run brand:check  # verify assets without writing
+```
+
+`npm run sync` reads `GITHUB_TOKEN` when available for a higher GitHub API rate limit. The tracked snapshot is committed by the workflow, so the site still renders verified data when the APIs are unavailable.
+
+The `Sync telemetry and deploy` workflow runs every 6 hours, on pushes to `main`, and on `repository_dispatch`. It normalizes assets, bakes fresh telemetry, runs tests and type-checking, commits any snapshot/asset changes, builds, and deploys to GitHub Pages.
+
+## Brand assets
+
+- `public/logos/<slug>.png|svg` — repository logos, raster max 256px.
+- `public/brand/<slug>.png` — repository themes, exactly 1024x512.
+- `public/logo.png` — org logo.
+- `public/og-image.png` — social preview, 1200x630.
+
+`npm run brand:sync` keeps raster assets within those budgets. SVG logos are left untouched.
+
+## Layout
 
 ```text
-GitHub API + npm registry
-        │  scripts/sync.ts (daily cron, or manual)
-        ▼
-src/data/baked.json ──┐  numbers only, never edit by hand
-                       ▼
-src/content/repos/*.md │  human voice: blurb, story, category, accent, pattern
-                       ▼
-joinProjects() → sorted stars-first, throws on drift
-                       ▼
-Astro pages + React islands → dist/ → GitHub Pages
+index.html
+src/
+  App.tsx
+  components/       # hero, 3D scene, featured, journey, archive, modal
+  data/             # curated org data + baked live snapshot
+  utils/            # live sync, project logic, tests
+public/             # logos, themes, icons, social preview
+scripts/
+  bake-org-data.mjs # GitHub + npm telemetry baker
+  brand.mjs         # asset normalizer
 ```
-
-- Pages: `/` (hero, metrics, featured, philosophy, journey, explorer, CTA),
-  `/projects` (search + filters), `/journey` (full timeline),
-  `/about` (principles, migration, live stack, ecosystem), `/404`, `/llms.txt`.
-- Design tokens live in one place: `src/styles/tokens.css`.
-
-## Adding content
-
-**New repository** (required — otherwise the next sync breaks the build):
-
-1. Create `src/content/repos/<slug>.md` (see `github.md` for the pattern,
-   `slug:` override for special names like `.github`).
-2. Add `public/logos/<slug>.png` (max 256px) and `public/brand/<slug>.png`
-   (1024x512). `npm run brand:sync` normalizes raster assets automatically;
-   `npm run build` runs it too. SVG logos are left untouched.
-3. Run `node scripts/sync.ts --out src/data/baked.json`, then test + build.
-
-`npm run brand:check` verifies formats without writing anything (CI uses the
-same rules through tests and the sync workflow).
-
-Timeline entries go in `src/content/timeline/*.md`, prose in `src/content/docs/*.md`
-— schemas in `src/content.config.ts`.
-
-Repo `topics` on GitHub become the tags shown on cards (max 6) — edit topics
-on GitHub, sync pulls them in.
-
-## CI & deploy
-
-- Push to `main` → `deploy.yml`: build + test, then build + deploy to Pages.
-  Red tests block the deploy.
-- `sync-site.yml`: daily data bake → validate → commit if changed → push,
-  which triggers a deploy automatically. Run it manually from the Actions tab.
-
-## License
-
-Open source under the MIT license, matching the rest of the org's projects.
