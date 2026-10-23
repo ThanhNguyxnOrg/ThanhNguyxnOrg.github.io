@@ -1,6 +1,6 @@
 {
-  "syncedAt": "2026-10-22",
-  "syncedIso": "2026-10-22T21:18:48.135Z",
+  "syncedAt": "2026-10-23",
+  "syncedIso": "2026-10-23T03:51:28.046Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 19,
@@ -22,6 +22,45 @@
   },
   "repos": [
     {
+      "name": "apidex-hub",
+      "slug": "apidex-hub",
+      "description": "🌐 A curated collection of awesome free APIs for developers. Categorized, tested daily, and well-documented. Your one-stop resource for public APIs.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/apidex-hub",
+      "homepage": "https://thanhnguyxnorg.github.io/apidex-hub/",
+      "language": "TypeScript",
+      "stargazers_count": 1,
+      "forks_count": 2,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "api",
+        "api-collection",
+        "api-directory",
+        "api-list",
+        "apis",
+        "awesome",
+        "awesome-list",
+        "developer-resources",
+        "developer-tools",
+        "free",
+        "free-api",
+        "open-source",
+        "public-apis",
+        "resources",
+        "rest-api"
+      ],
+      "created_at": "2026-05-07T06:43:42Z",
+      "updated_at": "2026-10-23T03:06:32Z",
+      "pushed_at": "2026-10-23T03:06:28Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/apidex-hub.png",
+      "logo": "/logos/apidex-hub.svg"
+    },
+    {
       "name": "ThanhNguyxnOrg.github.io",
       "slug": "thanhnguyxnorg.github.io",
       "description": "Org site: build, explore, evolve.",
@@ -34,8 +73,8 @@
       "has_pages": true,
       "topics": [],
       "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-10-22T16:49:28Z",
-      "pushed_at": "2026-10-22T16:49:20Z",
+      "updated_at": "2026-10-22T21:18:58Z",
+      "pushed_at": "2026-10-22T21:18:50Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
@@ -89,45 +128,6 @@
       "archived": false,
       "image": "/brand/writecanvas.png",
       "logo": "/logos/writecanvas.png"
-    },
-    {
-      "name": "apidex-hub",
-      "slug": "apidex-hub",
-      "description": "🌐 A curated collection of awesome free APIs for developers. Categorized, tested daily, and well-documented. Your one-stop resource for public APIs.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/apidex-hub",
-      "homepage": "https://thanhnguyxnorg.github.io/apidex-hub/",
-      "language": "TypeScript",
-      "stargazers_count": 1,
-      "forks_count": 2,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "api",
-        "api-collection",
-        "api-directory",
-        "api-list",
-        "apis",
-        "awesome",
-        "awesome-list",
-        "developer-resources",
-        "developer-tools",
-        "free",
-        "free-api",
-        "open-source",
-        "public-apis",
-        "resources",
-        "rest-api"
-      ],
-      "created_at": "2026-05-07T06:43:42Z",
-      "updated_at": "2026-10-22T03:02:48Z",
-      "pushed_at": "2026-10-22T03:02:45Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/apidex-hub.png",
-      "logo": "/logos/apidex-hub.svg"
     },
     {
       "name": "PurgeKit",
