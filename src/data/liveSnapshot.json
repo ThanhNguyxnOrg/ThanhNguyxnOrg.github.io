@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-10-26",
-  "syncedIso": "2026-10-26T03:47:43.780Z",
+  "syncedIso": "2026-10-26T12:28:08.154Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 19,
@@ -21,6 +21,64 @@
     }
   },
   "repos": [
+    {
+      "name": "awesome-cert-sherpa",
+      "slug": "awesome-cert-sherpa",
+      "description": "Community-driven IT certification prep — curated resources, 1,590+ original practice questions, anti-dump pledge. AWS, Azure, GCP, CISSP, CCNA, CKA & more.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/awesome-cert-sherpa",
+      "homepage": "https://thanhnguyxnorg.github.io/awesome-cert-sherpa/",
+      "language": "TypeScript",
+      "stargazers_count": 1,
+      "forks_count": 2,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "awesome-list",
+        "aws",
+        "azure",
+        "ccna",
+        "certification",
+        "cissp",
+        "docusaurus",
+        "exam-prep",
+        "gcp",
+        "kubernetes",
+        "open-source",
+        "security-plus",
+        "terraform"
+      ],
+      "created_at": "2026-05-17T13:53:41Z",
+      "updated_at": "2026-10-26T12:09:51Z",
+      "pushed_at": "2026-10-26T12:09:48Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/awesome-cert-sherpa.png",
+      "logo": "/logos/awesome-cert-sherpa.png"
+    },
+    {
+      "name": "ThanhNguyxnOrg.github.io",
+      "slug": "thanhnguyxnorg.github.io",
+      "description": "Org site: build, explore, evolve.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
+      "homepage": "https://thanhnguyxnorg.github.io/",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [],
+      "created_at": "2026-10-13T13:31:35Z",
+      "updated_at": "2026-10-26T03:47:48Z",
+      "pushed_at": "2026-10-26T03:47:45Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/org-github.png",
+      "logo": "/logo.png"
+    },
     {
       "name": "apidex-hub",
       "slug": "apidex-hub",
@@ -212,27 +270,6 @@
       "archived": false,
       "image": "/brand/lumeo.png",
       "logo": "/logos/lumeo.png"
-    },
-    {
-      "name": "ThanhNguyxnOrg.github.io",
-      "slug": "thanhnguyxnorg.github.io",
-      "description": "Org site: build, explore, evolve.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
-      "homepage": "https://thanhnguyxnorg.github.io/",
-      "language": "TypeScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [],
-      "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-10-25T20:32:24Z",
-      "pushed_at": "2026-10-25T20:32:20Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/org-github.png",
-      "logo": "/logo.png"
     },
     {
       "name": "Locsight",
@@ -436,43 +473,6 @@
       "archived": false,
       "image": "/brand/snapbooth.png",
       "logo": "/logos/snapbooth.svg"
-    },
-    {
-      "name": "awesome-cert-sherpa",
-      "slug": "awesome-cert-sherpa",
-      "description": "Community-driven IT certification prep — curated resources, 1,590+ original practice questions, anti-dump pledge. AWS, Azure, GCP, CISSP, CCNA, CKA & more.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/awesome-cert-sherpa",
-      "homepage": "https://thanhnguyxnorg.github.io/awesome-cert-sherpa/",
-      "language": "TypeScript",
-      "stargazers_count": 1,
-      "forks_count": 2,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "awesome-list",
-        "aws",
-        "azure",
-        "ccna",
-        "certification",
-        "cissp",
-        "docusaurus",
-        "exam-prep",
-        "gcp",
-        "kubernetes",
-        "open-source",
-        "security-plus",
-        "terraform"
-      ],
-      "created_at": "2026-05-17T13:53:41Z",
-      "updated_at": "2026-10-19T15:16:30Z",
-      "pushed_at": "2026-10-19T15:16:26Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/awesome-cert-sherpa.png",
-      "logo": "/logos/awesome-cert-sherpa.png"
     },
     {
       "name": "lagvex",
