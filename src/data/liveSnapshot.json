@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-10-26",
-  "syncedIso": "2026-10-26T12:28:08.154Z",
+  "syncedIso": "2026-10-26T22:24:44.197Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 19,
@@ -8,19 +8,79 @@
     "forks": 8,
     "demos": 6,
     "packages": 2,
-    "downloads30d": 184
+    "downloads30d": 440
   },
   "npmPackages": {
     "archpulse": {
-      "downloads": 65,
+      "downloads": 73,
       "version": "v0.5.3"
     },
     "production-backend-kit": {
-      "downloads": 119,
+      "downloads": 367,
       "version": "v1.1.2"
     }
   },
   "repos": [
+    {
+      "name": "apidex-hub",
+      "slug": "apidex-hub",
+      "description": "🌐 A curated collection of awesome free APIs for developers. Categorized, tested daily, and well-documented. Your one-stop resource for public APIs.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/apidex-hub",
+      "homepage": "https://thanhnguyxnorg.github.io/apidex-hub/",
+      "language": "TypeScript",
+      "stargazers_count": 1,
+      "forks_count": 3,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "api",
+        "api-collection",
+        "api-directory",
+        "api-list",
+        "apis",
+        "awesome",
+        "awesome-list",
+        "developer-resources",
+        "developer-tools",
+        "free",
+        "free-api",
+        "open-source",
+        "public-apis",
+        "resources",
+        "rest-api"
+      ],
+      "created_at": "2026-05-07T06:43:42Z",
+      "updated_at": "2026-10-26T16:49:58Z",
+      "pushed_at": "2026-10-26T16:49:51Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/apidex-hub.png",
+      "logo": "/logos/apidex-hub.svg"
+    },
+    {
+      "name": "ThanhNguyxnOrg.github.io",
+      "slug": "thanhnguyxnorg.github.io",
+      "description": "Org site: build, explore, evolve.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
+      "homepage": "https://thanhnguyxnorg.github.io/",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [],
+      "created_at": "2026-10-13T13:31:35Z",
+      "updated_at": "2026-10-26T12:28:14Z",
+      "pushed_at": "2026-10-26T12:28:10Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/org-github.png",
+      "logo": "/logo.png"
+    },
     {
       "name": "awesome-cert-sherpa",
       "slug": "awesome-cert-sherpa",
@@ -57,66 +117,6 @@
       "archived": false,
       "image": "/brand/awesome-cert-sherpa.png",
       "logo": "/logos/awesome-cert-sherpa.png"
-    },
-    {
-      "name": "ThanhNguyxnOrg.github.io",
-      "slug": "thanhnguyxnorg.github.io",
-      "description": "Org site: build, explore, evolve.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
-      "homepage": "https://thanhnguyxnorg.github.io/",
-      "language": "TypeScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [],
-      "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-10-26T03:47:48Z",
-      "pushed_at": "2026-10-26T03:47:45Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/org-github.png",
-      "logo": "/logo.png"
-    },
-    {
-      "name": "apidex-hub",
-      "slug": "apidex-hub",
-      "description": "🌐 A curated collection of awesome free APIs for developers. Categorized, tested daily, and well-documented. Your one-stop resource for public APIs.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/apidex-hub",
-      "homepage": "https://thanhnguyxnorg.github.io/apidex-hub/",
-      "language": "TypeScript",
-      "stargazers_count": 1,
-      "forks_count": 3,
-      "open_issues_count": 1,
-      "has_pages": true,
-      "topics": [
-        "api",
-        "api-collection",
-        "api-directory",
-        "api-list",
-        "apis",
-        "awesome",
-        "awesome-list",
-        "developer-resources",
-        "developer-tools",
-        "free",
-        "free-api",
-        "open-source",
-        "public-apis",
-        "resources",
-        "rest-api"
-      ],
-      "created_at": "2026-05-07T06:43:42Z",
-      "updated_at": "2026-10-26T02:54:31Z",
-      "pushed_at": "2026-10-26T02:54:28Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/apidex-hub.png",
-      "logo": "/logos/apidex-hub.svg"
     },
     {
       "name": "cogmint",
