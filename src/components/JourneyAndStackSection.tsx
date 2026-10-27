@@ -220,6 +220,7 @@ export default function JourneyAndStackSection({
                             title={spotlightProject.name}
                             image={spotlightProject.image}
                             logo={spotlightProject.logo}
+                            logoBare={spotlightProject.logoBare}
                             pattern={spotlightProject.pattern}
                             accent={spotlightProject.accent}
                             className="h-full w-full"

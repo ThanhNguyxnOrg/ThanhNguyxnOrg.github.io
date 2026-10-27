@@ -68,6 +68,7 @@ export default function FeaturedSection({
                   title={lead.name}
                   image={lead.image}
                   logo={lead.logo}
+                  logoBare={lead.logoBare}
                   pattern={lead.pattern}
                   accent={lead.accent}
                   className="h-full w-full"
@@ -196,6 +197,7 @@ export default function FeaturedSection({
                           title={project.name}
                           image={project.image}
                           logo={project.logo}
+                          logoBare={project.logoBare}
                           pattern={project.pattern}
                           accent={project.accent}
                           className="h-full w-full"

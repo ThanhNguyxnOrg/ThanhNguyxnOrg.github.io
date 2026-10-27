@@ -35,6 +35,7 @@ export interface OrgProject {
   pattern: GlyphPattern;
   image: string | null;
   logo: string | null;
+  logoBare?: boolean;
 }
 
 export interface TimelineStop {
@@ -206,6 +207,7 @@ export const ORG_PROJECTS: OrgProject[] = [
     accent: 'secondary',
     pattern: 'orbit',
     logo: '/logos/afterframe-the-last-loop.png',
+    logoBare: true,
     image: '/brand/afterframe-the-last-loop.png',
   },
   {

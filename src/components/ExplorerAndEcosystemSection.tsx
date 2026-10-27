@@ -143,6 +143,7 @@ export default function ExplorerAndEcosystemSection({
                 title={project.name}
                 image={project.image}
                 logo={project.logo}
+                logoBare={project.logoBare}
                 pattern={project.pattern}
                 accent={project.accent}
                 className="h-full w-full"

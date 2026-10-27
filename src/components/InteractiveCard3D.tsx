@@ -167,6 +167,7 @@ export function ProjectArtwork({
   accent = 'primary',
   className = '',
   compact = false,
+  logoBare = false,
 }: {
   title: string;
   image: string | null;
@@ -175,6 +176,7 @@ export function ProjectArtwork({
   accent?: GlyphAccent;
   className?: string;
   compact?: boolean;
+  logoBare?: boolean;
 }) {
   const lowerSlug = title.trim().toLowerCase();
   const compactSlug = lowerSlug.replace(/[^a-z0-9]+/g, '');
@@ -320,7 +322,13 @@ export function ProjectArtwork({
 
       {/* Optional Repository Logo Emblem (Auto-Loaded from /public/logos/<repo>) */}
       {!compact && activeLogo && (
-        <div className="pointer-events-none absolute bottom-3 left-3 z-30 flex size-8 items-center justify-center overflow-hidden rounded-lg border border-[#2D3854]/90 bg-[#07090F]/90 p-1 shadow-lg">
+        <div
+          className={`pointer-events-none absolute bottom-3 left-3 z-30 flex items-center justify-center overflow-hidden rounded-lg ${
+            logoBare
+              ? 'size-10 bg-transparent p-0 drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]'
+              : 'size-8 border border-[#2D3854]/90 bg-[#07090F]/90 p-1 shadow-lg'
+          }`}
+        >
           <img
             src={activeLogo}
             alt=""
