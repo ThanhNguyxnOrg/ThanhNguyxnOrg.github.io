@@ -12,8 +12,7 @@ import {
 import { mergeLiveGitHubRepos } from './liveSync';
 
 test('dataset integrity matches baked totals', () => {
-  assert.equal(ORG_PROJECTS.length, 19);
-  assert.equal(ORG_METADATA.totals.repos, 19);
+  assert.equal(ORG_PROJECTS.length, ORG_METADATA.totals.repos);
 
   const totalStars = ORG_PROJECTS.reduce((acc, p) => acc + p.stars, 0);
   assert.equal(totalStars, ORG_METADATA.totals.stars);
@@ -48,9 +47,11 @@ test('filterAndSortProjects supports scientific impact sort, live demo filter, a
     topics: [],
     sort: 'scientific',
   });
-  assert.equal(scientificSorted.length, 19);
+  assert.equal(scientificSorted.length, ORG_PROJECTS.length);
   const firstScore = assessProjectScientifically(scientificSorted[0]).score;
-  const lastScore = assessProjectScientifically(scientificSorted[18]).score;
+  const lastScore = assessProjectScientifically(
+    scientificSorted[scientificSorted.length - 1],
+  ).score;
   assert.ok(firstScore >= lastScore);
 
   const demos = filterAndSortProjects(ORG_PROJECTS, {
@@ -60,15 +61,16 @@ test('filterAndSortProjects supports scientific impact sort, live demo filter, a
     onlyLiveDemos: true,
     sort: 'az',
   });
-  assert.equal(demos.length, 6);
+  const expectedDemos = ORG_PROJECTS.filter((project) => Boolean(project.demoUrl)).length;
+  assert.equal(demos.length, expectedDemos);
   assert.equal(demos[0].name, 'apidex-hub');
 });
 
-test('groupProjectsByCluster partitions all 19 repositories into 4 logical engineering clusters', () => {
+test('groupProjectsByCluster partitions all repositories into 4 logical engineering clusters', () => {
   const clusters = groupProjectsByCluster(ORG_PROJECTS);
   assert.equal(clusters.length, 4);
   const totalInClusters = clusters.reduce((sum, c) => sum + c.items.length, 0);
-  assert.equal(totalInClusters, 19);
+  assert.equal(totalInClusters, ORG_PROJECTS.length);
 });
 
 test('mergeLiveGitHubRepos updates stars, preserves curated story, and never duplicates existing repos', () => {
@@ -120,15 +122,18 @@ test('mergeLiveGitHubRepos updates stars, preserves curated story, and never dup
     },
   ]);
 
-  // 19 existing + 1 brand-new = 20 (zero duplicates)
-  assert.equal(updated.length, 20);
+  // Existing curated repositories + 1 brand-new = zero duplicates
+  assert.equal(updated.length, ORG_PROJECTS.length + 1);
 
+  const originalBlendops = ORG_PROJECTS.find((p) => p.slug === 'blendops')!;
   const blendops = updated.find((p) => p.slug === 'blendops')!;
   assert.equal(blendops.stars, 12);
   assert.equal(blendops.forks, 3);
   // Self-referential github.com homepage should not become a fake demoUrl
   assert.equal(blendops.demoUrl, null);
   assert.ok(blendops.story && blendops.story.length > 10);
+  // A shorter live description must not overwrite richer curated copy
+  assert.equal(blendops.description, originalBlendops.description);
 
   const switcherMatches = updated.filter((p) => p.slug === 'git-account-switcher');
   assert.equal(switcherMatches.length, 1);
@@ -143,8 +148,11 @@ test('mergeLiveGitHubRepos updates stars, preserves curated story, and never dup
 
 test('computeLanguageBreakdown calculates accurate counts and relative percentages', () => {
   const breakdown = computeLanguageBreakdown(ORG_PROJECTS);
+  const expectedTypeScript = ORG_PROJECTS.filter(
+    (project) => project.language === 'TypeScript',
+  ).length;
   assert.equal(breakdown[0].language, 'TypeScript');
-  assert.equal(breakdown[0].count, 7);
+  assert.equal(breakdown[0].count, expectedTypeScript);
   assert.equal(breakdown[0].percentage, 100);
 });
 
@@ -158,7 +166,7 @@ test('computeOrbitalPositions assigns non-overlapping 3D coordinates across 3 ri
   const normal = computeOrbitalPositions(ORG_PROJECTS, 0);
   const exploded = computeOrbitalPositions(ORG_PROJECTS, 1);
 
-  assert.equal(normal.length, 19);
-  assert.equal(exploded.length, 19);
+  assert.equal(normal.length, ORG_PROJECTS.length);
+  assert.equal(exploded.length, ORG_PROJECTS.length);
   assert.ok(exploded[0].radius > normal[0].radius);
 });

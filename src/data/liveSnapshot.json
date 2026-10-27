@@ -1,9 +1,9 @@
 {
   "syncedAt": "2026-10-27",
-  "syncedIso": "2026-10-27T11:46:47.752Z",
+  "syncedIso": "2026-10-27T13:11:32.922Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
-    "repos": 19,
+    "repos": 20,
     "stars": 12,
     "forks": 8,
     "demos": 6,
@@ -21,6 +21,89 @@
     }
   },
   "repos": [
+    {
+      "name": "AFTERFRAME-THE-LAST-LOOP",
+      "slug": "afterframe-the-last-loop",
+      "description": "A cinematic sci-fi action RPG about fractured timelines, temporal technology, and the mystery of the last loop. In active development.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/AFTERFRAME-THE-LAST-LOOP",
+      "homepage": "",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": false,
+      "topics": [
+        "action-rpg",
+        "afterframe",
+        "boss-fight",
+        "game-design",
+        "game-development",
+        "in-development",
+        "indie-game",
+        "sci-fi",
+        "temporal-mechanics",
+        "the-last-loop"
+      ],
+      "created_at": "2026-10-27T12:54:19Z",
+      "updated_at": "2026-10-27T13:10:47Z",
+      "pushed_at": "2026-10-27T13:08:57Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/afterframe-the-last-loop.png",
+      "logo": "/logos/afterframe-the-last-loop.png"
+    },
+    {
+      "name": "WriteCanvas",
+      "slug": "writecanvas",
+      "description": "Cross-platform desktop handwriting and note-taking app with pressure-sensitive inking, multi-page canvases, and Scrble Ink-compatible PNG notes.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/WriteCanvas",
+      "homepage": "https://github.com/ThanhNguyxnOrg/WriteCanvas",
+      "language": "JavaScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": false,
+      "topics": [
+        "canvas",
+        "digital-inking",
+        "handwriting",
+        "ink-replay",
+        "note-taking",
+        "stylu"
+      ],
+      "created_at": "2026-10-19T12:48:16Z",
+      "updated_at": "2026-10-27T12:13:54Z",
+      "pushed_at": "2026-10-27T12:13:49Z",
+      "default_branch": "master",
+      "license": {
+        "spdx_id": "Apache-2.0"
+      },
+      "archived": false,
+      "image": "/brand/writecanvas.png",
+      "logo": "/logos/writecanvas.png"
+    },
+    {
+      "name": "ThanhNguyxnOrg.github.io",
+      "slug": "thanhnguyxnorg.github.io",
+      "description": "Org site: build, explore, evolve.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
+      "homepage": "https://thanhnguyxnorg.github.io/",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [],
+      "created_at": "2026-10-13T13:31:35Z",
+      "updated_at": "2026-10-27T11:46:54Z",
+      "pushed_at": "2026-10-27T11:46:49Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/org-github.png",
+      "logo": "/logo.png"
+    },
     {
       "name": "apidex-hub",
       "slug": "apidex-hub",
@@ -59,27 +142,6 @@
       "archived": false,
       "image": "/brand/apidex-hub.png",
       "logo": "/logos/apidex-hub.svg"
-    },
-    {
-      "name": "ThanhNguyxnOrg.github.io",
-      "slug": "thanhnguyxnorg.github.io",
-      "description": "Org site: build, explore, evolve.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
-      "homepage": "https://thanhnguyxnorg.github.io/",
-      "language": "TypeScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [],
-      "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-10-27T04:10:50Z",
-      "pushed_at": "2026-10-27T04:10:45Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/org-github.png",
-      "logo": "/logo.png"
     },
     {
       "name": "awesome-cert-sherpa",
@@ -344,36 +406,6 @@
       "archived": false,
       "image": "/brand/layoutlingua.png",
       "logo": "/logos/layoutlingua.png"
-    },
-    {
-      "name": "WriteCanvas",
-      "slug": "writecanvas",
-      "description": "Cross-platform desktop handwriting and note-taking app with pressure-sensitive inking, multi-page canvases, and Scrble Ink-compatible PNG notes.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/WriteCanvas",
-      "homepage": "https://github.com/ThanhNguyxnOrg/WriteCanvas",
-      "language": "JavaScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": false,
-      "topics": [
-        "canvas",
-        "digital-inking",
-        "handwriting",
-        "ink-replay",
-        "note-taking",
-        "stylu"
-      ],
-      "created_at": "2026-10-19T12:48:16Z",
-      "updated_at": "2026-10-25T11:15:06Z",
-      "pushed_at": "2026-10-25T11:15:02Z",
-      "default_branch": "master",
-      "license": {
-        "spdx_id": "Apache-2.0"
-      },
-      "archived": false,
-      "image": "/brand/writecanvas.png",
-      "logo": "/logos/writecanvas.png"
     },
     {
       "name": ".github",

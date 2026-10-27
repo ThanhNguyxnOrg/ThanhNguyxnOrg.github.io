@@ -60,15 +60,20 @@ interface GitHubRepoPayload {
 const CACHE_KEY = 'thanhnguyxnorg_live_sync_v7';
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 
-export const WORKFLOW_YAML_SNIPPET = `name: Zero-Touch Auto-Sync ThanhNguyxnOrg Telemetry & Pages Deploy
+export const WORKFLOW_YAML_SNIPPET = `name: Sync telemetry and deploy
 on:
   schedule:
-    - cron: '0 */6 * * *' # Runs every 6 hours automatically
+    - cron: '0 */6 * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [org-repo-updated, release-published]
   push:
     branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   sync-verify-and-deploy:
@@ -76,12 +81,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '22', cache: 'npm' }
-      - run: npm install
-      - run: npm run sync # Deduplicates & fuzzy-matches /public/brand|logos
-      - run: npm test     # Verifies scientific & 3D orbital unit tests
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run brand:sync
+      - run: npm run sync
+      - run: npm test && npm run lint
+      - name: Commit synced data
+        run: |
+          git config user.name "ThanhNguyxnAgent[bot]"
+          git config user.email "296222857+thanhnguyxnagent[bot]@users.noreply.github.com"
+          git add -A src/data/liveSnapshot.json public/logos public/brand
+          git diff --cached --quiet || git commit -m "chore(sync): update live telemetry and brand assets [skip ci]"
+          git diff --cached --quiet || git push
       - run: npm run build
-      - uses: actions/deploy-pages@v4`;
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: ./dist }
+      - uses: actions/deploy-pages@v5`;
 
 export function compactRepoKey(value: string): string {
   return String(value || '')
@@ -211,10 +226,14 @@ export function mergeLiveGitHubRepos(
     consumedLiveNames.add(compactRepoKey(live.name));
 
     const slug = baked.slug.toLowerCase();
+    const liveDescription = live.description?.trim();
     merged.push({
       ...baked,
-      description: live.description && live.description.trim().length > 0 ? live.description : baked.description,
-      blurb: baked.blurb || live.description || baked.description,
+      description:
+        liveDescription && liveDescription.length > baked.description.trim().length
+          ? liveDescription
+          : baked.description,
+      blurb: baked.blurb || liveDescription || baked.description,
       stars:
         typeof live.stargazers_count === 'number'
           ? Math.max(baked.stars, live.stargazers_count)
