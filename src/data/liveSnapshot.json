@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-10-27",
-  "syncedIso": "2026-10-27T04:10:43.976Z",
+  "syncedIso": "2026-10-27T11:46:47.752Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 19,
@@ -30,7 +30,7 @@
       "language": "TypeScript",
       "stargazers_count": 1,
       "forks_count": 3,
-      "open_issues_count": 0,
+      "open_issues_count": 1,
       "has_pages": true,
       "topics": [
         "api",
@@ -50,8 +50,8 @@
         "rest-api"
       ],
       "created_at": "2026-05-07T06:43:42Z",
-      "updated_at": "2026-10-27T03:28:13Z",
-      "pushed_at": "2026-10-27T03:28:09Z",
+      "updated_at": "2026-10-27T10:09:06Z",
+      "pushed_at": "2026-10-27T10:09:02Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -73,8 +73,8 @@
       "has_pages": true,
       "topics": [],
       "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-10-26T22:24:50Z",
-      "pushed_at": "2026-10-26T22:24:46Z",
+      "updated_at": "2026-10-27T04:10:50Z",
+      "pushed_at": "2026-10-27T04:10:45Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
