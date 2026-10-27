@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-10-27",
-  "syncedIso": "2026-10-27T13:11:32.922Z",
+  "syncedIso": "2026-10-27T13:19:47.475Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 20,
@@ -21,6 +21,27 @@
     }
   },
   "repos": [
+    {
+      "name": "ThanhNguyxnOrg.github.io",
+      "slug": "thanhnguyxnorg.github.io",
+      "description": "Org site: build, explore, evolve.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
+      "homepage": "https://thanhnguyxnorg.github.io/",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [],
+      "created_at": "2026-10-13T13:31:35Z",
+      "updated_at": "2026-10-27T13:19:33Z",
+      "pushed_at": "2026-10-27T13:19:29Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/org-github.png",
+      "logo": "/logo.png"
+    },
     {
       "name": "AFTERFRAME-THE-LAST-LOOP",
       "slug": "afterframe-the-last-loop",
@@ -82,27 +103,6 @@
       "archived": false,
       "image": "/brand/writecanvas.png",
       "logo": "/logos/writecanvas.png"
-    },
-    {
-      "name": "ThanhNguyxnOrg.github.io",
-      "slug": "thanhnguyxnorg.github.io",
-      "description": "Org site: build, explore, evolve.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
-      "homepage": "https://thanhnguyxnorg.github.io/",
-      "language": "TypeScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [],
-      "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-10-27T11:46:54Z",
-      "pushed_at": "2026-10-27T11:46:49Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/org-github.png",
-      "logo": "/logo.png"
     },
     {
       "name": "apidex-hub",
