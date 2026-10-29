@@ -848,7 +848,7 @@ export const ORG_PROJECTS: OrgProject[] = [
     accent: 'primary',
     pattern: 'stack',
     logo: 'https://raw.githubusercontent.com/ThanhNguyxnOrg/Techstack-Studio/main/public/icon-192.png',
-    image: 'https://raw.githubusercontent.com/ThanhNguyxnOrg/Techstack-Studio/main/public/Techstack-Studio%20theme.png',
+    image: 'https://raw.githubusercontent.com/ThanhNguyxnOrg/Techstack-Studio/7da8f0250de31a0d93b9a71ae4689b9e63a082c9/public/Techstack-Studio%20theme.png',
   },
   {
     name: 'ThanhNguyxnOrg.github.io',
