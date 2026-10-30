@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-10-30",
-  "syncedIso": "2026-10-30T12:21:26.195Z",
+  "syncedIso": "2026-10-30T15:30:36.875Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 21,
@@ -8,19 +8,72 @@
     "forks": 8,
     "demos": 7,
     "packages": 2,
-    "downloads30d": 104
+    "downloads30d": 99
   },
   "npmPackages": {
     "archpulse": {
-      "downloads": 34,
+      "downloads": 33,
       "version": "v0.5.3"
     },
     "production-backend-kit": {
-      "downloads": 70,
+      "downloads": 66,
       "version": "v1.1.2"
     }
   },
   "repos": [
+    {
+      "name": "ThanhNguyxnOrg.github.io",
+      "slug": "thanhnguyxnorg.github.io",
+      "description": "Org site: build, explore, evolve.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
+      "homepage": "https://thanhnguyxnorg.github.io/",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [],
+      "created_at": "2026-10-13T13:31:35Z",
+      "updated_at": "2026-10-30T15:30:19Z",
+      "pushed_at": "2026-10-30T15:30:14Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/org-github.png",
+      "logo": "/logo.png"
+    },
+    {
+      "name": "AFTERFRAME-THE-LAST-LOOP",
+      "slug": "afterframe-the-last-loop",
+      "description": "A cinematic sci-fi action RPG about fractured timelines, temporal technology, and the mystery of the last loop. In active development.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/AFTERFRAME-THE-LAST-LOOP",
+      "homepage": "",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": false,
+      "topics": [
+        "action-rpg",
+        "afterframe",
+        "boss-fight",
+        "game-design",
+        "game-development",
+        "in-development",
+        "indie-game",
+        "sci-fi",
+        "temporal-mechanics",
+        "the-last-loop"
+      ],
+      "created_at": "2026-10-27T12:54:19Z",
+      "updated_at": "2026-10-30T14:42:02Z",
+      "pushed_at": "2026-10-30T14:41:58Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/afterframe-the-last-loop.png",
+      "logo": "/logos/afterframe-the-last-loop.png"
+    },
     {
       "name": "LayoutLingua",
       "slug": "layoutlingua",
@@ -52,8 +105,8 @@
         "translation"
       ],
       "created_at": "2026-09-04T06:23:25Z",
-      "updated_at": "2026-10-30T09:30:30Z",
-      "pushed_at": "2026-10-30T09:30:26Z",
+      "updated_at": "2026-10-30T14:34:37Z",
+      "pushed_at": "2026-10-30T14:34:32Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -134,59 +187,6 @@
       "archived": false,
       "image": null,
       "logo": null
-    },
-    {
-      "name": "ThanhNguyxnOrg.github.io",
-      "slug": "thanhnguyxnorg.github.io",
-      "description": "Org site: build, explore, evolve.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
-      "homepage": "https://thanhnguyxnorg.github.io/",
-      "language": "TypeScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [],
-      "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-10-30T04:52:05Z",
-      "pushed_at": "2026-10-30T04:52:00Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/org-github.png",
-      "logo": "/logo.png"
-    },
-    {
-      "name": "AFTERFRAME-THE-LAST-LOOP",
-      "slug": "afterframe-the-last-loop",
-      "description": "A cinematic sci-fi action RPG about fractured timelines, temporal technology, and the mystery of the last loop. In active development.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/AFTERFRAME-THE-LAST-LOOP",
-      "homepage": "",
-      "language": "TypeScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": false,
-      "topics": [
-        "action-rpg",
-        "afterframe",
-        "boss-fight",
-        "game-design",
-        "game-development",
-        "in-development",
-        "indie-game",
-        "sci-fi",
-        "temporal-mechanics",
-        "the-last-loop"
-      ],
-      "created_at": "2026-10-27T12:54:19Z",
-      "updated_at": "2026-10-29T16:12:00Z",
-      "pushed_at": "2026-10-29T16:11:56Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/afterframe-the-last-loop.png",
-      "logo": "/logos/afterframe-the-last-loop.png"
     },
     {
       "name": "PurgeKit",
