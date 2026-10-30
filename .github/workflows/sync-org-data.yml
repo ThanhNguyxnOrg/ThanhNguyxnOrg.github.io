@@ -28,11 +28,11 @@ jobs:
     steps:
       - name: Create ThanhNguyxnAGent App token
         id: agent-token
-        if: ${{ vars.THANHNGUYN_AGENT_APP_ID != '' }}
+        if: ${{ vars.BOT_APP_ID != '' }}
         uses: actions/create-github-app-token@v2
         with:
-          app-id: ${{ vars.THANHNGUYN_AGENT_APP_ID }}
-          private-key: ${{ secrets.THANHNGUYN_AGENT_PRIVATE_KEY }}
+          app-id: ${{ vars.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
           owner: ThanhNguyxnOrg
           repositories: ThanhNguyxnOrg.github.io
 
