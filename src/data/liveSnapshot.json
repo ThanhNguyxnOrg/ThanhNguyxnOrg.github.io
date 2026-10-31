@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-10-31",
-  "syncedIso": "2026-10-31T04:07:30.538Z",
+  "syncedIso": "2026-10-31T04:37:57.905Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 21,
@@ -22,6 +22,40 @@
   },
   "repos": [
     {
+      "name": "Techstack-Studio",
+      "slug": "techstack-studio",
+      "description": "Compose, customize, and export animated SVG technology stacks for GitHub READMEs, portfolios, and websites.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/Techstack-Studio",
+      "homepage": "https://thanhnguyxnorg.github.io/Techstack-Studio/",
+      "language": "JavaScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "animated-svg",
+        "developer-tools",
+        "github-readme",
+        "react",
+        "readme",
+        "svg",
+        "tailwindcss",
+        "tech-stack",
+        "typescript",
+        "vite"
+      ],
+      "created_at": "2026-10-28T13:41:16Z",
+      "updated_at": "2026-10-31T04:14:51Z",
+      "pushed_at": "2026-10-31T04:21:12Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": null,
+      "logo": null
+    },
+    {
       "name": "ThanhNguyxnOrg.github.io",
       "slug": "thanhnguyxnorg.github.io",
       "description": "Org site: build, explore, evolve.",
@@ -34,8 +68,8 @@
       "has_pages": true,
       "topics": [],
       "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-10-31T04:07:10Z",
-      "pushed_at": "2026-10-31T04:07:06Z",
+      "updated_at": "2026-10-31T04:07:36Z",
+      "pushed_at": "2026-10-31T04:07:32Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
@@ -153,40 +187,6 @@
       "archived": false,
       "image": "/brand/apidex-hub.png",
       "logo": "/logos/apidex-hub.svg"
-    },
-    {
-      "name": "Techstack-Studio",
-      "slug": "techstack-studio",
-      "description": "Compose, customize, and export animated SVG technology stacks for GitHub READMEs, portfolios, and websites.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/Techstack-Studio",
-      "homepage": "https://thanhnguyxnorg.github.io/Techstack-Studio/",
-      "language": "JavaScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "animated-svg",
-        "developer-tools",
-        "github-readme",
-        "react",
-        "readme",
-        "svg",
-        "tailwindcss",
-        "tech-stack",
-        "typescript",
-        "vite"
-      ],
-      "created_at": "2026-10-28T13:41:16Z",
-      "updated_at": "2026-10-30T06:12:02Z",
-      "pushed_at": "2026-10-30T06:11:58Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": null,
-      "logo": null
     },
     {
       "name": "PurgeKit",
