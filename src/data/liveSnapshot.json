@@ -1,6 +1,6 @@
 {
-  "syncedAt": "2026-11-02",
-  "syncedIso": "2026-11-02T15:03:01.074Z",
+  "syncedAt": "2026-11-03",
+  "syncedIso": "2026-11-03T00:42:45.635Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 21,
@@ -8,7 +8,7 @@
     "forks": 8,
     "demos": 7,
     "packages": 2,
-    "downloads30d": 87
+    "downloads30d": 93
   },
   "npmPackages": {
     "archpulse": {
@@ -16,11 +16,32 @@
       "version": "v0.5.3"
     },
     "production-backend-kit": {
-      "downloads": 55,
+      "downloads": 61,
       "version": "v1.1.2"
     }
   },
   "repos": [
+    {
+      "name": "ThanhNguyxnOrg.github.io",
+      "slug": "thanhnguyxnorg.github.io",
+      "description": "Org site: build, explore, evolve.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
+      "homepage": "https://thanhnguyxnorg.github.io/",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [],
+      "created_at": "2026-10-13T13:31:35Z",
+      "updated_at": "2026-11-02T15:03:07Z",
+      "pushed_at": "2026-11-02T15:03:02Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/org-github.png",
+      "logo": "/logo.png"
+    },
     {
       "name": "awesome-cert-sherpa",
       "slug": "awesome-cert-sherpa",
@@ -123,27 +144,6 @@
       "archived": false,
       "image": null,
       "logo": null
-    },
-    {
-      "name": "ThanhNguyxnOrg.github.io",
-      "slug": "thanhnguyxnorg.github.io",
-      "description": "Org site: build, explore, evolve.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
-      "homepage": "https://thanhnguyxnorg.github.io/",
-      "language": "TypeScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [],
-      "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-11-02T04:58:37Z",
-      "pushed_at": "2026-11-02T04:58:34Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/org-github.png",
-      "logo": "/logo.png"
     },
     {
       "name": "cogmint",
