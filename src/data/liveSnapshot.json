@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-11-03",
-  "syncedIso": "2026-11-03T13:48:12.999Z",
+  "syncedIso": "2026-11-03T22:59:34.345Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 21,
@@ -21,6 +21,27 @@
     }
   },
   "repos": [
+    {
+      "name": "ThanhNguyxnOrg.github.io",
+      "slug": "thanhnguyxnorg.github.io",
+      "description": "Org site: build, explore, evolve.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
+      "homepage": "https://thanhnguyxnorg.github.io/",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [],
+      "created_at": "2026-10-13T13:31:35Z",
+      "updated_at": "2026-11-03T13:48:19Z",
+      "pushed_at": "2026-11-03T13:48:15Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/org-github.png",
+      "logo": "/logo.png"
+    },
     {
       "name": "Techstack-Studio",
       "slug": "techstack-studio",
@@ -132,27 +153,6 @@
       "archived": false,
       "image": "/brand/apidex-hub.png",
       "logo": "/logos/apidex-hub.svg"
-    },
-    {
-      "name": "ThanhNguyxnOrg.github.io",
-      "slug": "thanhnguyxnorg.github.io",
-      "description": "Org site: build, explore, evolve.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
-      "homepage": "https://thanhnguyxnorg.github.io/",
-      "language": "TypeScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [],
-      "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-11-03T00:42:54Z",
-      "pushed_at": "2026-11-03T00:42:48Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/org-github.png",
-      "logo": "/logo.png"
     },
     {
       "name": "awesome-cert-sherpa",
