@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-11-05",
-  "syncedIso": "2026-11-05T05:41:13.365Z",
+  "syncedIso": "2026-11-05T14:14:08.662Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 21,
@@ -12,11 +12,11 @@
   },
   "npmPackages": {
     "archpulse": {
-      "downloads": 28,
+      "downloads": 23,
       "version": "v0.5.3"
     },
     "production-backend-kit": {
-      "downloads": 63,
+      "downloads": 68,
       "version": "v1.1.2"
     }
   },
@@ -45,8 +45,8 @@
         "youtube"
       ],
       "created_at": "2026-05-10T02:58:10Z",
-      "updated_at": "2026-11-05T05:22:51Z",
-      "pushed_at": "2026-11-05T05:22:47Z",
+      "updated_at": "2026-11-05T13:36:39Z",
+      "pushed_at": "2026-11-05T13:36:35Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -54,6 +54,54 @@
       "archived": false,
       "image": "/brand/lumeo.png",
       "logo": "/logos/lumeo.png"
+    },
+    {
+      "name": ".github",
+      "slug": ".github",
+      "description": "Organization profile and community health files for ThanhNguyxnOrg",
+      "html_url": "https://github.com/ThanhNguyxnOrg/.github",
+      "homepage": null,
+      "language": "Python",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": false,
+      "topics": [
+        "community-health",
+        "docs",
+        "github",
+        "organization",
+        "templates"
+      ],
+      "created_at": "2026-05-06T10:34:21Z",
+      "updated_at": "2026-11-05T10:57:36Z",
+      "pushed_at": "2026-11-05T10:57:32Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/org-github.png",
+      "logo": "/logo.png"
+    },
+    {
+      "name": "ThanhNguyxnOrg.github.io",
+      "slug": "thanhnguyxnorg.github.io",
+      "description": "Org site: build, explore, evolve.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
+      "homepage": "https://thanhnguyxnorg.github.io/",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [],
+      "created_at": "2026-10-13T13:31:35Z",
+      "updated_at": "2026-11-05T05:41:19Z",
+      "pushed_at": "2026-11-05T05:41:15Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/org-github.png",
+      "logo": "/logo.png"
     },
     {
       "name": "apidex-hub",
@@ -93,54 +141,6 @@
       "archived": false,
       "image": "/brand/apidex-hub.png",
       "logo": "/logos/apidex-hub.svg"
-    },
-    {
-      "name": "ThanhNguyxnOrg.github.io",
-      "slug": "thanhnguyxnorg.github.io",
-      "description": "Org site: build, explore, evolve.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
-      "homepage": "https://thanhnguyxnorg.github.io/",
-      "language": "TypeScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [],
-      "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-11-04T23:21:47Z",
-      "pushed_at": "2026-11-04T23:21:43Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/org-github.png",
-      "logo": "/logo.png"
-    },
-    {
-      "name": ".github",
-      "slug": ".github",
-      "description": "Organization profile and community health files for ThanhNguyxnOrg",
-      "html_url": "https://github.com/ThanhNguyxnOrg/.github",
-      "homepage": null,
-      "language": "Python",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": false,
-      "topics": [
-        "community-health",
-        "docs",
-        "github",
-        "organization",
-        "templates"
-      ],
-      "created_at": "2026-05-06T10:34:21Z",
-      "updated_at": "2026-11-04T13:30:28Z",
-      "pushed_at": "2026-11-04T13:30:24Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/org-github.png",
-      "logo": "/logo.png"
     },
     {
       "name": "AFTERFRAME-THE-LAST-LOOP",
