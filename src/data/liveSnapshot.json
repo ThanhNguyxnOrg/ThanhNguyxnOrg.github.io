@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-11-06",
-  "syncedIso": "2026-11-06T05:38:40.421Z",
+  "syncedIso": "2026-11-06T13:54:32.653Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 21,
@@ -8,19 +8,40 @@
     "forks": 8,
     "demos": 8,
     "packages": 2,
-    "downloads30d": 91
+    "downloads30d": 100
   },
   "npmPackages": {
     "archpulse": {
-      "downloads": 23,
+      "downloads": 24,
       "version": "v0.5.3"
     },
     "production-backend-kit": {
-      "downloads": 68,
+      "downloads": 76,
       "version": "v1.1.2"
     }
   },
   "repos": [
+    {
+      "name": "ThanhNguyxnOrg.github.io",
+      "slug": "thanhnguyxnorg.github.io",
+      "description": "Org site: build, explore, evolve.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
+      "homepage": "https://thanhnguyxnorg.github.io/",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [],
+      "created_at": "2026-10-13T13:31:35Z",
+      "updated_at": "2026-11-06T05:38:46Z",
+      "pushed_at": "2026-11-06T05:38:42Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/org-github.png",
+      "logo": "/logo.png"
+    },
     {
       "name": "apidex-hub",
       "slug": "apidex-hub",
@@ -166,27 +187,6 @@
       "archived": false,
       "image": "/brand/blendops.png",
       "logo": "/logos/blendops.png"
-    },
-    {
-      "name": "ThanhNguyxnOrg.github.io",
-      "slug": "thanhnguyxnorg.github.io",
-      "description": "Org site: build, explore, evolve.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
-      "homepage": "https://thanhnguyxnorg.github.io/",
-      "language": "TypeScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [],
-      "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-11-05T14:14:15Z",
-      "pushed_at": "2026-11-05T14:14:10Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/org-github.png",
-      "logo": "/logo.png"
     },
     {
       "name": ".github",
