@@ -1,11 +1,11 @@
 {
   "syncedAt": "2026-11-07",
-  "syncedIso": "2026-11-07T12:38:52.278Z",
+  "syncedIso": "2026-11-07T21:35:12.323Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 21,
     "stars": 12,
-    "forks": 9,
+    "forks": 10,
     "demos": 8,
     "packages": 2,
     "downloads30d": 103
@@ -22,6 +22,74 @@
   },
   "repos": [
     {
+      "name": "Techstack-Studio",
+      "slug": "techstack-studio",
+      "description": "Compose, customize, and export animated SVG technology stacks for GitHub READMEs, portfolios, and websites.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/Techstack-Studio",
+      "homepage": "https://thanhnguyxnorg.github.io/Techstack-Studio/",
+      "language": "JavaScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "animated-svg",
+        "developer-tools",
+        "github-readme",
+        "react",
+        "readme",
+        "svg",
+        "tailwindcss",
+        "tech-stack",
+        "typescript",
+        "vite"
+      ],
+      "created_at": "2026-10-28T13:41:16Z",
+      "updated_at": "2026-11-07T17:05:09Z",
+      "pushed_at": "2026-11-07T17:05:05Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": null,
+      "logo": null
+    },
+    {
+      "name": "lumeo",
+      "slug": "lumeo",
+      "description": "Bilingual captions and live AI dubbing for YouTube. Three tiers, one click: free caption translation, ~5s Standard dub, <1s Realtime dub.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/lumeo",
+      "homepage": "https://thanhnguyxnorg.github.io/lumeo/",
+      "language": "JavaScript",
+      "stargazers_count": 2,
+      "forks_count": 1,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "ai-dubbing",
+        "chrome-extension",
+        "javascript",
+        "manifest-v3",
+        "realtime",
+        "speech-to-text",
+        "subtitles",
+        "text-to-speech",
+        "translation",
+        "youtube"
+      ],
+      "created_at": "2026-05-10T02:58:10Z",
+      "updated_at": "2026-11-07T13:31:35Z",
+      "pushed_at": "2026-11-07T13:31:32Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/lumeo.png",
+      "logo": "/logos/lumeo.png"
+    },
+    {
       "name": "ThanhNguyxnOrg.github.io",
       "slug": "thanhnguyxnorg.github.io",
       "description": "Org site: build, explore, evolve.",
@@ -34,8 +102,8 @@
       "has_pages": true,
       "topics": [],
       "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-11-07T05:08:01Z",
-      "pushed_at": "2026-11-07T05:07:57Z",
+      "updated_at": "2026-11-07T12:38:57Z",
+      "pushed_at": "2026-11-07T12:38:54Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
@@ -50,8 +118,8 @@
       "homepage": "https://thanhnguyxnorg.github.io/apidex-hub/",
       "language": "TypeScript",
       "stargazers_count": 1,
-      "forks_count": 4,
-      "open_issues_count": 2,
+      "forks_count": 5,
+      "open_issues_count": 3,
       "has_pages": true,
       "topics": [
         "api",
@@ -121,74 +189,6 @@
       "archived": false,
       "image": "/brand/layoutlingua.png",
       "logo": "/logos/layoutlingua.png"
-    },
-    {
-      "name": "Techstack-Studio",
-      "slug": "techstack-studio",
-      "description": "Compose, customize, and export animated SVG technology stacks for GitHub READMEs, portfolios, and websites.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/Techstack-Studio",
-      "homepage": "https://thanhnguyxnorg.github.io/Techstack-Studio/",
-      "language": "JavaScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "animated-svg",
-        "developer-tools",
-        "github-readme",
-        "react",
-        "readme",
-        "svg",
-        "tailwindcss",
-        "tech-stack",
-        "typescript",
-        "vite"
-      ],
-      "created_at": "2026-10-28T13:41:16Z",
-      "updated_at": "2026-11-06T14:39:31Z",
-      "pushed_at": "2026-11-06T14:39:28Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": null,
-      "logo": null
-    },
-    {
-      "name": "lumeo",
-      "slug": "lumeo",
-      "description": "Bilingual captions and live AI dubbing for YouTube. Three tiers, one click: free caption translation, ~5s Standard dub, <1s Realtime dub.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/lumeo",
-      "homepage": "https://thanhnguyxnorg.github.io/lumeo/",
-      "language": "JavaScript",
-      "stargazers_count": 2,
-      "forks_count": 1,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "ai-dubbing",
-        "chrome-extension",
-        "javascript",
-        "manifest-v3",
-        "realtime",
-        "speech-to-text",
-        "subtitles",
-        "text-to-speech",
-        "translation",
-        "youtube"
-      ],
-      "created_at": "2026-05-10T02:58:10Z",
-      "updated_at": "2026-11-06T02:36:26Z",
-      "pushed_at": "2026-11-06T02:36:21Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/lumeo.png",
-      "logo": "/logos/lumeo.png"
     },
     {
       "name": "blendops",
