@@ -26,15 +26,14 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Create ThanhNguyxnAgent App token
+      - name: Mint repository-scoped ThanhNguyxnAgent token
         id: agent-token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        uses: ThanhNguyxnOrg/.github/.github/actions/agent-token@da9d02544f60aeec92f8c851846ee3a587044beb
         with:
+          profile: content
           client-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
-          owner: ThanhNguyxnOrg
-          repositories: ThanhNguyxnOrg.github.io
-          permission-contents: write
+
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -61,6 +60,9 @@ jobs:
       - name: Test and type-check
         run: npm test && npm run lint
 
+      - name: Set ThanhNguyxnAgent commit identity
+        uses: ThanhNguyxnOrg/.github/.github/actions/agent-git-identity@da9d02544f60aeec92f8c851846ee3a587044beb
+
       - name: Commit synced data
         run: |
           git add -A src/data/liveSnapshot.json public/logos public/brand
@@ -68,8 +70,6 @@ jobs:
             echo "No synced data changes"
             exit 0
           fi
-          git config user.name "ThanhNguyxnAgent[bot]"
-          git config user.email "296222857+thanhnguyxnagent[bot]@users.noreply.github.com"
           git commit -m "chore(sync): update live telemetry and brand assets [skip ci]"
           git push
 
