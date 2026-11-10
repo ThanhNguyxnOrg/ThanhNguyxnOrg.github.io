@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-11-10",
-  "syncedIso": "2026-11-10T12:17:15.140Z",
+  "syncedIso": "2026-11-10T12:19:26.841Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 21,
@@ -34,8 +34,8 @@
       "has_pages": true,
       "topics": [],
       "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-11-10T12:16:58Z",
-      "pushed_at": "2026-11-10T12:16:53Z",
+      "updated_at": "2026-11-10T12:19:07Z",
+      "pushed_at": "2026-11-10T12:19:02Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
@@ -62,8 +62,8 @@
         "stylu"
       ],
       "created_at": "2026-10-19T12:48:16Z",
-      "updated_at": "2026-11-10T12:16:54Z",
-      "pushed_at": "2026-11-10T12:16:50Z",
+      "updated_at": "2026-11-10T12:19:05Z",
+      "pushed_at": "2026-11-10T12:18:59Z",
       "default_branch": "master",
       "license": {
         "spdx_id": "Apache-2.0"
@@ -98,8 +98,8 @@
         "static-auditor"
       ],
       "created_at": "2026-06-15T17:36:17Z",
-      "updated_at": "2026-11-10T12:16:51Z",
-      "pushed_at": "2026-11-10T12:16:47Z",
+      "updated_at": "2026-11-10T12:18:59Z",
+      "pushed_at": "2026-11-10T12:18:55Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
@@ -131,8 +131,8 @@
         "tailwindcss"
       ],
       "created_at": "2026-05-17T05:57:19Z",
-      "updated_at": "2026-11-10T12:16:47Z",
-      "pushed_at": "2026-11-10T12:16:43Z",
+      "updated_at": "2026-11-10T12:18:53Z",
+      "pushed_at": "2026-11-10T12:18:48Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -164,8 +164,8 @@
         "typescript"
       ],
       "created_at": "2026-06-08T16:56:53Z",
-      "updated_at": "2026-11-10T12:16:44Z",
-      "pushed_at": "2026-11-10T12:16:39Z",
+      "updated_at": "2026-11-10T12:18:46Z",
+      "pushed_at": "2026-11-10T12:18:41Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -202,8 +202,8 @@
         "webgl"
       ],
       "created_at": "2026-11-04T12:29:15Z",
-      "updated_at": "2026-11-10T12:16:40Z",
-      "pushed_at": "2026-11-10T12:16:36Z",
+      "updated_at": "2026-11-10T12:18:42Z",
+      "pushed_at": "2026-11-10T12:18:39Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
@@ -237,8 +237,8 @@
         "terraform"
       ],
       "created_at": "2026-05-17T13:53:41Z",
-      "updated_at": "2026-11-10T12:16:37Z",
-      "pushed_at": "2026-11-10T12:16:32Z",
+      "updated_at": "2026-11-10T12:18:40Z",
+      "pushed_at": "2026-11-10T12:18:36Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -273,8 +273,8 @@
         "vue"
       ],
       "created_at": "2026-05-17T06:06:31Z",
-      "updated_at": "2026-11-10T12:16:23Z",
-      "pushed_at": "2026-11-10T12:16:18Z",
+      "updated_at": "2026-11-10T12:18:36Z",
+      "pushed_at": "2026-11-10T12:18:32Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -282,6 +282,40 @@
       "archived": false,
       "image": "/brand/cogmint.png",
       "logo": "/logos/cogmint.svg"
+    },
+    {
+      "name": "Techstack-Studio",
+      "slug": "techstack-studio",
+      "description": "Compose, customize, and export animated SVG technology stacks for GitHub READMEs, portfolios, and websites.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/Techstack-Studio",
+      "homepage": "https://thanhnguyxnorg.github.io/Techstack-Studio/",
+      "language": "JavaScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "animated-svg",
+        "developer-tools",
+        "github-readme",
+        "react",
+        "readme",
+        "svg",
+        "tailwindcss",
+        "tech-stack",
+        "typescript",
+        "vite"
+      ],
+      "created_at": "2026-10-28T13:41:16Z",
+      "updated_at": "2026-11-10T12:18:33Z",
+      "pushed_at": "2026-11-10T12:18:28Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": null,
+      "logo": null
     },
     {
       "name": "blendops",
@@ -312,8 +346,8 @@
         "workflows"
       ],
       "created_at": "2026-04-24T15:17:43Z",
-      "updated_at": "2026-11-10T12:15:50Z",
-      "pushed_at": "2026-11-10T12:15:45Z",
+      "updated_at": "2026-11-10T12:18:26Z",
+      "pushed_at": "2026-11-10T12:18:21Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -321,6 +355,37 @@
       "archived": false,
       "image": "/brand/blendops.png",
       "logo": "/logos/blendops.png"
+    },
+    {
+      "name": "StepDSA",
+      "slug": "stepdsa",
+      "description": "Interactive DSA learning platform & visualizer with deterministic time-travel engine and playground.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/StepDSA",
+      "homepage": "https://thanhnguyxnorg.github.io/StepDSA/",
+      "language": "TypeScript",
+      "stargazers_count": 1,
+      "forks_count": 1,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "algorithms",
+        "data-structures",
+        "dsa",
+        "education",
+        "learning",
+        "typescript",
+        "visualizer"
+      ],
+      "created_at": "2026-09-26T04:58:47Z",
+      "updated_at": "2026-11-10T12:18:24Z",
+      "pushed_at": "2026-11-10T12:18:19Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/stepdsa.png",
+      "logo": "/logos/stepdsa.svg"
     },
     {
       "name": "Snapbooth",
@@ -352,112 +417,13 @@
         "webcam"
       ],
       "created_at": "2026-05-19T16:44:46Z",
-      "updated_at": "2026-11-10T12:15:46Z",
-      "pushed_at": "2026-11-10T12:15:41Z",
+      "updated_at": "2026-11-10T12:18:20Z",
+      "pushed_at": "2026-11-10T12:18:16Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
       "image": "/brand/snapbooth.png",
       "logo": "/logos/snapbooth.svg"
-    },
-    {
-      "name": "Techstack-Studio",
-      "slug": "techstack-studio",
-      "description": "Compose, customize, and export animated SVG technology stacks for GitHub READMEs, portfolios, and websites.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/Techstack-Studio",
-      "homepage": "https://thanhnguyxnorg.github.io/Techstack-Studio/",
-      "language": "JavaScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "animated-svg",
-        "developer-tools",
-        "github-readme",
-        "react",
-        "readme",
-        "svg",
-        "tailwindcss",
-        "tech-stack",
-        "typescript",
-        "vite"
-      ],
-      "created_at": "2026-10-28T13:41:16Z",
-      "updated_at": "2026-11-10T12:15:43Z",
-      "pushed_at": "2026-11-10T12:15:38Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": null,
-      "logo": null
-    },
-    {
-      "name": "StepDSA",
-      "slug": "stepdsa",
-      "description": "Interactive DSA learning platform & visualizer with deterministic time-travel engine and playground.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/StepDSA",
-      "homepage": "https://thanhnguyxnorg.github.io/StepDSA/",
-      "language": "TypeScript",
-      "stargazers_count": 1,
-      "forks_count": 1,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "algorithms",
-        "data-structures",
-        "dsa",
-        "education",
-        "learning",
-        "typescript",
-        "visualizer"
-      ],
-      "created_at": "2026-09-26T04:58:47Z",
-      "updated_at": "2026-11-10T12:15:40Z",
-      "pushed_at": "2026-11-10T12:15:36Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/stepdsa.png",
-      "logo": "/logos/stepdsa.svg"
-    },
-    {
-      "name": "lumeo",
-      "slug": "lumeo",
-      "description": "Bilingual captions and live AI dubbing for YouTube. Three tiers, one click: free caption translation, ~5s Standard dub, <1s Realtime dub.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/lumeo",
-      "homepage": "https://thanhnguyxnorg.github.io/lumeo/",
-      "language": "JavaScript",
-      "stargazers_count": 2,
-      "forks_count": 1,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "ai-dubbing",
-        "chrome-extension",
-        "javascript",
-        "manifest-v3",
-        "realtime",
-        "speech-to-text",
-        "subtitles",
-        "text-to-speech",
-        "translation",
-        "youtube"
-      ],
-      "created_at": "2026-05-10T02:58:10Z",
-      "updated_at": "2026-11-10T12:15:36Z",
-      "pushed_at": "2026-11-10T12:15:31Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/lumeo.png",
-      "logo": "/logos/lumeo.png"
     },
     {
       "name": "PurgeKit",
@@ -483,8 +449,8 @@
         "windows"
       ],
       "created_at": "2026-06-10T14:24:56Z",
-      "updated_at": "2026-11-10T12:15:33Z",
-      "pushed_at": "2026-11-10T12:15:28Z",
+      "updated_at": "2026-11-10T12:18:17Z",
+      "pushed_at": "2026-11-10T12:18:12Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "Apache-2.0"
@@ -492,6 +458,40 @@
       "archived": false,
       "image": "/brand/purgekit.png",
       "logo": "/logos/purgekit.png"
+    },
+    {
+      "name": "lumeo",
+      "slug": "lumeo",
+      "description": "Bilingual captions and live AI dubbing for YouTube. Three tiers, one click: free caption translation, ~5s Standard dub, <1s Realtime dub.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/lumeo",
+      "homepage": "https://thanhnguyxnorg.github.io/lumeo/",
+      "language": "JavaScript",
+      "stargazers_count": 2,
+      "forks_count": 1,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "ai-dubbing",
+        "chrome-extension",
+        "javascript",
+        "manifest-v3",
+        "realtime",
+        "speech-to-text",
+        "subtitles",
+        "text-to-speech",
+        "translation",
+        "youtube"
+      ],
+      "created_at": "2026-05-10T02:58:10Z",
+      "updated_at": "2026-11-10T12:18:09Z",
+      "pushed_at": "2026-11-10T12:18:05Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/lumeo.png",
+      "logo": "/logos/lumeo.png"
     },
     {
       "name": ".github",
@@ -512,8 +512,8 @@
         "templates"
       ],
       "created_at": "2026-05-06T10:34:21Z",
-      "updated_at": "2026-11-10T12:15:10Z",
-      "pushed_at": "2026-11-10T12:15:06Z",
+      "updated_at": "2026-11-10T12:17:58Z",
+      "pushed_at": "2026-11-10T12:17:54Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
