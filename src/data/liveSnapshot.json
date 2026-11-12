@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-11-12",
-  "syncedIso": "2026-11-12T00:13:19.584Z",
+  "syncedIso": "2026-11-12T14:48:36.220Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 21,
@@ -8,7 +8,7 @@
     "forks": 10,
     "demos": 9,
     "packages": 2,
-    "downloads30d": 97
+    "downloads30d": 96
   },
   "npmPackages": {
     "archpulse": {
@@ -16,11 +16,84 @@
       "version": "v0.5.3"
     },
     "production-backend-kit": {
-      "downloads": 72,
+      "downloads": 71,
       "version": "v1.1.2"
     }
   },
   "repos": [
+    {
+      "name": "lumeo",
+      "slug": "lumeo",
+      "description": "Bilingual captions and live AI dubbing for YouTube. Three tiers, one click: free caption translation, ~5s Standard dub, <1s Realtime dub.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/lumeo",
+      "homepage": "https://thanhnguyxnorg.github.io/lumeo/",
+      "language": "JavaScript",
+      "stargazers_count": 2,
+      "forks_count": 1,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "ai-dubbing",
+        "chrome-extension",
+        "javascript",
+        "manifest-v3",
+        "realtime",
+        "speech-to-text",
+        "subtitles",
+        "text-to-speech",
+        "translation",
+        "youtube"
+      ],
+      "created_at": "2026-05-10T02:58:10Z",
+      "updated_at": "2026-11-12T12:00:44Z",
+      "pushed_at": "2026-11-12T11:00:43Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/lumeo.png",
+      "logo": "/logos/lumeo.png"
+    },
+    {
+      "name": "apidex-hub",
+      "slug": "apidex-hub",
+      "description": "🌐 A curated collection of awesome free APIs for developers. Categorized, tested daily, and well-documented. Your one-stop resource for public APIs.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/apidex-hub",
+      "homepage": "https://thanhnguyxnorg.github.io/apidex-hub/",
+      "language": "TypeScript",
+      "stargazers_count": 1,
+      "forks_count": 5,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "api",
+        "api-collection",
+        "api-directory",
+        "api-list",
+        "apis",
+        "awesome",
+        "awesome-list",
+        "developer-resources",
+        "developer-tools",
+        "free",
+        "free-api",
+        "open-source",
+        "public-apis",
+        "resources",
+        "rest-api"
+      ],
+      "created_at": "2026-05-07T06:43:42Z",
+      "updated_at": "2026-11-12T06:31:44Z",
+      "pushed_at": "2026-11-12T05:31:40Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/apidex-hub.png",
+      "logo": "/logos/apidex-hub.svg"
+    },
     {
       "name": "ThanhNguyxnOrg.github.io",
       "slug": "thanhnguyxnorg.github.io",
@@ -34,8 +107,8 @@
       "has_pages": true,
       "topics": [],
       "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-11-11T14:45:39Z",
-      "pushed_at": "2026-11-11T13:45:35Z",
+      "updated_at": "2026-11-12T01:13:24Z",
+      "pushed_at": "2026-11-12T00:13:21Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
@@ -141,45 +214,6 @@
       "archived": false,
       "image": "/brand/blendops.png",
       "logo": "/logos/blendops.png"
-    },
-    {
-      "name": "apidex-hub",
-      "slug": "apidex-hub",
-      "description": "🌐 A curated collection of awesome free APIs for developers. Categorized, tested daily, and well-documented. Your one-stop resource for public APIs.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/apidex-hub",
-      "homepage": "https://thanhnguyxnorg.github.io/apidex-hub/",
-      "language": "TypeScript",
-      "stargazers_count": 1,
-      "forks_count": 5,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "api",
-        "api-collection",
-        "api-directory",
-        "api-list",
-        "apis",
-        "awesome",
-        "awesome-list",
-        "developer-resources",
-        "developer-tools",
-        "free",
-        "free-api",
-        "open-source",
-        "public-apis",
-        "resources",
-        "rest-api"
-      ],
-      "created_at": "2026-05-07T06:43:42Z",
-      "updated_at": "2026-11-11T05:23:51Z",
-      "pushed_at": "2026-11-11T04:23:46Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/apidex-hub.png",
-      "logo": "/logos/apidex-hub.svg"
     },
     {
       "name": "AFTERFRAME-THE-LAST-LOOP",
@@ -374,40 +408,6 @@
       "archived": false,
       "image": "/brand/layoutlingua.png",
       "logo": "/logos/layoutlingua.png"
-    },
-    {
-      "name": "lumeo",
-      "slug": "lumeo",
-      "description": "Bilingual captions and live AI dubbing for YouTube. Three tiers, one click: free caption translation, ~5s Standard dub, <1s Realtime dub.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/lumeo",
-      "homepage": "https://thanhnguyxnorg.github.io/lumeo/",
-      "language": "JavaScript",
-      "stargazers_count": 2,
-      "forks_count": 1,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "ai-dubbing",
-        "chrome-extension",
-        "javascript",
-        "manifest-v3",
-        "realtime",
-        "speech-to-text",
-        "subtitles",
-        "text-to-speech",
-        "translation",
-        "youtube"
-      ],
-      "created_at": "2026-05-10T02:58:10Z",
-      "updated_at": "2026-11-10T14:19:34Z",
-      "pushed_at": "2026-11-10T14:19:32Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/lumeo.png",
-      "logo": "/logos/lumeo.png"
     },
     {
       "name": "WriteCanvas",
