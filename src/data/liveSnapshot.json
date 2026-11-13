@@ -1,6 +1,6 @@
 {
-  "syncedAt": "2026-11-12",
-  "syncedIso": "2026-11-12T23:19:08.046Z",
+  "syncedAt": "2026-11-13",
+  "syncedIso": "2026-11-13T05:38:42.091Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 21,
@@ -22,6 +22,76 @@
   },
   "repos": [
     {
+      "name": "apidex-hub",
+      "slug": "apidex-hub",
+      "description": "🌐 A curated collection of awesome free APIs for developers. Categorized, tested daily, and well-documented. Your one-stop resource for public APIs.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/apidex-hub",
+      "homepage": "https://thanhnguyxnorg.github.io/apidex-hub/",
+      "language": "TypeScript",
+      "stargazers_count": 1,
+      "forks_count": 5,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "api",
+        "api-collection",
+        "api-directory",
+        "api-list",
+        "apis",
+        "awesome",
+        "awesome-list",
+        "developer-resources",
+        "developer-tools",
+        "free",
+        "free-api",
+        "open-source",
+        "public-apis",
+        "resources",
+        "rest-api"
+      ],
+      "created_at": "2026-05-07T06:43:42Z",
+      "updated_at": "2026-11-12T06:31:44Z",
+      "pushed_at": "2026-11-13T04:47:55Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/apidex-hub.png",
+      "logo": "/logos/apidex-hub.svg"
+    },
+    {
+      "name": "StepDSA",
+      "slug": "stepdsa",
+      "description": "Interactive DSA learning platform & visualizer with deterministic time-travel engine and playground.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/StepDSA",
+      "homepage": "https://thanhnguyxnorg.github.io/StepDSA/",
+      "language": "TypeScript",
+      "stargazers_count": 1,
+      "forks_count": 1,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "algorithms",
+        "data-structures",
+        "dsa",
+        "education",
+        "learning",
+        "typescript",
+        "visualizer"
+      ],
+      "created_at": "2026-09-26T04:58:47Z",
+      "updated_at": "2026-11-10T12:18:24Z",
+      "pushed_at": "2026-11-13T03:40:58Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/stepdsa.png",
+      "logo": "/logos/stepdsa.svg"
+    },
+    {
       "name": "ThanhNguyxnOrg.github.io",
       "slug": "thanhnguyxnorg.github.io",
       "description": "Org site: build, explore, evolve.",
@@ -35,7 +105,7 @@
       "topics": [],
       "created_at": "2026-10-13T13:31:35Z",
       "updated_at": "2026-11-12T15:48:41Z",
-      "pushed_at": "2026-11-12T14:48:38Z",
+      "pushed_at": "2026-11-12T23:19:10Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
@@ -75,45 +145,6 @@
       "archived": false,
       "image": "/brand/lumeo.png",
       "logo": "/logos/lumeo.png"
-    },
-    {
-      "name": "apidex-hub",
-      "slug": "apidex-hub",
-      "description": "🌐 A curated collection of awesome free APIs for developers. Categorized, tested daily, and well-documented. Your one-stop resource for public APIs.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/apidex-hub",
-      "homepage": "https://thanhnguyxnorg.github.io/apidex-hub/",
-      "language": "TypeScript",
-      "stargazers_count": 1,
-      "forks_count": 5,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "api",
-        "api-collection",
-        "api-directory",
-        "api-list",
-        "apis",
-        "awesome",
-        "awesome-list",
-        "developer-resources",
-        "developer-tools",
-        "free",
-        "free-api",
-        "open-source",
-        "public-apis",
-        "resources",
-        "rest-api"
-      ],
-      "created_at": "2026-05-07T06:43:42Z",
-      "updated_at": "2026-11-12T06:31:44Z",
-      "pushed_at": "2026-11-12T05:31:40Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/apidex-hub.png",
-      "logo": "/logos/apidex-hub.svg"
     },
     {
       "name": "PurgeKit",
@@ -647,37 +678,6 @@
       "archived": false,
       "image": null,
       "logo": null
-    },
-    {
-      "name": "StepDSA",
-      "slug": "stepdsa",
-      "description": "Interactive DSA learning platform & visualizer with deterministic time-travel engine and playground.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/StepDSA",
-      "homepage": "https://thanhnguyxnorg.github.io/StepDSA/",
-      "language": "TypeScript",
-      "stargazers_count": 1,
-      "forks_count": 1,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "algorithms",
-        "data-structures",
-        "dsa",
-        "education",
-        "learning",
-        "typescript",
-        "visualizer"
-      ],
-      "created_at": "2026-09-26T04:58:47Z",
-      "updated_at": "2026-11-10T12:18:24Z",
-      "pushed_at": "2026-11-10T12:18:19Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/stepdsa.png",
-      "logo": "/logos/stepdsa.svg"
     },
     {
       "name": "Snapbooth",
