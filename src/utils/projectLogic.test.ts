@@ -28,7 +28,7 @@ test('filterAndSortProjects filters by category and search query accurately', ()
     topics: [],
     sort: 'stars',
   });
-  assert.equal(aiProjects.length, 3);
+  assert.equal(aiProjects.length, 4);
   assert.equal(aiProjects[0].name, 'blendops');
 
   const rustQuery = filterAndSortProjects(ORG_PROJECTS, {
