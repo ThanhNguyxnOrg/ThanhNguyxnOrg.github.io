@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-11-15",
-  "syncedIso": "2026-11-15T10:19:52.603Z",
+  "syncedIso": "2026-11-15T10:24:28.441Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 21,
@@ -21,6 +21,76 @@
     }
   },
   "repos": [
+    {
+      "name": "AFTERFRAME-THE-LAST-LOOP",
+      "slug": "afterframe-the-last-loop",
+      "description": "A third-person sci-fi action RPG built with React, TypeScript and Three.js. Explore Nadir-9 and uncover a fractured time-loop campaign.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/AFTERFRAME-THE-LAST-LOOP",
+      "homepage": "https://thanhnguyxn.itch.io/afterframe-the-last-loop",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": false,
+      "topics": [
+        "3d-game",
+        "action-rpg",
+        "browser-game",
+        "game-development",
+        "indie-game",
+        "react",
+        "sci-fi",
+        "three-js",
+        "threejs",
+        "time-loop",
+        "typescript",
+        "vite",
+        "web-game",
+        "webgl"
+      ],
+      "created_at": "2026-11-04T12:29:15Z",
+      "updated_at": "2026-11-10T14:54:15Z",
+      "pushed_at": "2026-11-15T10:24:21Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/afterframe-the-last-loop.png",
+      "logo": "/logos/afterframe-the-last-loop.png"
+    },
+    {
+      "name": "Techstack-Studio",
+      "slug": "techstack-studio",
+      "description": "Compose, customize, and export animated SVG technology stacks for GitHub READMEs, portfolios, and websites.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/Techstack-Studio",
+      "homepage": "https://thanhnguyxnorg.github.io/Techstack-Studio/",
+      "language": "JavaScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "animated-svg",
+        "developer-tools",
+        "github-readme",
+        "react",
+        "readme",
+        "svg",
+        "tailwindcss",
+        "tech-stack",
+        "typescript",
+        "vite"
+      ],
+      "created_at": "2026-10-28T13:41:16Z",
+      "updated_at": "2026-11-10T12:18:33Z",
+      "pushed_at": "2026-11-15T10:24:18Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": null,
+      "logo": null
+    },
     {
       "name": "WriteCanvas",
       "slug": "writecanvas",
@@ -43,7 +113,7 @@
       ],
       "created_at": "2026-10-19T12:48:16Z",
       "updated_at": "2026-11-15T08:33:38Z",
-      "pushed_at": "2026-11-15T10:19:32Z",
+      "pushed_at": "2026-11-15T10:24:14Z",
       "default_branch": "master",
       "license": {
         "spdx_id": "Apache-2.0"
@@ -51,6 +121,45 @@
       "archived": false,
       "image": "/brand/writecanvas.png",
       "logo": "/logos/writecanvas.png"
+    },
+    {
+      "name": "ClipForge",
+      "slug": "clipforge",
+      "description": "Offline audio inspection and batch-processing toolkit (C++23, NASM x86-64 SSE2, CMake, CLI)",
+      "html_url": "https://github.com/ThanhNguyxnOrg/ClipForge",
+      "homepage": "https://thanhnguyxnorg.github.io",
+      "language": "C++",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": false,
+      "topics": [
+        "audio",
+        "audio-processing",
+        "batch-processing",
+        "cli",
+        "cmake",
+        "cpp23",
+        "dsp",
+        "nasm",
+        "offline-first",
+        "peak-normalization",
+        "silence-trimming",
+        "simd",
+        "sse2",
+        "wav",
+        "windows"
+      ],
+      "created_at": "2026-10-15T06:32:27Z",
+      "updated_at": "2026-11-10T14:27:12Z",
+      "pushed_at": "2026-11-15T10:24:10Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/clipforge.png",
+      "logo": "/logos/clipforge.svg"
     },
     {
       "name": "ThanhNguyxnOrg.github.io",
@@ -66,12 +175,43 @@
       "topics": [],
       "created_at": "2026-10-13T13:31:35Z",
       "updated_at": "2026-11-12T15:48:41Z",
-      "pushed_at": "2026-11-15T10:19:29Z",
+      "pushed_at": "2026-11-15T10:24:06Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
       "image": "/brand/org-github.png",
       "logo": "/logo.png"
+    },
+    {
+      "name": "StepDSA",
+      "slug": "stepdsa",
+      "description": "Interactive DSA learning platform & visualizer with deterministic time-travel engine and playground.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/StepDSA",
+      "homepage": "https://thanhnguyxnorg.github.io/StepDSA/",
+      "language": "TypeScript",
+      "stargazers_count": 1,
+      "forks_count": 1,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "algorithms",
+        "data-structures",
+        "dsa",
+        "education",
+        "learning",
+        "typescript",
+        "visualizer"
+      ],
+      "created_at": "2026-09-26T04:58:47Z",
+      "updated_at": "2026-11-10T12:18:24Z",
+      "pushed_at": "2026-11-15T10:24:03Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/stepdsa.png",
+      "logo": "/logos/stepdsa.svg"
     },
     {
       "name": "git-account-switcher",
@@ -96,7 +236,7 @@
       ],
       "created_at": "2026-09-16T01:59:30Z",
       "updated_at": "2026-11-10T12:09:03Z",
-      "pushed_at": "2026-11-15T10:19:26Z",
+      "pushed_at": "2026-11-15T10:24:00Z",
       "default_branch": "master",
       "license": {
         "spdx_id": "MIT"
@@ -106,31 +246,38 @@
       "logo": "/logos/git-account-switcher.png"
     },
     {
-      "name": ".github",
-      "slug": ".github",
-      "description": "Organization profile and community health files for ThanhNguyxnOrg",
-      "html_url": "https://github.com/ThanhNguyxnOrg/.github",
+      "name": "lagvex",
+      "slug": "lagvex",
+      "description": "Open-source game latency reducer & ping booster via WinTun and Go VPS Relay",
+      "html_url": "https://github.com/ThanhNguyxnOrg/lagvex",
       "homepage": null,
-      "language": "Python",
-      "stargazers_count": 0,
+      "language": "Go",
+      "stargazers_count": 4,
       "forks_count": 0,
       "open_issues_count": 0,
       "has_pages": false,
       "topics": [
-        "community-health",
-        "docs",
-        "github",
-        "organization",
-        "templates"
+        "cs2",
+        "game-booster",
+        "golang",
+        "latency-reducer",
+        "ping-booster",
+        "pubg",
+        "split-tunneling",
+        "valorant",
+        "vpn",
+        "wintun"
       ],
-      "created_at": "2026-05-06T10:34:21Z",
-      "updated_at": "2026-11-11T11:59:16Z",
-      "pushed_at": "2026-11-15T10:19:20Z",
+      "created_at": "2026-09-12T07:37:16Z",
+      "updated_at": "2026-11-14T11:24:38Z",
+      "pushed_at": "2026-11-15T10:23:57Z",
       "default_branch": "main",
-      "license": null,
+      "license": {
+        "spdx_id": "MIT"
+      },
       "archived": false,
-      "image": "/brand/org-github.png",
-      "logo": "/logo.png"
+      "image": "/brand/lagvex.png",
+      "logo": "/logos/lagvex.png"
     },
     {
       "name": "LayoutLingua",
@@ -164,7 +311,7 @@
       ],
       "created_at": "2026-09-04T06:23:25Z",
       "updated_at": "2026-11-10T14:27:00Z",
-      "pushed_at": "2026-11-15T10:19:19Z",
+      "pushed_at": "2026-11-15T10:23:54Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -200,7 +347,7 @@
       ],
       "created_at": "2026-06-15T17:36:17Z",
       "updated_at": "2026-11-10T12:18:59Z",
-      "pushed_at": "2026-11-15T10:19:13Z",
+      "pushed_at": "2026-11-15T10:23:51Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
@@ -208,178 +355,43 @@
       "logo": "/logos/skillgauge.png"
     },
     {
-      "name": "AFTERFRAME-THE-LAST-LOOP",
-      "slug": "afterframe-the-last-loop",
-      "description": "A third-person sci-fi action RPG built with React, TypeScript and Three.js. Explore Nadir-9 and uncover a fractured time-loop campaign.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/AFTERFRAME-THE-LAST-LOOP",
-      "homepage": "https://thanhnguyxn.itch.io/afterframe-the-last-loop",
-      "language": "TypeScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": false,
-      "topics": [
-        "3d-game",
-        "action-rpg",
-        "browser-game",
-        "game-development",
-        "indie-game",
-        "react",
-        "sci-fi",
-        "three-js",
-        "threejs",
-        "time-loop",
-        "typescript",
-        "vite",
-        "web-game",
-        "webgl"
-      ],
-      "created_at": "2026-11-04T12:29:15Z",
-      "updated_at": "2026-11-10T14:54:15Z",
-      "pushed_at": "2026-11-15T10:17:19Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/afterframe-the-last-loop.png",
-      "logo": "/logos/afterframe-the-last-loop.png"
-    },
-    {
-      "name": "Techstack-Studio",
-      "slug": "techstack-studio",
-      "description": "Compose, customize, and export animated SVG technology stacks for GitHub READMEs, portfolios, and websites.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/Techstack-Studio",
-      "homepage": "https://thanhnguyxnorg.github.io/Techstack-Studio/",
+      "name": "blendops",
+      "slug": "blendops",
+      "description": "AI-native Blender workflow and skill pack for non-Blender users, built around official Blender MCP, Claude Blender Connector, and Blender CLI.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/blendops",
+      "homepage": "https://github.com/ThanhNguyxnOrg/blendops",
       "language": "JavaScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "animated-svg",
-        "developer-tools",
-        "github-readme",
-        "react",
-        "readme",
-        "svg",
-        "tailwindcss",
-        "tech-stack",
-        "typescript",
-        "vite"
-      ],
-      "created_at": "2026-10-28T13:41:16Z",
-      "updated_at": "2026-11-10T12:18:33Z",
-      "pushed_at": "2026-11-15T10:17:17Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": null,
-      "logo": null
-    },
-    {
-      "name": "ClipForge",
-      "slug": "clipforge",
-      "description": "Offline audio inspection and batch-processing toolkit (C++23, NASM x86-64 SSE2, CMake, CLI)",
-      "html_url": "https://github.com/ThanhNguyxnOrg/ClipForge",
-      "homepage": "https://thanhnguyxnorg.github.io",
-      "language": "C++",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": false,
-      "topics": [
-        "audio",
-        "audio-processing",
-        "batch-processing",
-        "cli",
-        "cmake",
-        "cpp23",
-        "dsp",
-        "nasm",
-        "offline-first",
-        "peak-normalization",
-        "silence-trimming",
-        "simd",
-        "sse2",
-        "wav",
-        "windows"
-      ],
-      "created_at": "2026-10-15T06:32:27Z",
-      "updated_at": "2026-11-10T14:27:12Z",
-      "pushed_at": "2026-11-15T10:17:11Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/clipforge.png",
-      "logo": "/logos/clipforge.svg"
-    },
-    {
-      "name": "StepDSA",
-      "slug": "stepdsa",
-      "description": "Interactive DSA learning platform & visualizer with deterministic time-travel engine and playground.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/StepDSA",
-      "homepage": "https://thanhnguyxnorg.github.io/StepDSA/",
-      "language": "TypeScript",
-      "stargazers_count": 1,
-      "forks_count": 1,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "algorithms",
-        "data-structures",
-        "dsa",
-        "education",
-        "learning",
-        "typescript",
-        "visualizer"
-      ],
-      "created_at": "2026-09-26T04:58:47Z",
-      "updated_at": "2026-11-10T12:18:24Z",
-      "pushed_at": "2026-11-15T10:17:04Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/stepdsa.png",
-      "logo": "/logos/stepdsa.svg"
-    },
-    {
-      "name": "lagvex",
-      "slug": "lagvex",
-      "description": "Open-source game latency reducer & ping booster via WinTun and Go VPS Relay",
-      "html_url": "https://github.com/ThanhNguyxnOrg/lagvex",
-      "homepage": null,
-      "language": "Go",
       "stargazers_count": 4,
       "forks_count": 0,
       "open_issues_count": 0,
       "has_pages": false,
       "topics": [
-        "cs2",
-        "game-booster",
-        "golang",
-        "latency-reducer",
-        "ping-booster",
-        "pubg",
-        "split-tunneling",
-        "valorant",
-        "vpn",
-        "wintun"
+        "agent-skills",
+        "ai-agents",
+        "blender",
+        "blender-mcp",
+        "claude",
+        "claude-code",
+        "creative-ai",
+        "glb",
+        "gltf",
+        "product-visualization",
+        "react-three-fiber",
+        "skills",
+        "threejs",
+        "web-3d",
+        "workflows"
       ],
-      "created_at": "2026-09-12T07:37:16Z",
-      "updated_at": "2026-11-14T11:24:38Z",
-      "pushed_at": "2026-11-15T10:16:56Z",
+      "created_at": "2026-04-24T15:17:43Z",
+      "updated_at": "2026-11-14T00:08:54Z",
+      "pushed_at": "2026-11-15T10:23:48Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
       },
       "archived": false,
-      "image": "/brand/lagvex.png",
-      "logo": "/logos/lagvex.png"
+      "image": "/brand/blendops.png",
+      "logo": "/logos/blendops.png"
     },
     {
       "name": "PurgeKit",
@@ -406,7 +418,7 @@
       ],
       "created_at": "2026-06-10T14:24:56Z",
       "updated_at": "2026-11-11T22:18:40Z",
-      "pushed_at": "2026-11-15T10:16:40Z",
+      "pushed_at": "2026-11-15T10:23:40Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "Apache-2.0"
@@ -439,7 +451,7 @@
       ],
       "created_at": "2026-06-08T16:56:53Z",
       "updated_at": "2026-11-10T12:18:46Z",
-      "pushed_at": "2026-11-15T10:16:37Z",
+      "pushed_at": "2026-11-15T10:23:37Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -479,7 +491,7 @@
       ],
       "created_at": "2026-05-19T16:44:46Z",
       "updated_at": "2026-11-10T12:18:20Z",
-      "pushed_at": "2026-11-15T10:16:33Z",
+      "pushed_at": "2026-11-15T10:23:34Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
@@ -514,7 +526,7 @@
       ],
       "created_at": "2026-05-17T13:53:41Z",
       "updated_at": "2026-11-10T12:18:40Z",
-      "pushed_at": "2026-11-15T10:16:27Z",
+      "pushed_at": "2026-11-15T10:23:29Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -522,45 +534,6 @@
       "archived": false,
       "image": "/brand/awesome-cert-sherpa.png",
       "logo": "/logos/awesome-cert-sherpa.png"
-    },
-    {
-      "name": "blendops",
-      "slug": "blendops",
-      "description": "AI-native Blender workflow and skill pack for non-Blender users, built around official Blender MCP, Claude Blender Connector, and Blender CLI.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/blendops",
-      "homepage": "https://github.com/ThanhNguyxnOrg/blendops",
-      "language": "JavaScript",
-      "stargazers_count": 4,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": false,
-      "topics": [
-        "agent-skills",
-        "ai-agents",
-        "blender",
-        "blender-mcp",
-        "claude",
-        "claude-code",
-        "creative-ai",
-        "glb",
-        "gltf",
-        "product-visualization",
-        "react-three-fiber",
-        "skills",
-        "threejs",
-        "web-3d",
-        "workflows"
-      ],
-      "created_at": "2026-04-24T15:17:43Z",
-      "updated_at": "2026-11-14T00:08:54Z",
-      "pushed_at": "2026-11-15T10:16:24Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/blendops.png",
-      "logo": "/logos/blendops.png"
     },
     {
       "name": "cogmint",
@@ -589,7 +562,7 @@
       ],
       "created_at": "2026-05-17T06:06:31Z",
       "updated_at": "2026-11-10T12:18:36Z",
-      "pushed_at": "2026-11-15T10:16:23Z",
+      "pushed_at": "2026-11-15T10:23:26Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -624,7 +597,7 @@
       ],
       "created_at": "2026-05-17T05:57:19Z",
       "updated_at": "2026-11-10T12:18:53Z",
-      "pushed_at": "2026-11-15T10:16:19Z",
+      "pushed_at": "2026-11-15T10:23:23Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -658,7 +631,7 @@
       ],
       "created_at": "2026-05-10T02:58:10Z",
       "updated_at": "2026-11-12T12:00:44Z",
-      "pushed_at": "2026-11-15T10:16:16Z",
+      "pushed_at": "2026-11-15T10:23:20Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -697,7 +670,7 @@
       ],
       "created_at": "2026-05-07T06:43:42Z",
       "updated_at": "2026-11-12T06:31:44Z",
-      "pushed_at": "2026-11-15T10:16:13Z",
+      "pushed_at": "2026-11-15T10:23:17Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -741,7 +714,7 @@
       ],
       "created_at": "2026-04-22T10:02:09Z",
       "updated_at": "2026-11-10T14:27:08Z",
-      "pushed_at": "2026-11-15T10:16:03Z",
+      "pushed_at": "2026-11-15T10:23:11Z",
       "default_branch": "master",
       "license": {
         "spdx_id": "AGPL-3.0"
@@ -749,6 +722,33 @@
       "archived": false,
       "image": "/brand/judgeloom-core.png",
       "logo": "/logos/judgeloom-core.png"
+    },
+    {
+      "name": ".github",
+      "slug": ".github",
+      "description": "Organization profile and community health files for ThanhNguyxnOrg",
+      "html_url": "https://github.com/ThanhNguyxnOrg/.github",
+      "homepage": null,
+      "language": "Python",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": false,
+      "topics": [
+        "community-health",
+        "docs",
+        "github",
+        "organization",
+        "templates"
+      ],
+      "created_at": "2026-05-06T10:34:21Z",
+      "updated_at": "2026-11-11T11:59:16Z",
+      "pushed_at": "2026-11-15T10:19:20Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/org-github.png",
+      "logo": "/logo.png"
     }
   ]
 }
