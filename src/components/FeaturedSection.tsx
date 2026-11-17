@@ -25,7 +25,7 @@ export default function FeaturedSection({
       aria-labelledby="featured-heading"
       className="scroll-mt-20 border-b border-[#1E263B]/80 py-20 md:py-28"
     >
-      <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-10">
+      <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
         {/* Section Header */}
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-2xl">
@@ -46,7 +46,7 @@ export default function FeaturedSection({
           </div>
           <a
             href="#archive"
-            className="inline-flex items-center gap-2 font-mono text-xs font-medium text-[#FCD34D] transition-colors hover:text-[#F59E0B] whitespace-nowrap shrink-0"
+            className="inline-flex items-start gap-2 font-mono text-xs font-medium text-[#FCD34D] transition-colors hover:text-[#F59E0B] sm:items-center lg:whitespace-nowrap lg:shrink-0"
           >
             Jump to full {projects.length}-repository scientific index
             <ArrowUpRight className="size-4" aria-hidden="true" />
@@ -187,7 +187,7 @@ export default function FeaturedSection({
                   delay: Math.min(index * 0.06, 0.3),
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className={spanClass}
+                className={`min-w-0 ${spanClass}`}
               >
                 <InteractiveCard3D className="h-full" maxTilt={5}>
                   <article className="flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-[#1E263B] bg-gradient-to-b from-[#101625] to-[#0B0F1A] shadow-xl transition-colors hover:border-[#2D3854]">
@@ -254,7 +254,7 @@ export default function FeaturedSection({
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between gap-2 border-t border-[#1E263B]/80 px-6 py-4">
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#1E263B]/80 px-4 py-4 sm:px-6">
                       <div className="flex items-center gap-2">
                         <button
                           type="button"

@@ -57,7 +57,7 @@ export default function JourneyAndStackSection({
         aria-labelledby="principles-heading"
         className="scroll-mt-24 border-b border-[#1E263B]/80 bg-[#0A0E18] py-20 md:py-24"
       >
-        <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-10">
+        <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
           <div className="max-w-2xl">
             <p className="font-mono text-xs text-[#FCD34D]">02. Operating Principles</p>
             <h2
@@ -113,7 +113,7 @@ export default function JourneyAndStackSection({
         aria-labelledby="journey-heading"
         className="scroll-mt-24 border-b border-[#1E263B]/80 py-20 md:py-28"
       >
-        <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-10">
+        <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
           <div className="max-w-2xl">
             <p className="font-mono text-xs text-[#FCD34D]">03. Chronological Evolution</p>
             <h2
@@ -131,7 +131,7 @@ export default function JourneyAndStackSection({
           <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:items-stretch">
             {/* Left Column: Interactive Timeline Selector */}
             <div
-              className="flex flex-col justify-between gap-3.5 lg:col-span-7"
+              className="flex min-w-0 flex-col justify-between gap-3.5 lg:col-span-7"
               role="tablist"
               aria-label="Organization timeline milestones"
             >
@@ -166,7 +166,7 @@ export default function JourneyAndStackSection({
             </div>
 
             {/* Right Column: Animated Live Milestone Stage & Era Repository Switcher (Balanced Height) */}
-            <div className="flex flex-col lg:col-span-5">
+            <div className="flex min-w-0 flex-col lg:col-span-5">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`${activeStop.id}-${spotlightProject.slug}`}
@@ -340,7 +340,7 @@ export default function JourneyAndStackSection({
         aria-labelledby="stack-heading"
         className="scroll-mt-24 border-b border-[#1E263B]/80 bg-[#0A0E18] py-20 md:py-28"
       >
-        <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-10">
+        <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <p className="font-mono text-xs text-[#FCD34D]">04. Live Architecture & Migration</p>
@@ -357,11 +357,11 @@ export default function JourneyAndStackSection({
             </div>
 
             {/* Interactive Segmented Control for Stack vs Migration */}
-            <div className="flex items-center gap-1 self-start rounded-full border border-[#1E263B] bg-[#07090F] p-1">
+            <div className="flex max-w-full flex-wrap items-center gap-1 self-start rounded-full border border-[#1E263B] bg-[#07090F] p-1">
               <button
                 type="button"
                 onClick={() => setActiveDocTab('stack')}
-                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium transition-all whitespace-nowrap shrink-0 ${
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium transition-all whitespace-nowrap shrink-0 sm:px-4 ${
                   activeDocTab === 'stack'
                     ? 'bg-[#F59E0B] font-semibold text-[#07090F] shadow-[0_0_16px_rgba(245,158,11,0.3)]'
                     : 'text-[#A3A9BF] hover:text-[#F4F5FA]'
@@ -373,7 +373,7 @@ export default function JourneyAndStackSection({
               <button
                 type="button"
                 onClick={() => setActiveDocTab('migration')}
-                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium transition-all whitespace-nowrap shrink-0 ${
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium transition-all whitespace-nowrap shrink-0 sm:px-4 ${
                   activeDocTab === 'migration'
                     ? 'bg-[#F59E0B] font-semibold text-[#07090F] shadow-[0_0_16px_rgba(245,158,11,0.3)]'
                     : 'text-[#A3A9BF] hover:text-[#F4F5FA]'
@@ -387,7 +387,7 @@ export default function JourneyAndStackSection({
 
           <div className="mt-12 grid gap-10 lg:grid-cols-12">
             {/* Left 6 Cols: Interactive Language Breakdown */}
-            <div className="flex flex-col justify-between rounded-3xl border border-[#1E263B] bg-gradient-to-b from-[#101625] to-[#0B0F1A] p-6 sm:p-8 lg:col-span-6">
+            <div className="flex min-w-0 flex-col justify-between rounded-3xl border border-[#1E263B] bg-gradient-to-b from-[#101625] to-[#0B0F1A] p-6 sm:p-8 lg:col-span-6">
               <div>
                 <div className="flex items-center justify-between font-mono text-xs text-[#868CA6]">
                   <span>LANGUAGE DISTRIBUTION</span>
@@ -433,7 +433,7 @@ export default function JourneyAndStackSection({
             </div>
 
             {/* Right 6 Cols: Animated Active Monograph Tab */}
-            <div className="flex flex-col justify-between rounded-3xl border border-[#1E263B] bg-gradient-to-b from-[#101625] to-[#0B0F1A] p-6 sm:p-8 lg:col-span-6">
+            <div className="flex min-w-0 flex-col justify-between rounded-3xl border border-[#1E263B] bg-gradient-to-b from-[#101625] to-[#0B0F1A] p-6 sm:p-8 lg:col-span-6">
               <AnimatePresence mode="wait">
                 {activeDocTab === 'stack' ? (
                   <motion.div
@@ -527,15 +527,15 @@ export default function JourneyAndStackSection({
                 )}
               </AnimatePresence>
 
-              <div className="mt-6 flex items-center justify-between border-t border-[#1E263B] pt-4">
-                <span className="font-mono text-xs text-[#868CA6]">
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-2 border-t border-[#1E263B] pt-4">
+                <span className="min-w-0 font-mono text-xs text-[#868CA6]">
                   Source: ThanhNguyxnOrg/.github
                 </span>
                 <a
                   href="https://github.com/ThanhNguyxnOrg/.github"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 font-mono text-xs text-[#FCD34D] hover:underline whitespace-nowrap shrink-0"
+                  className="inline-flex items-center gap-1 font-mono text-xs text-[#FCD34D] hover:underline whitespace-nowrap"
                 >
                   Read Org Docs
                   <ArrowUpRight className="size-3.5" aria-hidden="true" />

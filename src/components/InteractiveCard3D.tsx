@@ -135,7 +135,7 @@ export function InteractiveCard3D({
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`group/tilt relative rounded-3xl will-change-transform ${className}`}
+      className={`group/tilt relative min-w-0 rounded-3xl will-change-transform ${className}`}
       style={{ transformStyle: 'preserve-3d' } as CSSProperties}
     >
       {/* Dynamic Cursor-Tracking Border Highlight */}

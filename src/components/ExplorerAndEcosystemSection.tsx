@@ -153,7 +153,7 @@ export default function ExplorerAndEcosystemSection({
             <div className="flex flex-col gap-2.5 p-5">
               {/* Unboxed Scientific Metadata */}
               <div className="flex items-center justify-between gap-2 font-mono text-xs text-[#868CA6]">
-                <span className="truncate">
+                <span className="min-w-0 truncate">
                   <span className="text-[#FCD34D]">{project.category}</span>
                   <span aria-hidden="true"> · </span>
                   <span>{project.language}</span>
@@ -207,7 +207,7 @@ export default function ExplorerAndEcosystemSection({
             </div>
           </div>
 
-          <div className="flex items-center justify-between gap-2 border-t border-[#1E263B]/80 px-5 py-3.5">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#1E263B]/80 px-4 py-3.5 sm:px-5">
             <div className="flex items-center gap-2">
               <button
                 type="button"
@@ -262,7 +262,7 @@ export default function ExplorerAndEcosystemSection({
         aria-labelledby="archive-heading"
         className="scroll-mt-24 border-b border-[#1E263B]/80 py-20 md:py-28"
       >
-        <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-10">
+        <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <p className="font-mono text-xs text-[#FCD34D]">
@@ -281,8 +281,8 @@ export default function ExplorerAndEcosystemSection({
             </div>
 
             {/* Sort + Layout View Controls */}
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-1 rounded-full border border-[#1E263B] bg-[#0D111C] p-1">
+            <div className="flex min-w-0 flex-wrap items-center gap-3">
+              <div className="no-scrollbar flex max-w-full items-center gap-1 overflow-x-auto rounded-full border border-[#1E263B] bg-[#0D111C] p-1">
                 {(
                   [
                     { id: 'scientific', label: 'Scientific Impact' },
@@ -306,7 +306,7 @@ export default function ExplorerAndEcosystemSection({
                 ))}
               </div>
 
-              <div className="flex items-center gap-1 rounded-full border border-[#1E263B] bg-[#0D111C] p-1">
+              <div className="no-scrollbar flex max-w-full items-center gap-1 overflow-x-auto rounded-full border border-[#1E263B] bg-[#0D111C] p-1">
                 <button
                   type="button"
                   onClick={() => setViewMode('grid')}
@@ -545,11 +545,11 @@ export default function ExplorerAndEcosystemSection({
                     key={project.slug}
                     className="flex flex-col justify-between gap-4 p-5 transition-colors hover:bg-[#141A29]/60 sm:flex-row sm:items-center"
                   >
-                    <div className="flex items-start gap-4">
+                    <div className="flex min-w-0 items-start gap-4">
                       <span className="pt-1 font-mono text-xs text-[#868CA6] tabular-nums">
                         {String(idx + 1).padStart(2, '0')}
                       </span>
-                      <div>
+                      <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
                           <h3 className="font-display text-base font-bold text-[#F4F5FA]">
                             {project.name}
@@ -593,10 +593,10 @@ export default function ExplorerAndEcosystemSection({
         aria-labelledby="ecosystem-heading"
         className="scroll-mt-24 border-b border-[#1E263B]/80 bg-[#0A0E18] py-20 md:py-28"
       >
-        <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-10">
+        <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
           <div className="grid gap-10 lg:grid-cols-12 lg:items-stretch">
             {/* Left 5 Cols: Auto-Sync Telemetry Engine + Zero-Touch .yml Workflow Card (Zero Empty Space) */}
-            <div className="flex flex-col justify-between gap-6 lg:col-span-5">
+            <div className="flex min-w-0 flex-col justify-between gap-6 lg:col-span-5">
               <div>
                 <p className="font-mono text-xs text-[#FCD34D]">
                   06. Ecosystem, Zero-Touch Auto-Sync & npm Registry
@@ -718,7 +718,7 @@ export default function ExplorerAndEcosystemSection({
                   <summary className="cursor-pointer select-none font-mono text-xs font-medium text-[#C9CDE0] transition-colors hover:text-[#FCD34D]">
                     Inspect scheduled 6-hour CI/CD workflow YAML
                   </summary>
-                  <pre className="no-scrollbar mt-2.5 overflow-x-auto border-t border-[#1E263B] pt-2.5 font-mono text-[11px] leading-relaxed text-[#C9CDE0]">
+                  <pre className="no-scrollbar mt-2.5 max-w-full overflow-x-auto border-t border-[#1E263B] pt-2.5 font-mono text-[11px] leading-relaxed text-[#C9CDE0]">
                     <code>{WORKFLOW_YAML_SNIPPET}</code>
                   </pre>
                 </details>
@@ -726,7 +726,7 @@ export default function ExplorerAndEcosystemSection({
             </div>
 
             {/* Right 7 Cols: Interactive Ecosystem & npm Registry List */}
-            <ul className="flex flex-col justify-between divide-y divide-[#1E263B] overflow-hidden rounded-3xl border border-[#1E263B] bg-gradient-to-b from-[#101625] to-[#0B0F1A] lg:col-span-7">
+            <ul className="flex min-w-0 flex-col justify-between divide-y divide-[#1E263B] overflow-hidden rounded-3xl border border-[#1E263B] bg-gradient-to-b from-[#101625] to-[#0B0F1A] lg:col-span-7">
               {resources.map((res, idx) => (
                 <li
                   key={res.label}
@@ -761,8 +761,8 @@ export default function ExplorerAndEcosystemSection({
                       <p className="text-sm text-[#A3A9BF]">{res.description}</p>
 
                       {res.packageName && (
-                        <div className="mt-2 flex items-center gap-2">
-                          <code className="rounded-full border border-[#1E263B] bg-[#07090F] px-3.5 py-1.5 font-mono text-xs text-[#FCD34D]">
+                        <div className="mt-2 flex flex-wrap items-center gap-2">
+                          <code className="max-w-full truncate rounded-full border border-[#1E263B] bg-[#07090F] px-3.5 py-1.5 font-mono text-xs text-[#FCD34D]">
                             npm i {res.packageName}
                           </code>
                           <button

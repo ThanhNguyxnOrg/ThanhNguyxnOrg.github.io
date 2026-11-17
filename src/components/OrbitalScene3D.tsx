@@ -1017,8 +1017,8 @@ export default function OrbitalScene3D({
       />
 
       {/* Compact Single-Line Top-Edge HUD Strip */}
-      <div className="pointer-events-none relative z-10 flex w-full min-w-0 flex-wrap items-center justify-between gap-2 p-3 sm:px-4">
-        <div className="pointer-events-auto inline-flex max-w-full items-center gap-1.5 rounded-full border border-[#2D3854]/80 bg-[#0D111C]/90 px-3 py-1 shadow-lg">
+      <div className="pointer-events-none relative z-10 flex w-full min-w-0 flex-col gap-2 p-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:p-3 sm:px-4">
+        <div className="pointer-events-auto hidden max-w-full items-center gap-1.5 rounded-full border border-[#2D3854]/80 bg-[#0D111C]/90 px-3 py-1 shadow-lg sm:inline-flex">
           <Compass className="size-3.5 shrink-0 text-[#F59E0B]" aria-hidden="true" />
           <span className="truncate font-mono text-[11px] font-medium text-[#F4F5FA]">
             3D ARMILLARY ASTROLABE
@@ -1033,21 +1033,21 @@ export default function OrbitalScene3D({
 
         {/* Sleek Single-Line Active Node Pill */}
         {selectedProject && scientific && (
-          <div className="pointer-events-auto flex max-w-full flex-wrap items-center gap-2 rounded-full border border-[#2D3854] bg-[#0D111C]/95 px-3 py-1 shadow-xl">
-            <span className="font-mono text-xs font-bold text-[#F4F5FA]">
+          <div className="pointer-events-auto flex w-full min-w-0 items-center gap-2 rounded-full border border-[#2D3854] bg-[#0D111C]/95 px-2.5 py-1 shadow-xl sm:w-auto sm:flex-wrap sm:px-3">
+            <span className="min-w-0 flex-1 truncate font-mono text-xs font-bold text-[#F4F5FA] sm:flex-none">
               {selectedProject.name}
             </span>
-            <span className="font-mono text-[11px] text-[#38BDF8] tabular-nums">
+            <span className="shrink-0 font-mono text-[11px] text-[#38BDF8] tabular-nums">
               Idx {scientific.score}
             </span>
-            <span className="inline-flex items-center gap-1 font-mono text-xs text-[#F4F5FA] tabular-nums">
+            <span className="hidden shrink-0 items-center gap-1 font-mono text-xs text-[#F4F5FA] tabular-nums sm:inline-flex">
               <Star className="size-3 text-[#F59E0B]" aria-hidden="true" />
               {selectedProject.stars}
             </span>
             <button
               type="button"
               onClick={() => onOpenDossier(selectedProject)}
-              className="inline-flex items-center gap-1 rounded-full bg-[#F59E0B] px-2.5 py-0.5 text-[11px] font-semibold text-[#07090F] transition-colors hover:bg-[#FCD34D] whitespace-nowrap shrink-0"
+              className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-full bg-[#F59E0B] px-2.5 py-0.5 text-[11px] font-semibold text-[#07090F] transition-colors hover:bg-[#FCD34D] whitespace-nowrap sm:ml-0"
             >
               <Eye className="size-3" aria-hidden="true" />
               Dossier
@@ -1057,9 +1057,9 @@ export default function OrbitalScene3D({
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Open ${selectedProject.name} on GitHub`}
-              className="inline-flex items-center gap-1 rounded-full border border-[#2D3854] bg-[#141A29] px-2 py-0.5 text-[11px] font-medium text-[#C9CDE0] transition-colors hover:border-[#F59E0B] hover:text-[#F4F5FA] whitespace-nowrap shrink-0"
+              className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[#2D3854] bg-[#141A29] px-2 py-0.5 text-[11px] font-medium text-[#C9CDE0] transition-colors hover:border-[#F59E0B] hover:text-[#F4F5FA] whitespace-nowrap sm:px-2 sm:py-0.5"
             >
-              GitHub
+              <span className="hidden sm:inline">GitHub</span>
               <ExternalLink className="size-3" aria-hidden="true" />
             </a>
           </div>

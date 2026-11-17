@@ -147,7 +147,7 @@ export default function App() {
           {/* Zone 2: 5 concise single-line navigation links */}
           <nav
             aria-label="Primary Navigation"
-            className="hidden items-center gap-7 text-sm font-medium text-[#A3A9BF] md:flex"
+            className="hidden items-center gap-3.5 text-xs font-medium text-[#A3A9BF] md:flex lg:gap-7 lg:text-sm"
           >
             <a
               href="#projects"
@@ -187,9 +187,10 @@ export default function App() {
               href={ORG_METADATA.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-full bg-[#F59E0B] px-4 py-2 text-xs font-semibold text-[#07090F] transition-all hover:bg-[#FCD34D] hover:shadow-[0_0_20px_rgba(245,158,11,0.35)] whitespace-nowrap shrink-0"
+              aria-label="Explore ThanhNguyxnOrg on GitHub"
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#F59E0B] px-3 py-2 text-xs font-semibold text-[#07090F] transition-all hover:bg-[#FCD34D] hover:shadow-[0_0_20px_rgba(245,158,11,0.35)] whitespace-nowrap shrink-0 sm:px-4"
             >
-              Explore GitHub
+              <span className="hidden sm:inline">Explore GitHub</span>
               <ArrowUpRight className="size-3.5" aria-hidden="true" />
             </a>
 
@@ -218,11 +219,15 @@ export default function App() {
                 { label: 'Journey', href: '#journey' },
                 { label: 'Live Stack', href: '#stack' },
                 { label: 'Full Index', href: '#archive' },
+                { label: 'GitHub ↗', href: ORG_METADATA.githubUrl, external: true },
               ].map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
                     onClick={() => setMobileNavOpen(false)}
+                    {...('external' in item && item.external
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
                     className="block py-1.5 hover:text-[#FCD34D]"
                   >
                     {item.label}
@@ -308,23 +313,23 @@ export default function App() {
                     <ArrowRight className="size-4" aria-hidden="true" />
                   </a>
 
-                  <div className="inline-flex items-center justify-between gap-1 rounded-full border border-[#2D3854] bg-[#0D111C] p-1 sm:justify-start">
+                  <div className="inline-flex min-w-0 items-center justify-between gap-1 rounded-full border border-[#2D3854] bg-[#0D111C] p-1 sm:justify-start">
                     <button
                       type="button"
                       onClick={() => handleCycle3DNode(-1)}
                       aria-label="Previous 3D satellite node"
-                      className="inline-flex size-8 items-center justify-center rounded-full text-[#C9CDE0] transition-colors hover:bg-[#141A29] hover:text-[#FCD34D]"
+                      className="inline-flex size-8 shrink-0 items-center justify-center rounded-full text-[#C9CDE0] transition-colors hover:bg-[#141A29] hover:text-[#FCD34D]"
                     >
                       <ChevronLeft className="size-4" aria-hidden="true" />
                     </button>
                     <button
                       type="button"
                       onClick={() => setDossierProject(selected3DProject)}
-                      className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium text-[#F4F5FA] transition-colors hover:text-[#FCD34D] whitespace-nowrap shrink-0"
+                      className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium text-[#F4F5FA] transition-colors hover:text-[#FCD34D] sm:flex-none"
                     >
-                      <Eye className="size-4 text-[#F59E0B]" aria-hidden="true" />
-                      <span>Inspect {selected3DProject.name}</span>
-                      <span className="font-mono text-[11px] text-[#868CA6] tabular-nums">
+                      <Eye className="size-4 shrink-0 text-[#F59E0B]" aria-hidden="true" />
+                      <span className="truncate">Inspect {selected3DProject.name}</span>
+                      <span className="font-mono text-[11px] text-[#868CA6] tabular-nums shrink-0">
                         ({String(selectedIndex + 1).padStart(2, '0')}/{activeProjects.length})
                       </span>
                     </button>
@@ -359,7 +364,7 @@ export default function App() {
 
             {/* Full-Width 5-Column Live Verified Metrics Row Below the Hero Split */}
             <dl className="mt-10 grid grid-cols-2 gap-4 rounded-3xl border border-[#1E263B] bg-gradient-to-r from-[#0D111C] via-[#111726] to-[#0D111C] p-6 shadow-xl sm:grid-cols-3 lg:grid-cols-5">
-              <div className="flex flex-col gap-1 border-r border-[#1E263B] pr-4 last:border-r-0">
+              <div className="flex flex-col gap-1 border-[#1E263B] lg:border-r lg:pr-4 lg:last:border-r-0">
                 <dt className="font-mono text-xs text-[#868CA6]">Public Repositories</dt>
                 <dd className="font-display text-3xl font-bold text-[#F4F5FA] tabular-nums">
                   {syncState.totals.repos}
@@ -367,7 +372,7 @@ export default function App() {
                 <dd className="font-mono text-[11px] text-[#FCD34D]">100% open source</dd>
               </div>
 
-              <div className="flex flex-col gap-1 border-r border-[#1E263B] pr-4 last:border-r-0">
+              <div className="flex flex-col gap-1 border-[#1E263B] lg:border-r lg:pr-4 lg:last:border-r-0">
                 <dt className="font-mono text-xs text-[#868CA6]">Verified GitHub Stars</dt>
                 <dd className="font-display text-3xl font-bold text-[#F4F5FA] tabular-nums">
                   {syncState.totals.stars}
@@ -377,7 +382,7 @@ export default function App() {
                 </dd>
               </div>
 
-              <div className="flex flex-col gap-1 border-r border-[#1E263B] pr-4 last:border-r-0">
+              <div className="flex flex-col gap-1 border-[#1E263B] lg:border-r lg:pr-4 lg:last:border-r-0">
                 <dt className="font-mono text-xs text-[#868CA6]">npm Downloads (30d)</dt>
                 <dd className="font-display text-3xl font-bold text-[#F4F5FA] tabular-nums">
                   {syncState.totals.downloads30d}
@@ -387,7 +392,7 @@ export default function App() {
                 </dd>
               </div>
 
-              <div className="flex flex-col gap-1 border-r border-[#1E263B] pr-4 last:border-r-0">
+              <div className="flex flex-col gap-1 border-[#1E263B] lg:border-r lg:pr-4 lg:last:border-r-0">
                 <dt className="font-mono text-xs text-[#868CA6]">Live Pages Demos</dt>
                 <dd className="font-display text-3xl font-bold text-[#F4F5FA] tabular-nums">
                   {syncState.totals.demos}
@@ -395,7 +400,7 @@ export default function App() {
                 <dd className="font-mono text-[11px] text-[#A3A9BF]">Zero-config browser apps</dd>
               </div>
 
-              <div className="flex flex-col gap-1">
+              <div className="col-span-2 flex flex-col gap-1 sm:col-span-1">
                 <dt className="font-mono text-xs text-[#868CA6]">Core Languages</dt>
                 <dd className="font-display text-3xl font-bold text-[#F4F5FA] tabular-nums">
                   {syncState.totals.languages.length}
@@ -452,7 +457,7 @@ export default function App() {
 
         {/* Closing Conversion / Open Source Callout */}
         <section className="border-b border-[#1E263B]/80 py-20 md:py-24">
-          <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-10">
+          <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
             <div className="flex flex-col items-start justify-between gap-8 rounded-3xl border border-[#2D3854] bg-gradient-to-r from-[#101625] via-[#0D111C] to-[#111726] p-8 shadow-2xl sm:p-12 lg:flex-row lg:items-center">
               <div className="max-w-2xl">
                 <p className="font-mono text-xs text-[#FCD34D]">OPEN SOURCE WORKSPACE</p>
@@ -493,7 +498,7 @@ export default function App() {
 
       {/* Quiet Editorial Footer */}
       <footer className="bg-[#07090F] py-14">
-        <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-10">
+        <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
           <div className="grid gap-10 border-b border-[#1E263B] pb-12 lg:grid-cols-12">
             <div className="flex flex-col gap-4 lg:col-span-5">
               <div className="flex items-center gap-3">
