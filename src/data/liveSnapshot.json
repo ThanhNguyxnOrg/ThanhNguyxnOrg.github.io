@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-11-17",
-  "syncedIso": "2026-11-17T01:42:55.460Z",
+  "syncedIso": "2026-11-17T07:41:19.757Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 23,
@@ -22,6 +22,142 @@
   },
   "repos": [
     {
+      "name": "chromadna",
+      "slug": "chromadna",
+      "description": "Adobe Lightroom / Camera Raw Color DNA Miner, Mathematical Preset Blender, XMP Compiler, 3D LUT Exporter, Agent Skill, and MCP Server.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/chromadna",
+      "homepage": "",
+      "language": "Python",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": false,
+      "topics": [
+        "3d-lut",
+        "adobe-lightroom",
+        "agent-skill",
+        "camera-raw",
+        "color-grading",
+        "color-science",
+        "film-emulation",
+        "lightroom",
+        "lut",
+        "mcp",
+        "mcp-server",
+        "photo-editing",
+        "presets",
+        "python",
+        "xmp"
+      ],
+      "created_at": "2026-11-16T18:14:19Z",
+      "updated_at": "2026-11-17T07:30:26Z",
+      "pushed_at": "2026-11-17T07:28:48Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/chromadna.png",
+      "logo": "/logos/chromadna.png"
+    },
+    {
+      "name": "lagvex",
+      "slug": "lagvex",
+      "description": "Open-source game latency reducer & ping booster via WinTun and Go VPS Relay",
+      "html_url": "https://github.com/ThanhNguyxnOrg/lagvex",
+      "homepage": null,
+      "language": "Go",
+      "stargazers_count": 4,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": false,
+      "topics": [
+        "cs2",
+        "game-booster",
+        "golang",
+        "latency-reducer",
+        "ping-booster",
+        "pubg",
+        "split-tunneling",
+        "valorant",
+        "vpn",
+        "wintun"
+      ],
+      "created_at": "2026-09-12T07:37:16Z",
+      "updated_at": "2026-11-14T11:24:38Z",
+      "pushed_at": "2026-11-17T07:18:40Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/lagvex.png",
+      "logo": "/logos/lagvex.png"
+    },
+    {
+      "name": "StepDSA",
+      "slug": "stepdsa",
+      "description": "Interactive DSA learning platform & visualizer with deterministic time-travel engine and playground.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/StepDSA",
+      "homepage": "https://thanhnguyxnorg.github.io/StepDSA/",
+      "language": "TypeScript",
+      "stargazers_count": 1,
+      "forks_count": 1,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "algorithms",
+        "data-structures",
+        "dsa",
+        "education",
+        "learning",
+        "typescript",
+        "visualizer"
+      ],
+      "created_at": "2026-09-26T04:58:47Z",
+      "updated_at": "2026-11-10T12:18:24Z",
+      "pushed_at": "2026-11-17T06:48:07Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/stepdsa.png",
+      "logo": "/logos/stepdsa.svg"
+    },
+    {
+      "name": "ThanhNguyxnOrg.github.io",
+      "slug": "thanhnguyxnorg.github.io",
+      "description": "Interactive 3D showcase and engineering index for ThanhNguyxnOrg — developer tools, AI workflows, and open-source utilities, with live repo telemetry.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
+      "homepage": "https://thanhnguyxnorg.github.io/",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": true,
+      "topics": [
+        "developer-tools",
+        "github-pages",
+        "open-source",
+        "portfolio",
+        "react",
+        "showcase",
+        "tailwindcss",
+        "threejs",
+        "typescript",
+        "vite"
+      ],
+      "created_at": "2026-10-13T13:31:35Z",
+      "updated_at": "2026-11-17T07:35:23Z",
+      "pushed_at": "2026-11-17T01:42:57Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/org-github.png",
+      "logo": "/logo.png"
+    },
+    {
       "name": "WriteCanvas",
       "slug": "writecanvas",
       "description": "Cross-platform desktop handwriting and note-taking app with pressure-sensitive inking, multi-page canvases, and Scrble Ink-compatible PNG notes.",
@@ -34,15 +170,17 @@
       "has_pages": false,
       "topics": [
         "canvas",
+        "desktop-app",
         "digital-inking",
+        "electron",
         "handwriting",
         "ink-replay",
         "note-taking",
-        "stylu",
+        "stylus",
         "writecanvas"
       ],
       "created_at": "2026-10-19T12:48:16Z",
-      "updated_at": "2026-11-15T08:33:38Z",
+      "updated_at": "2026-11-17T07:35:49Z",
       "pushed_at": "2026-11-17T00:09:51Z",
       "default_branch": "master",
       "license": {
@@ -120,40 +258,6 @@
       "logo": "/logos/locsight.png"
     },
     {
-      "name": "lagvex",
-      "slug": "lagvex",
-      "description": "Open-source game latency reducer & ping booster via WinTun and Go VPS Relay",
-      "html_url": "https://github.com/ThanhNguyxnOrg/lagvex",
-      "homepage": null,
-      "language": "Go",
-      "stargazers_count": 4,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": false,
-      "topics": [
-        "cs2",
-        "game-booster",
-        "golang",
-        "latency-reducer",
-        "ping-booster",
-        "pubg",
-        "split-tunneling",
-        "valorant",
-        "vpn",
-        "wintun"
-      ],
-      "created_at": "2026-09-12T07:37:16Z",
-      "updated_at": "2026-11-14T11:24:38Z",
-      "pushed_at": "2026-11-17T00:09:08Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/lagvex.png",
-      "logo": "/logos/lagvex.png"
-    },
-    {
       "name": "judgeloom-core",
       "slug": "judgeloom-core",
       "description": "A modern, high-performance competitive programming online judge platform built with Django, Channels, and Celery.",
@@ -200,7 +304,7 @@
     {
       "name": "ForgeHelm",
       "slug": "forgehelm",
-      "description": "⚒️ ForgeHelm — A powerful Chrome Extension for bulk GitHub repository management. Archive, delete, transfer, manage topics, change visibility, and more — all in one place.",
+      "description": "ForgeHelm — A powerful Chrome Extension for bulk GitHub repository management. Archive, delete, transfer, manage topics, change visibility, and more — all in one place.",
       "html_url": "https://github.com/ThanhNguyxnOrg/ForgeHelm",
       "homepage": "https://github.com/ThanhNguyxnOrg/ForgeHelm/releases/latest",
       "language": "JavaScript",
@@ -222,7 +326,7 @@
         "tailwindcss"
       ],
       "created_at": "2026-05-17T05:57:19Z",
-      "updated_at": "2026-11-10T12:18:53Z",
+      "updated_at": "2026-11-17T07:37:05Z",
       "pushed_at": "2026-11-17T00:08:59Z",
       "default_branch": "main",
       "license": {
@@ -412,32 +516,9 @@
       "logo": "/logo.png"
     },
     {
-      "name": "chromadna",
-      "slug": "chromadna",
-      "description": "",
-      "html_url": "https://github.com/ThanhNguyxnOrg/chromadna",
-      "homepage": null,
-      "language": "Python",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": false,
-      "topics": [],
-      "created_at": "2026-11-16T18:14:19Z",
-      "updated_at": "2026-11-16T18:58:25Z",
-      "pushed_at": "2026-11-16T23:00:21Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": null,
-      "logo": null
-    },
-    {
       "name": "apidex-hub",
       "slug": "apidex-hub",
-      "description": "🌐 A curated collection of awesome free APIs for developers. Categorized, tested daily, and well-documented. Your one-stop resource for public APIs.",
+      "description": "A curated collection of awesome free APIs for developers. Categorized, tested daily, and well-documented. Your one-stop resource for public APIs.",
       "html_url": "https://github.com/ThanhNguyxnOrg/apidex-hub",
       "homepage": "https://thanhnguyxnorg.github.io/apidex-hub/",
       "language": "Python",
@@ -447,10 +528,7 @@
       "has_pages": true,
       "topics": [
         "api",
-        "api-collection",
-        "api-directory",
         "api-list",
-        "apis",
         "awesome",
         "awesome-list",
         "developer-resources",
@@ -463,7 +541,7 @@
         "rest-api"
       ],
       "created_at": "2026-05-07T06:43:42Z",
-      "updated_at": "2026-11-16T17:11:39Z",
+      "updated_at": "2026-11-17T07:36:18Z",
       "pushed_at": "2026-11-16T16:12:17Z",
       "default_branch": "main",
       "license": {
@@ -472,58 +550,6 @@
       "archived": false,
       "image": "/brand/apidex-hub.png",
       "logo": "/logos/apidex-hub.svg"
-    },
-    {
-      "name": "StepDSA",
-      "slug": "stepdsa",
-      "description": "Interactive DSA learning platform & visualizer with deterministic time-travel engine and playground.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/StepDSA",
-      "homepage": "https://thanhnguyxnorg.github.io/StepDSA/",
-      "language": "TypeScript",
-      "stargazers_count": 1,
-      "forks_count": 1,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [
-        "algorithms",
-        "data-structures",
-        "dsa",
-        "education",
-        "learning",
-        "typescript",
-        "visualizer"
-      ],
-      "created_at": "2026-09-26T04:58:47Z",
-      "updated_at": "2026-11-10T12:18:24Z",
-      "pushed_at": "2026-11-16T16:03:05Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/stepdsa.png",
-      "logo": "/logos/stepdsa.svg"
-    },
-    {
-      "name": "ThanhNguyxnOrg.github.io",
-      "slug": "thanhnguyxnorg.github.io",
-      "description": "Org site: build, explore, evolve.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io",
-      "homepage": "https://thanhnguyxnorg.github.io/",
-      "language": "TypeScript",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": true,
-      "topics": [],
-      "created_at": "2026-10-13T13:31:35Z",
-      "updated_at": "2026-11-12T15:48:41Z",
-      "pushed_at": "2026-11-16T15:09:03Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/org-github.png",
-      "logo": "/logo.png"
     },
     {
       "name": "Techstack-Studio",
@@ -562,7 +588,7 @@
     {
       "name": "SkillGauge",
       "slug": "skillgauge",
-      "description": "🏆 Static auditing engine and leaderboard platform for agentic process instructions using a strict 100-criteria scientific matrix.",
+      "description": "Static auditing engine and leaderboard platform for agentic process instructions using a strict 100-criteria scientific matrix.",
       "html_url": "https://github.com/ThanhNguyxnOrg/SkillGauge",
       "homepage": "https://thanhnguyxnorg.github.io/SkillGauge/",
       "language": "TypeScript",
@@ -585,7 +611,7 @@
         "static-auditor"
       ],
       "created_at": "2026-06-15T17:36:17Z",
-      "updated_at": "2026-11-10T12:18:59Z",
+      "updated_at": "2026-11-17T07:36:34Z",
       "pushed_at": "2026-11-16T13:09:24Z",
       "default_branch": "main",
       "license": null,
@@ -671,9 +697,9 @@
     {
       "name": "git-account-switcher",
       "slug": "git-account-switcher",
-      "description": "⚡ Fast multi-account Git identity & GitHub CLI switcher. Switch accounts, tokens, commit authors, and noreply emails in 1 second. Zero SSH needed. Works on Windows, macOS, and Linux.",
+      "description": "Fast multi-account Git identity & GitHub CLI switcher. Switch accounts, tokens, commit authors, and noreply emails in 1 second. Zero SSH needed. Works on Windows, macOS, and Linux.",
       "html_url": "https://github.com/ThanhNguyxnOrg/git-account-switcher",
-      "homepage": null,
+      "homepage": "",
       "language": "PowerShell",
       "stargazers_count": 0,
       "forks_count": 0,
@@ -690,7 +716,7 @@
         "multi-account"
       ],
       "created_at": "2026-09-16T01:59:30Z",
-      "updated_at": "2026-11-10T12:09:03Z",
+      "updated_at": "2026-11-17T07:36:48Z",
       "pushed_at": "2026-11-16T13:07:58Z",
       "default_branch": "master",
       "license": {
@@ -748,7 +774,6 @@
         "indie-game",
         "react",
         "sci-fi",
-        "three-js",
         "threejs",
         "time-loop",
         "typescript",
@@ -757,7 +782,7 @@
         "webgl"
       ],
       "created_at": "2026-11-04T12:29:15Z",
-      "updated_at": "2026-11-10T14:54:15Z",
+      "updated_at": "2026-11-17T07:37:22Z",
       "pushed_at": "2026-11-16T13:07:42Z",
       "default_branch": "main",
       "license": null,
