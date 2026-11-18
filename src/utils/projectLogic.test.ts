@@ -8,6 +8,7 @@ import {
   computeLanguageBreakdown,
   computeTopicCounts,
   computeOrbitalPositions,
+  paginateItems,
 } from './projectLogic';
 import { mergeLiveGitHubRepos } from './liveSync';
 
@@ -28,7 +29,8 @@ test('filterAndSortProjects filters by category and search query accurately', ()
     topics: [],
     sort: 'stars',
   });
-  assert.equal(aiProjects.length, 4);
+  const expectedAiCount = ORG_PROJECTS.filter((p) => p.category === 'AI & Agents').length;
+  assert.equal(aiProjects.length, expectedAiCount);
   assert.equal(aiProjects[0].name, 'blendops');
 
   const rustQuery = filterAndSortProjects(ORG_PROJECTS, {
@@ -170,3 +172,23 @@ test('computeOrbitalPositions assigns non-overlapping 3D coordinates across 3 ri
   assert.equal(exploded.length, ORG_PROJECTS.length);
   assert.ok(exploded[0].radius > normal[0].radius);
 });
+
+test('paginateItems slices cleanly and clamps bounds for 100+ repositories', () => {
+  const hundred = Array.from({ length: 100 }, (_, i) => i + 1);
+  const page1 = paginateItems(hundred, 1, 9);
+  assert.equal(page1.items.length, 9);
+  assert.equal(page1.totalPages, 12);
+  assert.equal(page1.startIndex, 0);
+  assert.equal(page1.endIndex, 9);
+
+  const lastPage = paginateItems(hundred, 99, 9);
+  assert.equal(lastPage.currentPage, 12);
+  assert.deepEqual(lastPage.items, [100]);
+
+  const empty = paginateItems([], 1, 9);
+  assert.equal(empty.totalPages, 1);
+  assert.equal(empty.items.length, 0);
+  assert.equal(empty.startIndex, 0);
+  assert.equal(empty.endIndex, 0);
+});
+

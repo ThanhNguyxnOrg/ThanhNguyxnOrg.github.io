@@ -12,14 +12,16 @@ import {
   Pause,
   Play,
   RotateCcw,
-  Sparkles,
   Star,
 } from 'lucide-react';
 import type { OrgProject } from '../data/orgData';
-import { assessProjectScientifically, computeOrbitalPositions } from '../utils/projectLogic';
+import {
+  assessProjectScientifically,
+  ORBITAL_RING_TILTS,
+} from '../utils/projectLogic';
 
 export type MaterialFinish = 'obsidian-gold' | 'brushed-titanium' | 'optical-crystal';
-export type CameraPreset = 'overview' | 'core' | 'top' | 'horizon';
+export type CameraPreset = 'overview' | 'core' | 'top' | 'horizon' | 'focus';
 
 interface OrbitalScene3DProps {
   projects: OrgProject[];
@@ -29,74 +31,88 @@ interface OrbitalScene3DProps {
 }
 
 const CAMERA_PRESETS: Record<
-  CameraPreset,
+  Exclude<CameraPreset, 'focus'>,
   { pos: [number, number, number]; target: [number, number, number] }
 > = {
-  overview: { pos: [0, 6.1, 13.9], target: [0, -1.18, 0] },
-  core: { pos: [0, 2.2, 5.5], target: [0, 0.35, 0] },
-  top: { pos: [0, 16.4, 0.01], target: [0, 0, 0] },
-  horizon: { pos: [10.2, 2.1, 8.6], target: [0, -0.35, 0] },
+  overview: { pos: [0, 4.9, 14.4], target: [0, 0.15, 0] },
+  core: { pos: [0, 1.9, 5.4], target: [0, 0.45, 0] },
+  top: { pos: [0.4, 15.8, 2.2], target: [0, 0.2, 0] },
+  horizon: { pos: [11.2, 1.4, 7.6], target: [0, 0.25, 0] },
 };
+
+const FINISH_OPTIONS: { id: MaterialFinish; label: string; swatch: string }[] = [
+  { id: 'obsidian-gold', label: 'Gold', swatch: '#F59E0B' },
+  { id: 'brushed-titanium', label: 'Titanium', swatch: '#CBD5E1' },
+  { id: 'optical-crystal', label: 'Crystal', swatch: '#38BDF8' },
+];
+
+type PlanetArchetype = 'ai' | 'systems' | 'media' | 'learning';
+type PlanetSilhouette =
+  | 'gyro'
+  | 'relay'
+  | 'prism'
+  | 'observatory'
+  | 'cubesat'
+  | 'binary'
+  | 'beacon';
+
+function getPlanetArchetype(proj: OrgProject): PlanetArchetype {
+  const { cluster } = assessProjectScientifically(proj);
+  if (cluster === 'AI & Agentic Workflows') return 'ai';
+  if (cluster === 'Media DSP & Creative Web') return 'media';
+  if (cluster === 'Learning & Org Architecture') return 'learning';
+  return 'systems';
+}
+
+function getPlanetSilhouette(proj: OrgProject, idx: number): PlanetSilhouette {
+  if (proj.category === 'Network') return 'relay';
+  if (proj.category === 'AI & Agents') return idx % 2 === 0 ? 'gyro' : 'beacon';
+  if (proj.category === 'Media') return 'prism';
+  if (proj.category === 'Web Apps') return 'binary';
+  if (proj.category === 'Learning' || proj.category === 'Documents') return 'observatory';
+  if (proj.category === 'Meta') return 'beacon';
+  return idx % 2 === 0 ? 'cubesat' : 'relay';
+}
 
 function createCompassDialTexture(maxAnisotropy: number): THREE.CanvasTexture {
   const canvas = document.createElement('canvas');
-  canvas.width = 1024;
-  canvas.height = 1024;
+  canvas.width = 512;
+  canvas.height = 512;
   const ctx = canvas.getContext('2d');
   if (ctx) {
-    ctx.clearRect(0, 0, 1024, 1024);
-    const cx = 512;
-    const cy = 512;
+    ctx.clearRect(0, 0, 512, 512);
+    const cx = 256;
+    const cy = 256;
 
-    // Soft radial floor illumination
-    const grad = ctx.createRadialGradient(cx, cy, 20, cx, cy, 496);
-    grad.addColorStop(0, 'rgba(245, 158, 11, 0.24)');
-    grad.addColorStop(0.38, 'rgba(245, 158, 11, 0.07)');
-    grad.addColorStop(0.75, 'rgba(56, 189, 248, 0.035)');
+    const grad = ctx.createRadialGradient(cx, cy, 12, cx, cy, 248);
+    grad.addColorStop(0, 'rgba(245, 158, 11, 0.16)');
+    grad.addColorStop(0.45, 'rgba(56, 189, 248, 0.05)');
     grad.addColorStop(1, 'rgba(7, 9, 15, 0)');
     ctx.fillStyle = grad;
     ctx.beginPath();
-    ctx.arc(cx, cy, 496, 0, Math.PI * 2);
+    ctx.arc(cx, cy, 248, 0, Math.PI * 2);
     ctx.fill();
 
-    // Precision concentric calibration rings matching orbital track proportions
-    [472, 396, 296, 196, 98].forEach((r, idx) => {
+    [236, 188, 134, 82].forEach((r, idx) => {
       ctx.strokeStyle =
         idx === 0
-          ? 'rgba(245, 158, 11, 0.45)'
-          : idx === 4
-            ? 'rgba(56, 189, 248, 0.32)'
-            : 'rgba(252, 211, 77, 0.18)';
-      ctx.lineWidth = idx === 0 ? 2.2 : 1.2;
+          ? 'rgba(245, 158, 11, 0.34)'
+          : idx === 3
+            ? 'rgba(56, 189, 248, 0.25)'
+            : 'rgba(148, 163, 184, 0.16)';
+      ctx.lineWidth = idx === 0 ? 1.5 : 1;
       ctx.beginPath();
       ctx.arc(cx, cy, r, 0, Math.PI * 2);
       ctx.stroke();
     });
 
-    // 12 radial meridian spokes (every 30 deg)
-    ctx.strokeStyle = 'rgba(148, 163, 184, 0.11)';
-    ctx.lineWidth = 1;
-    for (let s = 0; s < 12; s++) {
-      const a = (s / 12) * Math.PI * 2;
-      ctx.beginPath();
-      ctx.moveTo(cx + Math.cos(a) * 98, cy + Math.sin(a) * 98);
-      ctx.lineTo(cx + Math.cos(a) * 472, cy + Math.sin(a) * 472);
-      ctx.stroke();
-    }
-
-    // 120 perimeter degree ticks
-    for (let i = 0; i < 120; i++) {
-      const angle = (i / 120) * Math.PI * 2;
-      const isMajor = i % 10 === 0;
-      const isMid = i % 5 === 0;
-      const rInner = isMajor ? 440 : isMid ? 450 : 458;
-      const rOuter = 470;
-      ctx.strokeStyle = isMajor
-        ? 'rgba(252, 211, 77, 0.88)'
-        : isMid
-          ? 'rgba(245, 158, 11, 0.48)'
-          : 'rgba(148, 163, 184, 0.24)';
-      ctx.lineWidth = isMajor ? 2.5 : 1.2;
+    for (let i = 0; i < 72; i++) {
+      const angle = (i / 72) * Math.PI * 2;
+      const isMajor = i % 6 === 0;
+      const rInner = isMajor ? 220 : 228;
+      const rOuter = 235;
+      ctx.strokeStyle = isMajor ? 'rgba(252, 211, 77, 0.65)' : 'rgba(148, 163, 184, 0.2)';
+      ctx.lineWidth = isMajor ? 1.8 : 1;
       ctx.beginPath();
       ctx.moveTo(cx + Math.cos(angle) * rInner, cy + Math.sin(angle) * rInner);
       ctx.lineTo(cx + Math.cos(angle) * rOuter, cy + Math.sin(angle) * rOuter);
@@ -109,38 +125,33 @@ function createCompassDialTexture(maxAnisotropy: number): THREE.CanvasTexture {
   return texture;
 }
 
-/**
- * Smooth radial glow texture for THREE.Sprite (zero hard polygon or sphere edges).
- */
 function createRadialGlowTexture(): THREE.CanvasTexture {
   const canvas = document.createElement('canvas');
-  canvas.width = 256;
-  canvas.height = 256;
+  canvas.width = 128;
+  canvas.height = 128;
   const ctx = canvas.getContext('2d');
   if (ctx) {
-    const grad = ctx.createRadialGradient(128, 128, 2, 128, 128, 124);
+    const grad = ctx.createRadialGradient(64, 64, 2, 64, 64, 62);
     grad.addColorStop(0, 'rgba(254, 249, 195, 1.0)');
-    grad.addColorStop(0.22, 'rgba(245, 158, 11, 0.68)');
-    grad.addColorStop(0.52, 'rgba(245, 158, 11, 0.16)');
+    grad.addColorStop(0.24, 'rgba(245, 158, 11, 0.62)');
+    grad.addColorStop(0.55, 'rgba(56, 189, 248, 0.16)');
     grad.addColorStop(1, 'rgba(7, 9, 15, 0.0)');
     ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 256, 256);
+    ctx.fillRect(0, 0, 128, 128);
   }
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   return texture;
 }
 
-// Pre-allocated math helpers outside animation loop for zero GC
+// Pre-allocated math helpers outside animation loop (zero GC)
 const _targetCameraPos = new THREE.Vector3();
 const _targetLookAt = new THREE.Vector3();
-const _currentLookAt = new THREE.Vector3(0, -0.58, 0);
+const _currentLookAt = new THREE.Vector3(0, 0.15, 0);
 const _pointerNdc = new THREE.Vector2();
-const _smoothPointer = new THREE.Vector2();
-const _curveStart = new THREE.Vector3();
+const _projWorldPos = new THREE.Vector3();
+const _focusWorldPos = new THREE.Vector3();
 const _curveMid = new THREE.Vector3();
-const _curveEnd = new THREE.Vector3();
-const _tempVec = new THREE.Vector3();
 
 export default function OrbitalScene3D({
   projects,
@@ -148,13 +159,19 @@ export default function OrbitalScene3D({
   onSelectProject,
   onOpenDossier,
 }: OrbitalScene3DProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasMountRef = useRef<HTMLDivElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
+
   const [finish, setFinish] = useState<MaterialFinish>('obsidian-gold');
   const [cameraPreset, setCameraPreset] = useState<CameraPreset>('overview');
   const [explodeFactor, setExplodeFactor] = useState<number>(0);
   const [paused, setPaused] = useState<boolean>(false);
-  const [dockCollapsed, setDockCollapsed] = useState<boolean>(true);
+  const [dockCollapsed, setDockCollapsed] = useState<boolean>(false);
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
+  const [contextLost, setContextLost] = useState<boolean>(false);
+
+  const applyFinishRef = useRef<((mode: MaterialFinish) => void) | null>(null);
 
   const stateRef = useRef({
     finish,
@@ -164,12 +181,16 @@ export default function OrbitalScene3D({
     selectedSlug,
     hoveredSlug,
     activeCameraTransition: false,
+    isVisible: true,
+    reducedMotion: false,
     projects,
     onSelectProject,
+    onOpenDossier,
   });
 
   useEffect(() => {
     stateRef.current.finish = finish;
+    applyFinishRef.current?.(finish);
   }, [finish]);
 
   useEffect(() => {
@@ -196,11 +217,20 @@ export default function OrbitalScene3D({
   useEffect(() => {
     stateRef.current.projects = projects;
     stateRef.current.onSelectProject = onSelectProject;
-  }, [projects, onSelectProject]);
+    stateRef.current.onOpenDossier = onOpenDossier;
+  }, [projects, onSelectProject, onOpenDossier]);
 
   useEffect(() => {
     const mount = canvasMountRef.current;
-    if (!mount) return;
+    const outerContainer = containerRef.current;
+    if (!mount || !outerContainer) return;
+
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    stateRef.current.reducedMotion = motionQuery.matches;
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      stateRef.current.reducedMotion = e.matches;
+    };
+    motionQuery.addEventListener('change', handleMotionChange);
 
     const isSoftwareGl = (() => {
       const probeCanvas = document.createElement('canvas');
@@ -214,7 +244,7 @@ export default function OrbitalScene3D({
     })();
 
     const width = Math.max(mount.clientWidth, 280);
-    const height = Math.max(mount.clientHeight, 420);
+    const height = Math.max(mount.clientHeight, 360);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: !isSoftwareGl,
@@ -223,14 +253,23 @@ export default function OrbitalScene3D({
     });
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.22;
-    renderer.setPixelRatio(isSoftwareGl ? 1 : Math.min(window.devicePixelRatio, 2));
+    renderer.toneMappingExposure = 1.2;
+    renderer.setPixelRatio(isSoftwareGl ? 1 : Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(width, height, false);
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
     renderer.domElement.style.display = 'block';
-    renderer.shadowMap.enabled = !isSoftwareGl;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.enabled = false; // Zero shadow-pass overhead for smooth 60fps orbit
+
+    const handleContextLost = (e: Event) => {
+      e.preventDefault();
+      setContextLost(true);
+    };
+    const handleContextRestored = () => {
+      setContextLost(false);
+    };
+    renderer.domElement.addEventListener('webglcontextlost', handleContextLost);
+    renderer.domElement.addEventListener('webglcontextrestored', handleContextRestored);
 
     mount.innerHTML = '';
     mount.appendChild(renderer.domElement);
@@ -238,25 +277,28 @@ export default function OrbitalScene3D({
     const scene = new THREE.Scene();
     const bgHex = 0x07090f;
     scene.background = new THREE.Color(bgHex);
-    scene.fog = new THREE.FogExp2(bgHex, 0.022);
+    scene.fog = new THREE.FogExp2(bgHex, 0.02);
 
     const pmremGenerator = new THREE.PMREMGenerator(renderer);
     const envTexture = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
     scene.environment = envTexture;
     pmremGenerator.dispose();
 
-    const camera = new THREE.PerspectiveCamera(39, width / height, 0.1, 120);
+    const aspect = width / height;
+    const camera = new THREE.PerspectiveCamera(aspect < 0.95 ? 52 : 39, aspect, 0.1, 110);
     camera.position.set(...CAMERA_PRESETS.overview.pos);
     camera.lookAt(...CAMERA_PRESETS.overview.target);
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = !isSoftwareGl;
-    controls.dampingFactor = 0.055;
-    controls.rotateSpeed = 0.75;
-    controls.zoomSpeed = 0.85;
-    controls.maxPolarAngle = Math.PI * 0.48;
-    controls.minDistance = 4.0;
-    controls.maxDistance = 24;
+    controls.dampingFactor = 0.075;
+    controls.rotateSpeed = 0.72;
+    controls.zoomSpeed = 0.8;
+    controls.enablePan = false;
+    controls.maxPolarAngle = Math.PI * 0.62;
+    controls.minPolarAngle = Math.PI * 0.12;
+    controls.minDistance = 4.2;
+    controls.maxDistance = 22;
     controls.target.set(...CAMERA_PRESETS.overview.target);
 
     const onControlStart = () => {
@@ -264,38 +306,23 @@ export default function OrbitalScene3D({
     };
     controls.addEventListener('start', onControlStart);
 
-    // Studio 3-Point Lighting Rig
-    const hemiLight = new THREE.HemisphereLight(0xdbeafe, 0x090d16, 0.95);
+    // 3-Point Studio Lighting Rig (warm key + cool sky fill + cyan rim)
+    const hemiLight = new THREE.HemisphereLight(0xdbeafe, 0x090d16, 1.05);
     hemiLight.position.set(0, 22, 0);
     scene.add(hemiLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffedd5, 2.35);
-    keyLight.position.set(8, 15, 10);
-    keyLight.castShadow = !isSoftwareGl;
-    if (!isSoftwareGl) {
-      keyLight.shadow.mapSize.width = 1024;
-      keyLight.shadow.mapSize.height = 1024;
-      const d = 11;
-      keyLight.shadow.camera.left = -d;
-      keyLight.shadow.camera.right = d;
-      keyLight.shadow.camera.top = d;
-      keyLight.shadow.camera.bottom = -d;
-      keyLight.shadow.camera.near = 1;
-      keyLight.shadow.camera.far = 35;
-      keyLight.shadow.bias = -0.0005;
-      keyLight.shadow.normalBias = 0.02;
-    }
+    const keyLight = new THREE.DirectionalLight(0xffedd5, 2.25);
+    keyLight.position.set(8, 14, 10);
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0x38bdf8, 1.45);
-    rimLight.position.set(-10, 7, -9);
+    const rimLight = new THREE.DirectionalLight(0x38bdf8, 1.55);
+    rimLight.position.set(-10, 6, -9);
     scene.add(rimLight);
 
-    const FLOOR_Y = -0.35;
-    const CORE_Y = 0.85;
-    _curveStart.set(0, CORE_Y, 0);
+    const FLOOR_Y = -2.15;
+    const CORE_Y = 0.35;
 
-    const corePointLight = new THREE.PointLight(0xf59e0b, 3.8, 19, 1.5);
+    const corePointLight = new THREE.PointLight(0xf59e0b, 3.4, 18, 1.4);
     corePointLight.position.set(0, CORE_Y, 0);
     scene.add(corePointLight);
 
@@ -303,30 +330,33 @@ export default function OrbitalScene3D({
     const dialTexture = createCompassDialTexture(maxAniso);
     const radialGlowTexture = createRadialGlowTexture();
 
+    // Shared Core Materials (only updated inside applyFinish)
     const primaryMetalMat = new THREE.MeshPhysicalMaterial({
       color: 0xf59e0b,
       metalness: 0.9,
       roughness: 0.14,
       clearcoat: 0.9,
       clearcoatRoughness: 0.08,
+      ior: 1.54,
+      thickness: 1.2,
+      attenuationColor: new THREE.Color(0x38bdf8),
+      attenuationDistance: 2.5,
     });
 
-    const darkStructuralMat = new THREE.MeshPhysicalMaterial({
+    const darkStructuralMat = new THREE.MeshStandardMaterial({
       color: 0x1e293b,
-      metalness: 0.85,
-      roughness: 0.22,
-      clearcoat: 0.7,
-      clearcoatRoughness: 0.15,
+      metalness: 0.84,
+      roughness: 0.24,
     });
 
     const accentChromeMat = new THREE.MeshPhysicalMaterial({
       color: 0xfef3c7,
-      metalness: 0.96,
-      roughness: 0.08,
-      clearcoat: 1.0,
+      metalness: 0.95,
+      roughness: 0.09,
+      anisotropy: 0.75,
+      clearcoat: 0.85,
     });
 
-    // Custom GLSL Shader for the Central Harmonic Sun Core
     const coreShaderUniforms = {
       uTime: { value: 0 },
       uBaseColor: { value: new THREE.Color(0xd97706) },
@@ -343,18 +373,19 @@ export default function OrbitalScene3D({
         varying float vDisplacement;
 
         void main() {
-          float wave = sin(position.x * 4.0 + uTime * 1.8) * cos(position.y * 4.0 - uTime * 1.5) * cos(position.z * 4.0 + uTime * 1.2);
-          float disp = wave * 0.03;
+          float wave = sin(position.x * 4.0 + uTime * 1.5) * cos(position.y * 4.0 - uTime * 1.3) * cos(position.z * 4.0 + uTime * 1.1);
+          float disp = wave * 0.028;
           vDisplacement = disp;
 
           vec3 newPos = position + normal * disp;
-          vNormal = normalize(normalMatrix * normal);
           vec4 mvPosition = modelViewMatrix * vec4(newPos, 1.0);
           vViewPosition = -mvPosition.xyz;
+          vNormal = normalize(normalMatrix * normal);
           gl_Position = projectionMatrix * mvPosition;
         }
       `,
       fragmentShader: `
+        uniform float uTime;
         uniform vec3 uBaseColor;
         uniform vec3 uRimColor;
         uniform vec3 uPulseColor;
@@ -365,152 +396,312 @@ export default function OrbitalScene3D({
         void main() {
           vec3 normal = normalize(vNormal);
           vec3 viewDir = normalize(vViewPosition);
-          float fresnel = pow(1.0 - max(0.0, dot(viewDir, normal)), 2.4);
-
-          float band = smoothstep(-0.03, 0.03, vDisplacement);
-          vec3 innerCol = mix(uBaseColor, uRimColor, band * 0.5);
-          vec3 finalCol = mix(innerCol, uRimColor, fresnel * 0.92) + uPulseColor * pow(fresnel, 4.0) * 0.35;
-
-          gl_FragColor = vec4(finalCol, 1.0);
+          float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 2.3);
+          float bands = sin(vDisplacement * 90.0 + uTime * 2.2) * 0.5 + 0.5;
+          vec3 col = mix(uBaseColor, uRimColor, fresnel * 0.85 + bands * 0.25);
+          col = mix(col, uPulseColor, pow(fresnel, 4.0) * 0.45);
+          gl_FragColor = vec4(col, 1.0);
         }
       `,
     });
 
-    const masterGroup = new THREE.Group();
-    scene.add(masterGroup);
+    // Pooled Planet Archetype Materials (8 shared PBR materials instead of 23x duplicate Physical shaders!)
+    const archetypeBodyMats: Record<PlanetArchetype, THREE.MeshStandardMaterial> = {
+      ai: new THREE.MeshStandardMaterial({
+        color: 0xf59e0b,
+        emissive: 0x78350f,
+        emissiveIntensity: 0.45,
+        metalness: 0.88,
+        roughness: 0.16,
+      }),
+      systems: new THREE.MeshStandardMaterial({
+        color: 0x94a3b8,
+        emissive: 0x075985,
+        emissiveIntensity: 0.35,
+        metalness: 0.92,
+        roughness: 0.22,
+      }),
+      media: new THREE.MeshStandardMaterial({
+        color: 0x34d399,
+        emissive: 0x065f46,
+        emissiveIntensity: 0.42,
+        metalness: 0.65,
+        roughness: 0.18,
+      }),
+      learning: new THREE.MeshStandardMaterial({
+        color: 0x818cf8,
+        emissive: 0x312e81,
+        emissiveIntensity: 0.4,
+        metalness: 0.78,
+        roughness: 0.2,
+      }),
+    };
 
-    // Ground Astrolabe Plane at FLOOR_Y = -0.35
-    const floorGroup = new THREE.Group();
-    floorGroup.position.y = FLOOR_Y;
-    masterGroup.add(floorGroup);
+    const archetypeRingMats: Record<PlanetArchetype, THREE.MeshStandardMaterial> = {
+      ai: new THREE.MeshStandardMaterial({
+        color: 0xfcd34d,
+        emissive: 0xd97706,
+        emissiveIntensity: 0.55,
+        metalness: 0.88,
+        roughness: 0.15,
+      }),
+      systems: new THREE.MeshStandardMaterial({
+        color: 0x38bdf8,
+        emissive: 0x0284c7,
+        emissiveIntensity: 0.65,
+        metalness: 0.85,
+        roughness: 0.16,
+      }),
+      media: new THREE.MeshStandardMaterial({
+        color: 0xa78bfa,
+        emissive: 0x7c3aed,
+        emissiveIntensity: 0.5,
+        metalness: 0.8,
+        roughness: 0.18,
+      }),
+      learning: new THREE.MeshStandardMaterial({
+        color: 0xfbbf24,
+        emissive: 0x4f46e5,
+        emissiveIntensity: 0.48,
+        metalness: 0.84,
+        roughness: 0.18,
+      }),
+    };
 
-    const dialPlaneGeo = new THREE.CircleGeometry(9.6, 96);
-    dialPlaneGeo.rotateX(-Math.PI / 2);
-    const dialPlaneMat = new THREE.MeshBasicMaterial({
-      map: dialTexture,
+    const selectedRingMat = new THREE.MeshStandardMaterial({
+      color: 0xfef08a,
+      emissive: 0xf59e0b,
+      emissiveIntensity: 1.75,
+      metalness: 0.9,
+      roughness: 0.1,
+    });
+
+    const conduitDefaultMats: Record<PlanetArchetype, THREE.LineBasicMaterial> = {
+      ai: new THREE.LineBasicMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.2 }),
+      systems: new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.18 }),
+      media: new THREE.LineBasicMaterial({ color: 0x34d399, transparent: true, opacity: 0.18 }),
+      learning: new THREE.LineBasicMaterial({ color: 0x818cf8, transparent: true, opacity: 0.18 }),
+    };
+
+    const conduitActiveMat = new THREE.LineBasicMaterial({
+      color: 0xfef08a,
       transparent: true,
-      opacity: 0.95,
-      depthWrite: false,
-    });
-    const dialPlane = new THREE.Mesh(dialPlaneGeo, dialPlaneMat);
-    dialPlane.position.y = 0.01;
-    floorGroup.add(dialPlane);
-
-    // Central Pedestal Base Ring on Floor directly under the Sun Core (grounds the core vertically)
-    const coreFloorRingGeo = new THREE.RingGeometry(0.45, 1.05, 64);
-    coreFloorRingGeo.rotateX(-Math.PI / 2);
-    const coreFloorRingMat = new THREE.MeshBasicMaterial({
-      color: 0xf59e0b,
-      transparent: true,
-      opacity: 0.38,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-    });
-    const coreFloorRing = new THREE.Mesh(coreFloorRingGeo, coreFloorRingMat);
-    coreFloorRing.position.y = 0.025;
-    floorGroup.add(coreFloorRing);
-
-    // 3 Concentric 3D Torus Orbital Track Rings on Floor
-    const trackRadii = [3.6, 5.8, 8.2];
-    const trackMeshes: THREE.Mesh[] = [];
-    trackRadii.forEach((r, idx) => {
-      const torusTrackGeo = new THREE.TorusGeometry(r, 0.022, 16, 128);
-      torusTrackGeo.rotateX(Math.PI / 2);
-      const torusTrackMat = new THREE.MeshBasicMaterial({
-        color: idx === 0 ? 0xf59e0b : idx === 1 ? 0xfcd34d : 0x38bdf8,
-        transparent: true,
-        opacity: idx === 0 ? 0.78 : idx === 1 ? 0.52 : 0.36,
-      });
-      const ringMesh = new THREE.Mesh(torusTrackGeo, torusTrackMat);
-      ringMesh.position.y = 0.03 + idx * 0.004;
-      floorGroup.add(ringMesh);
-      trackMeshes.push(ringMesh);
+      opacity: 0.82,
     });
 
-    // Central Symmetrical 3-Axis Armillary Astrolabe Core at (0, CORE_Y, 0)
-    const coreAssembly = new THREE.Group();
-    coreAssembly.position.set(0, CORE_Y, 0);
-    masterGroup.add(coreAssembly);
-
-    // Part 1: High-Subdivision Harmonic Plasma Sphere (centered at 0,0,0)
-    const coreSphereGeo = new THREE.SphereGeometry(0.82, 64, 64);
-    const coreMesh = new THREE.Mesh(coreSphereGeo, corePlasmaMat);
-    coreAssembly.add(coreMesh);
-
-    // Part 2: Seamless Radial Glow Sprite (centered at 0,0,0)
-    const coreGlowSpriteMat = new THREE.SpriteMaterial({
+    const photonAmberMat = new THREE.SpriteMaterial({
       map: radialGlowTexture,
-      color: 0xf59e0b,
+      color: 0xfef08a,
       transparent: true,
-      opacity: 0.78,
+      opacity: 0.85,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
-    const coreGlowSprite = new THREE.Sprite(coreGlowSpriteMat);
-    coreGlowSprite.scale.set(3.5, 3.5, 1);
-    coreAssembly.add(coreGlowSprite);
 
-    // Part 3: Horizontal Equatorial Horizon Ring with 8 Cardinal Calibration Nodes (100% symmetrical)
+    const photonCyanMat = new THREE.SpriteMaterial({
+      map: radialGlowTexture,
+      color: 0x7dd3fc,
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const glowSpriteAmberMat = new THREE.SpriteMaterial({
+      map: radialGlowTexture,
+      color: 0xfcd34d,
+      transparent: true,
+      opacity: 0.42,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const glowSpriteCyanMat = new THREE.SpriteMaterial({
+      map: radialGlowTexture,
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.34,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const applyFinish = (mode: MaterialFinish) => {
+      if (mode === 'obsidian-gold') {
+        primaryMetalMat.color.setHex(0xf59e0b);
+        primaryMetalMat.metalness = 0.9;
+        primaryMetalMat.roughness = 0.14;
+        primaryMetalMat.transmission = 0;
+        primaryMetalMat.opacity = 1;
+        primaryMetalMat.transparent = false;
+        darkStructuralMat.color.setHex(0x1e293b);
+        coreShaderUniforms.uBaseColor.value.setHex(0xd97706);
+        coreShaderUniforms.uRimColor.value.setHex(0xfef08a);
+      } else if (mode === 'brushed-titanium') {
+        primaryMetalMat.color.setHex(0xe2e8f0);
+        primaryMetalMat.metalness = 0.95;
+        primaryMetalMat.roughness = 0.19;
+        primaryMetalMat.transmission = 0;
+        primaryMetalMat.opacity = 1;
+        primaryMetalMat.transparent = false;
+        darkStructuralMat.color.setHex(0x334155);
+        coreShaderUniforms.uBaseColor.value.setHex(0x64748b);
+        coreShaderUniforms.uRimColor.value.setHex(0xf8fafc);
+      } else {
+        primaryMetalMat.color.setHex(0x7dd3fc);
+        primaryMetalMat.metalness = 0.12;
+        primaryMetalMat.roughness = 0.06;
+        primaryMetalMat.transmission = isSoftwareGl ? 0 : 0.85;
+        primaryMetalMat.transparent = true;
+        primaryMetalMat.opacity = isSoftwareGl ? 0.58 : 1;
+        darkStructuralMat.color.setHex(0x0f172a);
+        coreShaderUniforms.uBaseColor.value.setHex(0x0284c7);
+        coreShaderUniforms.uRimColor.value.setHex(0xe0f2fe);
+      }
+    };
+    applyFinishRef.current = applyFinish;
+    applyFinish(stateRef.current.finish);
+
+    const masterGroup = new THREE.Group();
+    scene.add(masterGroup);
+
+    // Subtle Observatory Floor Compass Dial far beneath the floating 3D astrolabe
+    const dialGeo = new THREE.CircleGeometry(9.6, 72);
+    const dialMat = new THREE.MeshStandardMaterial({
+      map: dialTexture,
+      transparent: true,
+      opacity: 0.72,
+      roughness: 0.88,
+      metalness: 0.1,
+      depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      polygonOffsetUnits: -1,
+    });
+    const dialMesh = new THREE.Mesh(dialGeo, dialMat);
+    dialMesh.rotation.x = -Math.PI / 2;
+    dialMesh.position.y = FLOOR_Y;
+    masterGroup.add(dialMesh);
+
+    // Central Gimbal Armillary Assembly (suspended in 3D space at CORE_Y)
+    const coreAnchorGroup = new THREE.Group();
+    coreAnchorGroup.position.set(0, CORE_Y, 0);
+    masterGroup.add(coreAnchorGroup);
+
+    const coreMesh = new THREE.Mesh(new THREE.IcosahedronGeometry(0.54, 2), corePlasmaMat);
+    coreAnchorGroup.add(coreMesh);
+
+    const coreGlowSprite = new THREE.Sprite(
+      new THREE.SpriteMaterial({
+        map: radialGlowTexture,
+        color: 0xfcd34d,
+        transparent: true,
+        opacity: 0.68,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      }),
+    );
+    coreGlowSprite.scale.set(3.2, 3.2, 1);
+    coreAnchorGroup.add(coreGlowSprite);
+
     const equatorialGroup = new THREE.Group();
-    const eqRingGeo = new THREE.TorusGeometry(1.26, 0.028, 28, 128);
-    eqRingGeo.rotateX(Math.PI / 2);
-    const eqRingMesh = new THREE.Mesh(eqRingGeo, primaryMetalMat);
-    equatorialGroup.add(eqRingMesh);
+    equatorialGroup.add(new THREE.Mesh(new THREE.TorusGeometry(1.08, 0.032, 14, 64), primaryMetalMat));
+    equatorialGroup.rotation.x = Math.PI * 0.42;
+    coreAnchorGroup.add(equatorialGroup);
 
-    const beadGeo = new THREE.SphereGeometry(0.052, 20, 20);
-    for (let i = 0; i < 8; i++) {
-      const a = (i / 8) * Math.PI * 2;
-      const bead = new THREE.Mesh(beadGeo, i % 2 === 0 ? accentChromeMat : primaryMetalMat);
-      bead.position.set(Math.cos(a) * 1.26, 0, Math.sin(a) * 1.26);
-      equatorialGroup.add(bead);
-    }
-    coreAssembly.add(equatorialGroup);
-
-    // Part 4 & 5: Twin Symmetrical Inclined Meridian Gimbal Rings (+38 deg and -38 deg)
-    const meridianRingGeo = new THREE.TorusGeometry(1.5, 0.022, 24, 128);
     const meridianGroupA = new THREE.Group();
-    meridianGroupA.rotation.x = Math.PI * 0.21;
-    const meridianMeshA = new THREE.Mesh(meridianRingGeo, accentChromeMat);
-    meridianGroupA.add(meridianMeshA);
-    coreAssembly.add(meridianGroupA);
+    meridianGroupA.add(new THREE.Mesh(new THREE.TorusGeometry(1.34, 0.024, 12, 64), accentChromeMat));
+    meridianGroupA.rotation.set(Math.PI / 4, Math.PI / 6, 0);
+    coreAnchorGroup.add(meridianGroupA);
 
     const meridianGroupB = new THREE.Group();
-    meridianGroupB.rotation.x = -Math.PI * 0.21;
-    const meridianMeshB = new THREE.Mesh(meridianRingGeo, primaryMetalMat);
-    meridianGroupB.add(meridianMeshB);
-    coreAssembly.add(meridianGroupB);
+    meridianGroupB.add(new THREE.Mesh(new THREE.TorusGeometry(1.34, 0.024, 12, 64), primaryMetalMat));
+    meridianGroupB.rotation.set(-Math.PI / 4, -Math.PI / 6, 0);
+    coreAnchorGroup.add(meridianGroupB);
 
-    // Part 6: Outer Ecliptic Precision Ring with 12 Degree Pearls
     const outerEclipticGroup = new THREE.Group();
-    const outerRingGeo = new THREE.TorusGeometry(1.8, 0.018, 24, 128);
-    outerRingGeo.rotateX(Math.PI / 2);
-    const outerRingMesh = new THREE.Mesh(outerRingGeo, darkStructuralMat);
-    outerEclipticGroup.add(outerRingMesh);
+    outerEclipticGroup.add(
+      new THREE.Mesh(new THREE.TorusGeometry(1.64, 0.028, 12, 64), darkStructuralMat),
+    );
+    outerEclipticGroup.rotation.set(Math.PI / 2 - 0.16, 0, 0.22);
+    coreAnchorGroup.add(outerEclipticGroup);
 
-    const smallPearlGeo = new THREE.SphereGeometry(0.038, 16, 16);
-    for (let i = 0; i < 12; i++) {
-      const a = (i / 12) * Math.PI * 2;
-      const p = new THREE.Mesh(smallPearlGeo, accentChromeMat);
-      p.position.set(Math.cos(a) * 1.8, 0, Math.sin(a) * 1.8);
-      outerEclipticGroup.add(p);
-    }
-    outerEclipticGroup.rotation.z = 0.22;
-    coreAssembly.add(outerEclipticGroup);
+    // Tall Vertical Meridian Calibration Frame around the Constellation (breaks horizontal flatness)
+    const verticalMeridianMat = new THREE.MeshStandardMaterial({
+      color: 0x334155,
+      emissive: 0x0f172a,
+      emissiveIntensity: 0.35,
+      metalness: 0.88,
+      roughness: 0.25,
+    });
+    const verticalMeridianA = new THREE.Mesh(
+      new THREE.TorusGeometry(4.35, 0.014, 10, 88),
+      verticalMeridianMat,
+    );
+    verticalMeridianA.rotation.y = Math.PI * 0.18;
+    coreAnchorGroup.add(verticalMeridianA);
 
-    // Instanced Smooth Starlight Orbs
-    const dustCount = 140;
-    const dustGeo = new THREE.SphereGeometry(0.03, 12, 12);
-    const dustMat = new THREE.MeshBasicMaterial({ color: 0xfcd34d });
-    const dustInstanced = new THREE.InstancedMesh(dustGeo, dustMat, dustCount);
+    const verticalMeridianB = new THREE.Mesh(
+      new THREE.TorusGeometry(6.35, 0.012, 10, 96),
+      verticalMeridianMat,
+    );
+    verticalMeridianB.rotation.y = -Math.PI * 0.32;
+    verticalMeridianB.rotation.x = 0.14;
+    coreAnchorGroup.add(verticalMeridianB);
+
+    // 3 Cross-Inclined 3D Orbital Planes (each ring tilts & spins cleanly around its own normal!)
+    const ringConfigs = [0, 1, 2] as const;
+    const ringTiltGroups: THREE.Group[] = [];
+    const ringSpinGroups: THREE.Group[] = [];
+    const ringTrackMeshes: THREE.Mesh[] = [];
+
+    ringConfigs.forEach((ringIdx) => {
+      const cfg = ORBITAL_RING_TILTS[ringIdx];
+      const tiltGroup = new THREE.Group();
+      tiltGroup.position.set(0, CORE_Y, 0);
+      tiltGroup.rotation.set(cfg.tiltX, 0, cfg.tiltZ);
+      masterGroup.add(tiltGroup);
+      ringTiltGroups.push(tiltGroup);
+
+      const spinGroup = new THREE.Group();
+      tiltGroup.add(spinGroup);
+      ringSpinGroups.push(spinGroup);
+
+      const trackGeo = new THREE.TorusGeometry(
+        cfg.baseRadius,
+        ringIdx === 0 ? 0.022 : 0.016,
+        10,
+        96,
+      );
+      trackGeo.rotateX(Math.PI / 2);
+      const trackMat = new THREE.MeshStandardMaterial({
+        color: ringIdx === 0 ? 0xf59e0b : ringIdx === 1 ? 0x38bdf8 : 0x64748b,
+        emissive: ringIdx === 0 ? 0x92400e : ringIdx === 1 ? 0x075985 : 0x1e293b,
+        emissiveIntensity: 0.48,
+        metalness: 0.85,
+        roughness: 0.25,
+      });
+      const trackMesh = new THREE.Mesh(trackGeo, trackMat);
+      spinGroup.add(trackMesh);
+      ringTrackMeshes.push(trackMesh);
+    });
+
+    // Instanced 3D Spherical Cosmic Dust Field (spread in full vertical & horizontal volume)
+    const DUST_COUNT = 160;
+    const dustGeo = new THREE.OctahedronGeometry(0.026, 0);
+    const dustMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const dustInstanced = new THREE.InstancedMesh(dustGeo, dustMat, DUST_COUNT);
     const dummy = new THREE.Object3D();
     const dustColor = new THREE.Color();
-    for (let i = 0; i < dustCount; i++) {
-      const angle = (i * 137.5 * Math.PI) / 180;
-      const radius = 2.5 + ((i * 29) % 85) * 0.1;
-      const y = -0.15 + ((i * 19) % 50) * 0.08;
-      dummy.position.set(Math.cos(angle) * radius, y, Math.sin(angle) * radius);
-      const s = 0.5 + (i % 5) * 0.18;
-      dummy.scale.setScalar(s);
+    for (let i = 0; i < DUST_COUNT; i++) {
+      const radius = 2.8 + ((i * 37) % 100) * 0.08;
+      const theta = (i / DUST_COUNT) * Math.PI * 2 * 6.5;
+      const phi = ((i * 29) % 100) / 100 - 0.5;
+      dummy.position.set(
+        Math.cos(theta) * radius,
+        CORE_Y + phi * 6.4,
+        Math.sin(theta) * radius,
+      );
+      dummy.scale.setScalar(0.5 + (i % 5) * 0.18);
       dummy.updateMatrix();
       dustInstanced.setMatrixAt(i, dummy.matrix);
       dustColor.setHex(i % 4 === 0 ? 0xf59e0b : i % 3 === 0 ? 0xfef08a : 0x38bdf8);
@@ -521,172 +712,396 @@ export default function OrbitalScene3D({
     dustInstanced.computeBoundingSphere();
     masterGroup.add(dustInstanced);
 
-    // 19 Concentric, Co-Axial Sculptural Satellite Nodes + Dynamically Locked Energy Conduits & Photon Packets
-    const orbitGroup = new THREE.Group();
-    masterGroup.add(orbitGroup);
+    // Distant Parallax Starfield Shell (1 draw call via THREE.Points, zero per-frame allocations)
+    const STAR_COUNT = 240;
+    const starPositions = new Float32Array(STAR_COUNT * 3);
+    const starColors = new Float32Array(STAR_COUNT * 3);
+    const starPalette = [
+      new THREE.Color(0xfef3c7), // soft warm starlight
+      new THREE.Color(0xbae6fd), // crisp cool cyan star
+      new THREE.Color(0xe2e8f0), // silver white
+    ];
+    for (let i = 0; i < STAR_COUNT; i++) {
+      // Deterministic golden-ratio spherical shell (r: 16..28) so no hydration jitter
+      const u = ((i * 73) % STAR_COUNT) / STAR_COUNT * 2 - 1;
+      const phi = (i * 2.3999632) % (Math.PI * 2);
+      const r = 16 + ((i * 19) % 120) * 0.1;
+      const sinTheta = Math.sqrt(Math.max(0, 1 - u * u));
+      starPositions[i * 3] = r * sinTheta * Math.cos(phi);
+      starPositions[i * 3 + 1] = r * u;
+      starPositions[i * 3 + 2] = r * sinTheta * Math.sin(phi);
 
+      const c = starPalette[i % starPalette.length];
+      starColors[i * 3] = c.r;
+      starColors[i * 3 + 1] = c.g;
+      starColors[i * 3 + 2] = c.b;
+    }
+    const starGeo = new THREE.BufferGeometry();
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    starGeo.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+    const starMat = new THREE.PointsMaterial({
+      size: 0.13,
+      sizeAttenuation: true,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.78,
+      depthWrite: false,
+    });
+    const starField = new THREE.Points(starGeo, starMat);
+    scene.add(starField);
+
+    // Pooled Astronomical Target Reticle (billboarded ring tracking focused satellite)
+    const selectionReticle = new THREE.Group();
+    const reticleOuterMat = new THREE.MeshBasicMaterial({
+      color: 0xfcd34d,
+      transparent: true,
+      opacity: 0.85,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    });
+    const reticleInnerMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.55,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    });
+    const reticleOuterRing = new THREE.Mesh(
+      new THREE.RingGeometry(0.55, 0.59, 32),
+      reticleOuterMat,
+    );
+    const reticleInnerRing = new THREE.Mesh(
+      new THREE.RingGeometry(0.64, 0.66, 4, 1, 0, Math.PI * 1.4),
+      reticleInnerMat,
+    );
+    selectionReticle.add(reticleOuterRing);
+    selectionReticle.add(reticleInnerRing);
+    selectionReticle.visible = false;
+    scene.add(selectionReticle);
+
+    // Shared Archetype & Satellite Geometries (7 distinct planet silhouettes + 4 micro-satellite moonlet types)
+    const sharedGeos = {
+      aiCore: new THREE.OctahedronGeometry(0.23, 1),
+      aiRingA: new THREE.TorusGeometry(0.39, 0.02, 10, 36),
+      aiRingB: new THREE.TorusGeometry(0.3, 0.014, 8, 30),
+
+      sysCore: new THREE.CylinderGeometry(0.16, 0.21, 0.27, 6),
+      sysCollar: new THREE.TorusGeometry(0.22, 0.018, 8, 24),
+      sysRing: new THREE.TorusGeometry(0.42, 0.02, 10, 36),
+      sysMast: new THREE.CylinderGeometry(0.014, 0.014, 0.56, 6),
+      solarWing: new THREE.BoxGeometry(0.34, 0.012, 0.11),
+
+      mediaCore: new THREE.DodecahedronGeometry(0.22, 0),
+      mediaFlagshipCore: new THREE.TorusKnotGeometry(0.145, 0.044, 34, 8),
+      mediaRing: new THREE.TorusGeometry(0.41, 0.02, 10, 36),
+
+      learnCore: new THREE.SphereGeometry(0.21, 16, 12),
+      learnBand: new THREE.TorusGeometry(0.24, 0.015, 8, 28),
+      learnRing: new THREE.TorusGeometry(0.39, 0.02, 10, 36),
+      learnBeacon: new THREE.ConeGeometry(0.08, 0.16, 6),
+
+      cubeCore: new THREE.BoxGeometry(0.24, 0.24, 0.24),
+      cubeBoom: new THREE.CylinderGeometry(0.01, 0.01, 0.62, 5),
+
+      binaryPrimary: new THREE.SphereGeometry(0.135, 12, 10),
+      binaryCompanion: new THREE.OctahedronGeometry(0.095, 0),
+
+      moonletSphere: new THREE.SphereGeometry(0.052, 8, 6),
+      moonletCube: new THREE.BoxGeometry(0.078, 0.056, 0.056),
+      moonletWing: new THREE.BoxGeometry(0.18, 0.009, 0.042),
+      moonletOcta: new THREE.OctahedronGeometry(0.062, 0),
+      moonletCone: new THREE.ConeGeometry(0.046, 0.11, 5),
+      hitSphere: new THREE.SphereGeometry(0.68, 8, 6),
+    };
+    sharedGeos.aiRingA.rotateX(Math.PI / 2);
+    sharedGeos.sysCollar.rotateX(Math.PI / 2);
+    sharedGeos.sysRing.rotateX(Math.PI / 2);
+    sharedGeos.mediaRing.rotateX(Math.PI / 2);
+    sharedGeos.learnRing.rotateX(Math.PI / 2);
+
+    const satHitMat = new THREE.MeshBasicMaterial({ visible: false });
     const interactableHitMeshes: THREE.Mesh[] = [];
-    const CURVE_SEGMENTS = 28;
+    const CURVE_SEGMENTS = 18;
 
-    const satelliteRecords: {
+    interface SatelliteRecord {
       slug: string;
+      archetype: PlanetArchetype;
+      ringIndex: 0 | 1 | 2;
+      angleRad: number;
+      baseRadius: number;
+      baseLocalY: number;
+      nodeScale: number;
+      spinSpeed: number;
+      moonletSpeed: number;
       group: THREE.Group;
-      coreOrb: THREE.Object3D;
-      innerGyro: THREE.Object3D;
+      bodyGroup: THREE.Group;
       outerRing: THREE.Mesh;
+      ringFrame: THREE.Group;
+      moonletOrbitGroup: THREE.Group;
       glowSprite: THREE.Sprite;
-      stemPositions: Float32Array;
-      stemLine: THREE.Line;
-      floorAnchor: THREE.Mesh;
       conduitLine: THREE.Line;
       conduitPositions: Float32Array;
       photonPulse: THREE.Sprite;
-      beaconMat: THREE.MeshPhysicalMaterial;
-      nodeScale: number;
-      ringIndex: number;
-    }[] = [];
+      localPos: THREE.Vector3;
+      hasDemo: boolean;
+      isSelectedNow: boolean;
+      currentRingScale: number;
+    }
 
-    const initialPositions = computeOrbitalPositions(stateRef.current.projects, 0);
+    const satelliteRecords: SatelliteRecord[] = [];
 
-    // Symmetrical Concentric Satellite Geometries (all centered at 0,0,0)
-    const satOuterRingGeo = new THREE.TorusGeometry(0.45, 0.025, 24, 64);
-    satOuterRingGeo.rotateX(Math.PI / 2);
-    const satInnerGyroGeo = new THREE.TorusGeometry(0.33, 0.018, 20, 64);
-    const satCoreSphereGeo = new THREE.SphereGeometry(0.2, 32, 32);
-    const satCoreCrystalGeo = new THREE.OctahedronGeometry(0.22, 2);
-    const satBaseDiscGeo = new THREE.RingGeometry(0.14, 0.25, 32);
-    satBaseDiscGeo.rotateX(-Math.PI / 2);
-    const satHitGeo = new THREE.SphereGeometry(0.75, 16, 16);
-    const satHitMat = new THREE.MeshBasicMaterial({ visible: false });
+    // Partition projects cleanly into the 3 cross-inclined orbital rings
+    const projs = stateRef.current.projects;
+    const ringBuckets: [OrgProject[], OrgProject[], OrgProject[]] = [
+      projs.slice(0, 5),
+      projs.slice(5, 12),
+      projs.slice(12),
+    ];
 
-    stateRef.current.projects.forEach((proj, idx) => {
-      const nodePos = initialPositions[idx];
-      const satGroup = new THREE.Group();
-      const initialY = 0.45 + nodePos.yOffset * 0.55;
-      satGroup.position.set(nodePos.x, initialY, nodePos.z);
-      satGroup.scale.setScalar(nodePos.nodeScale);
-      orbitGroup.add(satGroup);
+    let globalIdx = 0;
+    ringConfigs.forEach((ringIndex) => {
+      const items = ringBuckets[ringIndex];
+      const count = Math.max(1, items.length);
+      const ringCfg = ORBITAL_RING_TILTS[ringIndex];
+      const spinGroup = ringSpinGroups[ringIndex];
 
-      // 1. Center Core Gem/Sphere at exact (0, 0, 0)
-      const coreOrb = new THREE.Mesh(
-        proj.pattern === 'orbit' || proj.pattern === 'wave' ? satCoreSphereGeo : satCoreCrystalGeo,
-        proj.stars >= 2 ? accentChromeMat : primaryMetalMat,
-      );
-      satGroup.add(coreOrb);
+      items.forEach((proj, idxInRing) => {
+        const idx = globalIdx++;
+        const archetype = getPlanetArchetype(proj);
+        const silhouette = getPlanetSilhouette(proj, idx);
+        const phaseOffset = ringIndex * 0.55;
+        const angleRad = (idxInRing / count) * Math.PI * 2 + phaseOffset;
+        const baseRadius = ringCfg.baseRadius;
+        const baseLocalY =
+          Math.sin(idxInRing * 1.9 + ringIndex) * 0.34 +
+          (idxInRing % 2 === 0 ? 0.14 : -0.14);
+        const demoBonus = proj.demoUrl ? 0.1 : 0;
+        const nodeScale = 0.96 + Math.min(proj.stars, 4) * 0.12 + demoBonus;
 
-      // 2. Inner Tilted Gyroscopic Ring at exact (0, 0, 0)
-      const innerGyro = new THREE.Mesh(satInnerGyroGeo, accentChromeMat);
-      innerGyro.rotation.x = Math.PI / 3;
-      satGroup.add(innerGyro);
+        const lx = Math.cos(angleRad) * baseRadius;
+        const lz = Math.sin(angleRad) * baseRadius;
 
-      // 3. Outer Horizontal Status Halo Ring at exact (0, 0, 0)
-      const beaconMat = new THREE.MeshPhysicalMaterial({
-        color: proj.demoUrl ? 0xf59e0b : 0x38bdf8,
-        emissive: proj.demoUrl ? 0xf59e0b : 0x0284c7,
-        emissiveIntensity: proj.stars >= 2 ? 0.95 : 0.5,
-        metalness: 0.88,
-        roughness: 0.14,
-        clearcoat: 1.0,
-      });
-      const outerRing = new THREE.Mesh(satOuterRingGeo, beaconMat);
-      satGroup.add(outerRing);
+        const satGroup = new THREE.Group();
+        satGroup.position.set(lx, baseLocalY, lz);
+        satGroup.scale.setScalar(nodeScale);
+        spinGroup.add(satGroup);
 
-      // 4. Soft Radial Sprite Aura at exact (0, 0, 0)
-      const spriteMat = new THREE.SpriteMaterial({
-        map: radialGlowTexture,
-        color: proj.demoUrl ? 0xfcd34d : 0x38bdf8,
-        transparent: true,
-        opacity: 0.38,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-      });
-      const glowSprite = new THREE.Sprite(spriteMat);
-      glowSprite.scale.set(1.35, 1.35, 1);
-      satGroup.add(glowSprite);
+        // Distinct individual axial tilt so every planet has its own orientation in 3D space
+        const tiltSeed = ((idx * 37) % 11) - 5;
+        const bodyGroup = new THREE.Group();
+        bodyGroup.rotation.set(tiltSeed * 0.08, idx * 0.7, -tiltSeed * 0.06);
+        satGroup.add(bodyGroup);
 
-      // 5. Dynamic Vertical Laser Anchor Stem connecting (0,0,0) straight down to exact FLOOR_Y
-      const stemPositions = new Float32Array([
-        0,
-        0,
-        0,
-        0,
-        (FLOOR_Y - initialY) / nodePos.nodeScale,
-        0,
-      ]);
-      const stemGeo = new THREE.BufferGeometry();
-      stemGeo.setAttribute('position', new THREE.BufferAttribute(stemPositions, 3));
-      const stemMat = new THREE.LineBasicMaterial({
-        color: proj.demoUrl ? 0xf59e0b : 0x38bdf8,
-        transparent: true,
-        opacity: 0.4,
-      });
-      const stemLine = new THREE.Line(stemGeo, stemMat);
-      satGroup.add(stemLine);
+        const bodyMat = archetypeBodyMats[archetype];
+        const ringMat = archetypeRingMats[archetype];
 
-      // Floor anchor target ring directly beneath the vertical stem (updated every frame so it stays flush on FLOOR_Y)
-      const floorAnchor = new THREE.Mesh(
-        satBaseDiscGeo,
-        new THREE.MeshBasicMaterial({
-          color: proj.demoUrl ? 0xf59e0b : 0x38bdf8,
-          transparent: true,
-          opacity: 0.5,
-          side: THREE.DoubleSide,
-          depthWrite: false,
-        }),
-      );
-      floorAnchor.position.y = (FLOOR_Y - initialY + 0.02) / nodePos.nodeScale;
-      satGroup.add(floorAnchor);
+        // 7 Distinct Planet / Satellite Silhouettes
+        if (silhouette === 'gyro') {
+          bodyGroup.add(new THREE.Mesh(sharedGeos.aiCore, bodyMat));
+          const innerDiamond = new THREE.Mesh(sharedGeos.aiRingB, accentChromeMat);
+          innerDiamond.rotation.set(Math.PI / 3, Math.PI / 5, 0);
+          bodyGroup.add(innerDiamond);
+        } else if (silhouette === 'relay') {
+          bodyGroup.add(new THREE.Mesh(sharedGeos.sysCore, bodyMat));
+          const flange = new THREE.Mesh(sharedGeos.sysCollar, accentChromeMat);
+          flange.position.y = 0.06;
+          bodyGroup.add(flange);
+          bodyGroup.add(new THREE.Mesh(sharedGeos.sysMast, darkStructuralMat));
+          const leftWing = new THREE.Mesh(sharedGeos.solarWing, ringMat);
+          leftWing.position.set(-0.29, 0, 0);
+          bodyGroup.add(leftWing);
+          const rightWing = new THREE.Mesh(sharedGeos.solarWing, ringMat);
+          rightWing.position.set(0.29, 0, 0);
+          bodyGroup.add(rightWing);
+        } else if (silhouette === 'prism') {
+          const mediaMesh = new THREE.Mesh(
+            proj.stars >= 2 ? sharedGeos.mediaFlagshipCore : sharedGeos.mediaCore,
+            bodyMat,
+          );
+          bodyGroup.add(mediaMesh);
+        } else if (silhouette === 'cubesat') {
+          const cube = new THREE.Mesh(sharedGeos.cubeCore, bodyMat);
+          cube.rotation.set(0.35, 0.65, 0.2);
+          bodyGroup.add(cube);
+          const boomA = new THREE.Mesh(sharedGeos.cubeBoom, accentChromeMat);
+          boomA.rotation.z = Math.PI / 4;
+          bodyGroup.add(boomA);
+          const boomB = new THREE.Mesh(sharedGeos.cubeBoom, darkStructuralMat);
+          boomB.rotation.z = -Math.PI / 4;
+          bodyGroup.add(boomB);
+        } else if (silhouette === 'binary') {
+          const primary = new THREE.Mesh(sharedGeos.binaryPrimary, bodyMat);
+          primary.position.set(-0.12, 0.03, 0);
+          bodyGroup.add(primary);
+          const companion = new THREE.Mesh(sharedGeos.binaryCompanion, ringMat);
+          companion.position.set(0.15, -0.04, 0);
+          bodyGroup.add(companion);
+        } else if (silhouette === 'beacon') {
+          bodyGroup.add(new THREE.Mesh(sharedGeos.aiCore, bodyMat));
+          const vertBand = new THREE.Mesh(sharedGeos.learnBand, ringMat);
+          vertBand.rotation.x = Math.PI / 2;
+          bodyGroup.add(vertBand);
+          const crest = new THREE.Mesh(sharedGeos.learnBeacon, accentChromeMat);
+          crest.position.y = 0.25;
+          bodyGroup.add(crest);
+        } else {
+          // observatory
+          bodyGroup.add(new THREE.Mesh(sharedGeos.learnCore, bodyMat));
+          const meridianBand = new THREE.Mesh(sharedGeos.learnBand, accentChromeMat);
+          meridianBand.rotation.z = Math.PI / 2;
+          bodyGroup.add(meridianBand);
+          const beaconTip = new THREE.Mesh(sharedGeos.learnBeacon, ringMat);
+          beaconTip.position.y = 0.27;
+          bodyGroup.add(beaconTip);
+        }
 
-      // 6. Dynamic Curved Energy Conduit from Central Core to Satellite
-      const conduitPositions = new Float32Array((CURVE_SEGMENTS + 1) * 3);
-      const conduitGeo = new THREE.BufferGeometry();
-      conduitGeo.setAttribute('position', new THREE.BufferAttribute(conduitPositions, 3));
-      const conduitMat = new THREE.LineBasicMaterial({
-        color: proj.demoUrl ? 0xfcd34d : 0x38bdf8,
-        transparent: true,
-        opacity: 0.28,
-        blending: THREE.AdditiveBlending,
-      });
-      const conduitLine = new THREE.Line(conduitGeo, conduitMat);
-      orbitGroup.add(conduitLine);
+        // Outer Planetary Ring Frame
+        const ringFrame = new THREE.Group();
+        ringFrame.rotation.set(
+          ((idx * 19) % 7 - 3) * 0.14,
+          0,
+          ((idx * 23) % 7 - 3) * 0.12,
+        );
+        satGroup.add(ringFrame);
 
-      // 7. Traveling Photon Energy Packet Sprite gliding along the Bezier conduit
-      const photonMat = new THREE.SpriteMaterial({
-        map: radialGlowTexture,
-        color: proj.demoUrl ? 0xfef08a : 0x7dd3fc,
-        transparent: true,
-        opacity: 0.85,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-      });
-      const photonPulse = new THREE.Sprite(photonMat);
-      photonPulse.scale.set(0.45, 0.45, 1);
-      orbitGroup.add(photonPulse);
+        const ringGeo =
+          archetype === 'ai'
+            ? sharedGeos.aiRingA
+            : archetype === 'systems'
+              ? sharedGeos.sysRing
+              : archetype === 'media'
+                ? sharedGeos.mediaRing
+                : sharedGeos.learnRing;
 
-      // Raycast Proxy Sphere at exact (0, 0, 0)
-      const hitMesh = new THREE.Mesh(satHitGeo, satHitMat);
-      hitMesh.userData = { slug: proj.slug };
-      satGroup.add(hitMesh);
-      interactableHitMeshes.push(hitMesh);
+        const outerRing = new THREE.Mesh(ringGeo, ringMat);
+        if (archetype === 'media') {
+          outerRing.scale.set(1.18, 1, 0.84);
+        }
+        ringFrame.add(outerRing);
 
-      satelliteRecords.push({
-        slug: proj.slug,
-        group: satGroup,
-        coreOrb,
-        innerGyro,
-        outerRing,
-        glowSprite,
-        stemPositions,
-        stemLine,
-        floorAnchor,
-        conduitLine,
-        conduitPositions,
-        photonPulse,
-        beaconMat,
-        nodeScale: nodePos.nodeScale,
-        ringIndex: nodePos.ringIndex,
+        // Diverse Independently Orbiting Sub-Satellites (Moons / CubeSats / Probes)
+        const moonletOrbitGroup = new THREE.Group();
+        moonletOrbitGroup.rotation.set(
+          ((idx * 13) % 9 - 4) * 0.18,
+          idx * 0.9,
+          ((idx * 17) % 7 - 3) * 0.16,
+        );
+        satGroup.add(moonletOrbitGroup);
+
+        const moonCount = proj.stars >= 2 || proj.demoUrl ? 2 : idx % 3 === 0 ? 0 : 1;
+        for (let m = 0; m < moonCount; m++) {
+          const moonType = (idx + m * 2) % 4;
+          const orbitRadius = m === 0 ? 0.48 : 0.59;
+          const moonAngle = m * Math.PI * 0.85 + idx * 0.6;
+          const mx = Math.cos(moonAngle) * orbitRadius;
+          const mz = Math.sin(moonAngle) * orbitRadius;
+          const my = m === 0 ? 0.04 : -0.08;
+
+          if (moonType === 0) {
+            // Micro CubeSat with solar panels
+            const probeGroup = new THREE.Group();
+            probeGroup.position.set(mx, my, mz);
+            probeGroup.rotation.y = -moonAngle;
+            probeGroup.add(new THREE.Mesh(sharedGeos.moonletCube, accentChromeMat));
+            probeGroup.add(new THREE.Mesh(sharedGeos.moonletWing, ringMat));
+            moonletOrbitGroup.add(probeGroup);
+          } else if (moonType === 1) {
+            // Crystalline Octahedron Asteroid / Probe
+            const octa = new THREE.Mesh(sharedGeos.moonletOcta, ringMat);
+            octa.position.set(mx, my, mz);
+            octa.rotation.set(0.4, 0.8, 0.2);
+            moonletOrbitGroup.add(octa);
+          } else if (moonType === 2) {
+            // Directional Telemetry Cone Probe
+            const cone = new THREE.Mesh(sharedGeos.moonletCone, accentChromeMat);
+            cone.position.set(mx, my, mz);
+            cone.rotation.z = Math.PI / 3;
+            moonletOrbitGroup.add(cone);
+          } else {
+            // Classic Icy Spherical Moonlet
+            const sphere = new THREE.Mesh(sharedGeos.moonletSphere, accentChromeMat);
+            sphere.position.set(mx, my, mz);
+            moonletOrbitGroup.add(sphere);
+          }
+        }
+
+        const glowSprite = new THREE.Sprite(
+          proj.demoUrl || archetype === 'ai' ? glowSpriteAmberMat : glowSpriteCyanMat,
+        );
+        glowSprite.scale.set(0.96, 0.96, 1);
+        satGroup.add(glowSprite);
+
+        // Local-space curved Bezier conduit from Core (0,0,0) to satellite inside the tilted ringGroup!
+        const conduitPositions = new Float32Array((CURVE_SEGMENTS + 1) * 3);
+        const conduitGeo = new THREE.BufferGeometry();
+        conduitGeo.setAttribute('position', new THREE.BufferAttribute(conduitPositions, 3));
+        const conduitLine = new THREE.Line(conduitGeo, conduitDefaultMats[archetype]);
+        spinGroup.add(conduitLine);
+
+        const photonPulse = new THREE.Sprite(
+          proj.demoUrl || archetype === 'ai' ? photonAmberMat : photonCyanMat,
+        );
+        photonPulse.scale.set(0.36, 0.36, 1);
+        spinGroup.add(photonPulse);
+
+        const hitMesh = new THREE.Mesh(sharedGeos.hitSphere, satHitMat);
+        hitMesh.userData = { slug: proj.slug };
+        satGroup.add(hitMesh);
+        interactableHitMeshes.push(hitMesh);
+
+        satelliteRecords.push({
+          slug: proj.slug,
+          archetype,
+          ringIndex,
+          angleRad,
+          baseRadius,
+          baseLocalY,
+          nodeScale,
+          spinSpeed: 0.35 + (idx % 5) * 0.12,
+          moonletSpeed: (idx % 2 === 0 ? 1 : -1) * (0.95 + (idx % 4) * 0.32),
+          group: satGroup,
+          bodyGroup,
+          outerRing,
+          ringFrame,
+          moonletOrbitGroup,
+          glowSprite,
+          conduitLine,
+          conduitPositions,
+          photonPulse,
+          localPos: new THREE.Vector3(lx, baseLocalY, lz),
+          hasDemo: Boolean(proj.demoUrl),
+          isSelectedNow: false,
+          currentRingScale: 1.0,
+        });
       });
     });
+
+    // Helper to rebuild conduit Bezier vertices ONLY when explodeFactor changes (zero per-frame rebuilds!)
+    const updateConduitGeometry = (sat: SatelliteRecord, explode: number) => {
+      const spread = 1 + explode * 0.42;
+      const r = sat.baseRadius * spread;
+      const lx = Math.cos(sat.angleRad) * r;
+      const lz = Math.sin(sat.angleRad) * r;
+      const ly = sat.baseLocalY + explode * (sat.ringIndex - 1) * 0.72;
+      sat.localPos.set(lx, ly, lz);
+      sat.group.position.set(lx, ly, lz);
+
+      _curveMid.set(lx * 0.52, ly * 0.35 - 0.38, lz * 0.52);
+      const posArr = sat.conduitPositions;
+      for (let s = 0; s <= CURVE_SEGMENTS; s++) {
+        const t = s / CURVE_SEGMENTS;
+        const invT = 1 - t;
+        const b1 = 2 * invT * t;
+        const b2 = t * t;
+        posArr[s * 3] = b1 * _curveMid.x + b2 * lx;
+        posArr[s * 3 + 1] = b1 * _curveMid.y + b2 * ly;
+        posArr[s * 3 + 2] = b1 * _curveMid.z + b2 * lz;
+      }
+      sat.conduitLine.geometry.attributes.position.needsUpdate = true;
+    };
+
+    // Initial curve placement
+    satelliteRecords.forEach((sat) => updateConduitGeometry(sat, 0));
 
     if (!isSoftwareGl) {
       renderer.compile(scene, camera);
@@ -694,32 +1109,34 @@ export default function OrbitalScene3D({
 
     const raycaster = new THREE.Raycaster();
     let lastRaycastTime = 0;
+    let lastHoveredSlug: string | null = null;
 
     const handlePointerMove = (e: PointerEvent) => {
-      const rect = renderer.domElement.getBoundingClientRect();
-      const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      const ny = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-      _pointerNdc.set(nx, ny);
-
       const now = performance.now();
-      if (now - lastRaycastTime < 45) return;
+      if (now - lastRaycastTime < 55) return;
       lastRaycastTime = now;
+
+      const rect = renderer.domElement.getBoundingClientRect();
+      _pointerNdc.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      _pointerNdc.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
 
       raycaster.setFromCamera(_pointerNdc, camera);
       const hits = raycaster.intersectObjects(interactableHitMeshes, false);
-      if (hits.length > 0) {
-        const slug = hits[0].object.userData.slug as string;
-        setHoveredSlug(slug);
-        renderer.domElement.style.cursor = 'pointer';
-      } else {
-        setHoveredSlug(null);
-        renderer.domElement.style.cursor = 'grab';
+      const nextSlug = hits.length > 0 ? (hits[0].object.userData.slug as string) : null;
+
+      if (nextSlug !== lastHoveredSlug) {
+        lastHoveredSlug = nextSlug;
+        setHoveredSlug(nextSlug);
+        renderer.domElement.style.cursor = nextSlug ? 'pointer' : 'grab';
       }
     };
 
     const handlePointerLeave = () => {
-      _pointerNdc.set(0, 0);
-      setHoveredSlug(null);
+      if (lastHoveredSlug !== null) {
+        lastHoveredSlug = null;
+        setHoveredSlug(null);
+        renderer.domElement.style.cursor = 'grab';
+      }
     };
 
     const handleClick = (e: MouseEvent) => {
@@ -738,17 +1155,40 @@ export default function OrbitalScene3D({
       }
     };
 
+    const handleDoubleClick = (e: MouseEvent) => {
+      const rect = renderer.domElement.getBoundingClientRect();
+      _pointerNdc.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      _pointerNdc.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(_pointerNdc, camera);
+      const hits = raycaster.intersectObjects(interactableHitMeshes, false);
+      if (hits.length > 0) {
+        const slug = hits[0].object.userData.slug as string;
+        const found = stateRef.current.projects.find((p) => p.slug === slug);
+        if (found) {
+          stateRef.current.onSelectProject(found);
+          stateRef.current.onOpenDossier(found);
+        }
+      }
+    };
+
     renderer.domElement.addEventListener('pointermove', handlePointerMove);
     renderer.domElement.addEventListener('pointerleave', handlePointerLeave);
     renderer.domElement.addEventListener('click', handleClick);
+    renderer.domElement.addEventListener('dblclick', handleDoubleClick);
 
     const handleResize = () => {
       if (!mount) return;
       const w = Math.max(mount.clientWidth, 280);
-      const h = Math.max(mount.clientHeight, 420);
-      camera.aspect = w / h;
+      const h = Math.max(mount.clientHeight, 340);
+      const nextAspect = w / h;
+      camera.fov = nextAspect < 0.95 ? 52 : 39;
+      camera.aspect = nextAspect;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h, false);
+      if (stateRef.current.isVisible && !isDisposed) {
+        renderer.render(scene, camera);
+      }
     };
     window.addEventListener('resize', handleResize);
     const resizeObserver = new ResizeObserver(() => handleResize());
@@ -759,7 +1199,33 @@ export default function OrbitalScene3D({
     const startTime = performance.now();
     let prevTime = startTime;
     let currentExplode = 0;
-    let orbitalAngle = 0;
+    let lastConduitExplode = 0;
+    let hoverSpeedDamp = 1.0;
+
+    function scheduleNextFrame() {
+      if (isDisposed || !stateRef.current.isVisible) return;
+      if (isSoftwareGl) {
+        afterDraw(tick);
+      } else {
+        frameId = requestAnimationFrame(tick);
+      }
+    }
+
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.some((entry) => entry.isIntersecting);
+        const wasVisible = stateRef.current.isVisible;
+        stateRef.current.isVisible = visible;
+        if (visible && !wasVisible && !isDisposed) {
+          cancelAnimationFrame(frameId);
+          clearTimeout(frameId);
+          prevTime = performance.now();
+          tick();
+        }
+      },
+      { threshold: 0.05 },
+    );
+    intersectionObserver.observe(outerContainer);
 
     function afterDraw(cb: () => void) {
       if (isDisposed) return;
@@ -784,182 +1250,156 @@ export default function OrbitalScene3D({
     }
 
     function tick() {
-      if (isDisposed) return;
+      if (isDisposed || !stateRef.current.isVisible) return;
       const now = performance.now();
       const rawDelta = (now - prevTime) / 1000;
       prevTime = now;
-      const dt = Math.min(Math.max(rawDelta, 0.001), 0.1);
+      // Strict dt cap eliminates sudden velocity leaps ("nhanh quá") after tab switches or frame hiccups
+      const dt = Math.min(Math.max(rawDelta, 0.001), 0.045);
       const elapsed = (now - startTime) / 1000;
       const st = stateRef.current;
 
-      coreShaderUniforms.uTime.value = elapsed;
+      coreShaderUniforms.uTime.value = st.reducedMotion ? 0 : elapsed;
 
-      if (st.finish === 'obsidian-gold') {
-        primaryMetalMat.color.setHex(0xf59e0b);
-        primaryMetalMat.metalness = 0.9;
-        primaryMetalMat.roughness = 0.14;
-        darkStructuralMat.color.setHex(0x1e293b);
-        coreShaderUniforms.uBaseColor.value.setHex(0xd97706);
-        coreShaderUniforms.uRimColor.value.setHex(0xfef08a);
-      } else if (st.finish === 'brushed-titanium') {
-        primaryMetalMat.color.setHex(0xe2e8f0);
-        primaryMetalMat.metalness = 0.95;
-        primaryMetalMat.roughness = 0.2;
-        darkStructuralMat.color.setHex(0x334155);
-        coreShaderUniforms.uBaseColor.value.setHex(0x64748b);
-        coreShaderUniforms.uRimColor.value.setHex(0xf8fafc);
-      } else {
-        primaryMetalMat.color.setHex(0x38bdf8);
-        primaryMetalMat.metalness = 0.35;
-        primaryMetalMat.roughness = 0.08;
-        darkStructuralMat.color.setHex(0x0f172a);
-        coreShaderUniforms.uBaseColor.value.setHex(0x0284c7);
-        coreShaderUniforms.uRimColor.value.setHex(0xe0f2fe);
+      currentExplode = THREE.MathUtils.damp(currentExplode, st.explodeFactor, 7, dt);
+      const explodeChanged = Math.abs(currentExplode - lastConduitExplode) > 0.0008;
+
+      if (explodeChanged) {
+        lastConduitExplode = currentExplode;
+        const spread = 1 + currentExplode * 0.42;
+        ringTrackMeshes.forEach((tm) => tm.scale.setScalar(spread));
+        equatorialGroup.scale.setScalar(1 + currentExplode * 0.16);
+        meridianGroupA.scale.setScalar(1 + currentExplode * 0.24);
+        meridianGroupB.scale.setScalar(1 + currentExplode * 0.24);
+        outerEclipticGroup.scale.setScalar(1 + currentExplode * 0.34);
       }
 
-      // Subtle pointer parallax
-      _smoothPointer.x = THREE.MathUtils.damp(_smoothPointer.x, _pointerNdc.x, 4, dt);
-      _smoothPointer.y = THREE.MathUtils.damp(_smoothPointer.y, _pointerNdc.y, 4, dt);
-      masterGroup.rotation.z = _smoothPointer.x * -0.032;
-      masterGroup.rotation.x = _smoothPointer.y * 0.032;
+      // Smoothly ease orbital speed down while user hovers a planet so selection is effortless
+      const targetSpeedMult = st.hoveredSlug ? 0.22 : 1.0;
+      hoverSpeedDamp = THREE.MathUtils.damp(hoverSpeedDamp, targetSpeedMult, 6, dt);
 
-      // Smoothly damp explodeFactor
-      currentExplode = THREE.MathUtils.damp(currentExplode, st.explodeFactor, 6, dt);
+      if (!st.paused && !st.reducedMotion) {
+        coreMesh.rotation.y += dt * 0.26;
+        equatorialGroup.rotation.y += dt * 0.2;
+        meridianGroupA.rotation.y += dt * 0.28;
+        meridianGroupB.rotation.y -= dt * 0.28;
+        outerEclipticGroup.rotation.y -= dt * 0.16;
+        starField.rotation.y += dt * 0.014;
 
-      // Symmetrical expansion of Armillary Core rings
-      equatorialGroup.scale.setScalar(1 + currentExplode * 0.18);
-      meridianGroupA.scale.setScalar(1 + currentExplode * 0.26);
-      meridianGroupB.scale.setScalar(1 + currentExplode * 0.26);
-      outerEclipticGroup.scale.setScalar(1 + currentExplode * 0.36);
-      const glowScale = 3.5 + Math.sin(elapsed * 2.2) * 0.14 + currentExplode * 0.6;
-      coreGlowSprite.scale.set(glowScale, glowScale, 1);
-
-      if (!st.paused) {
-        orbitalAngle += dt * 0.11;
-        coreMesh.rotation.y += dt * 0.35;
-        equatorialGroup.rotation.y += dt * 0.28;
-        meridianGroupA.rotation.y += dt * 0.42;
-        meridianGroupB.rotation.y -= dt * 0.42;
-        outerEclipticGroup.rotation.y -= dt * 0.22;
-        orbitGroup.rotation.y = orbitalAngle;
+        ringSpinGroups[0].rotation.y += dt * ORBITAL_RING_TILTS[0].speed * hoverSpeedDamp;
+        ringSpinGroups[1].rotation.y += dt * ORBITAL_RING_TILTS[1].speed * hoverSpeedDamp;
+        ringSpinGroups[2].rotation.y += dt * ORBITAL_RING_TILTS[2].speed * hoverSpeedDamp;
       }
 
       const activeFocusSlug = st.hoveredSlug ?? st.selectedSlug;
-      const updatedPositions = computeOrbitalPositions(st.projects, currentExplode);
+      let focusedSatellite: SatelliteRecord | null = null;
 
-      satelliteRecords.forEach((sat, idx) => {
-        const targetPos = updatedPositions[idx];
-        const targetY =
-          0.45 +
-          targetPos.yOffset * 0.55 +
-          Math.sin(elapsed * 1.6 + idx * 0.85) * 0.06;
+      for (let i = 0; i < satelliteRecords.length; i++) {
+        const sat = satelliteRecords[i];
+        if (explodeChanged) {
+          updateConduitGeometry(sat, currentExplode);
+        }
 
-        sat.group.position.x = THREE.MathUtils.damp(sat.group.position.x, targetPos.x, 6, dt);
-        sat.group.position.z = THREE.MathUtils.damp(sat.group.position.z, targetPos.z, 6, dt);
-        sat.group.position.y = THREE.MathUtils.damp(sat.group.position.y, targetY, 6, dt);
-
-        // Lock vertical stem and floorAnchor disc strictly onto FLOOR_Y so they never float or sink
-        const localFloorY = (FLOOR_Y - sat.group.position.y) / sat.nodeScale;
-        sat.stemPositions[4] = localFloorY;
-        sat.stemLine.geometry.attributes.position.needsUpdate = true;
-        sat.floorAnchor.position.y = localFloorY + 0.02 / sat.nodeScale;
-
-        // Co-axial rotation of satellite sub-parts around their shared (0,0,0) center
-        sat.coreOrb.rotation.y += dt * 0.9;
-        sat.innerGyro.rotation.z += dt * 1.1;
-        sat.innerGyro.rotation.y -= dt * 0.6;
-        sat.innerGyro.scale.setScalar(1 + currentExplode * 0.25);
+        if (!st.reducedMotion) {
+          sat.bodyGroup.rotation.y += dt * sat.spinSpeed;
+          sat.ringFrame.rotation.y -= dt * (sat.spinSpeed * 0.65);
+          sat.moonletOrbitGroup.rotation.y += dt * sat.moonletSpeed * hoverSpeedDamp;
+        }
 
         const isSelected = sat.slug === activeFocusSlug;
-        const targetEmissive = isSelected ? 2.2 : 0.48;
-        sat.beaconMat.emissiveIntensity = THREE.MathUtils.damp(
-          sat.beaconMat.emissiveIntensity,
-          targetEmissive,
-          8,
-          dt,
-        );
-
-        const targetRingScale = isSelected
-          ? 1.32 + currentExplode * 0.2
-          : 1.0 + currentExplode * 0.14;
-        sat.outerRing.scale.setScalar(
-          THREE.MathUtils.damp(sat.outerRing.scale.x, targetRingScale, 8, dt),
-        );
-
-        // Smooth radial sprite aura
-        const spriteScale = isSelected ? 1.85 + Math.sin(elapsed * 4) * 0.12 : 1.18;
-        sat.glowSprite.scale.set(spriteScale, spriteScale, 1);
-        sat.glowSprite.material.opacity = isSelected ? 0.68 : 0.26;
-
-        // Dynamically lock the quadratic bezier conduit from Core (0, CORE_Y, 0) to exact Satellite center
-        _curveEnd.copy(sat.group.position);
-        _curveMid.set(
-          _curveEnd.x * 0.5,
-          FLOOR_Y + 0.14 + sat.ringIndex * 0.08,
-          _curveEnd.z * 0.5,
-        );
-        const posArr = sat.conduitPositions;
-        for (let s = 0; s <= CURVE_SEGMENTS; s++) {
-          const t = s / CURVE_SEGMENTS;
-          const invT = 1 - t;
-          _tempVec.x =
-            invT * invT * _curveStart.x +
-            2 * invT * t * _curveMid.x +
-            t * t * _curveEnd.x;
-          _tempVec.y =
-            invT * invT * _curveStart.y +
-            2 * invT * t * _curveMid.y +
-            t * t * _curveEnd.y;
-          _tempVec.z =
-            invT * invT * _curveStart.z +
-            2 * invT * t * _curveMid.z +
-            t * t * _curveEnd.z;
-          posArr[s * 3] = _tempVec.x;
-          posArr[s * 3 + 1] = _tempVec.y;
-          posArr[s * 3 + 2] = _tempVec.z;
+        if (isSelected) {
+          focusedSatellite = sat;
         }
-        sat.conduitLine.geometry.attributes.position.needsUpdate = true;
-        (sat.conduitLine.material as THREE.LineBasicMaterial).opacity = isSelected ? 0.78 : 0.2;
 
-        // Animate traveling photon energy packet along the exact Bezier curve
-        const pulseT = (elapsed * (isSelected ? 0.65 : 0.32) + idx * 0.17) % 1;
+        // Only swap pooled materials on state change (zero per-frame material churn)
+        if (isSelected !== sat.isSelectedNow) {
+          sat.isSelectedNow = isSelected;
+          sat.outerRing.material = isSelected
+            ? selectedRingMat
+            : archetypeRingMats[sat.archetype];
+          sat.conduitLine.material = isSelected
+            ? conduitActiveMat
+            : conduitDefaultMats[sat.archetype];
+        }
+
+        const targetScale = isSelected ? 1.28 : 1.0;
+        if (Math.abs(sat.currentRingScale - targetScale) > 0.001) {
+          sat.currentRingScale = THREE.MathUtils.damp(sat.currentRingScale, targetScale, 8, dt);
+          if (Math.abs(sat.currentRingScale - targetScale) <= 0.001) {
+            sat.currentRingScale = targetScale;
+          }
+          if (sat.archetype === 'media') {
+            sat.outerRing.scale.set(
+              sat.currentRingScale * 1.18,
+              sat.currentRingScale,
+              sat.currentRingScale * 0.84,
+            );
+          } else {
+            sat.outerRing.scale.setScalar(sat.currentRingScale);
+          }
+        }
+
+        const targetGlow = isSelected ? 1.5 : 0.96;
+        if (sat.glowSprite.scale.x !== targetGlow) {
+          sat.glowSprite.scale.setScalar(targetGlow);
+        }
+
+        // Animate photon pulse cleanly along local Bezier curve (zero allocations, zero buffer upload)
+        const pulseT =
+          ((st.reducedMotion ? 0.5 : elapsed * (isSelected ? 0.55 : 0.25)) + i * 0.17) % 1;
         const invPT = 1 - pulseT;
+        const b1 = 2 * invPT * pulseT;
+        const b2 = pulseT * pulseT;
+        const midX = sat.localPos.x * 0.52;
+        const midY = sat.localPos.y * 0.35 - 0.38;
+        const midZ = sat.localPos.z * 0.52;
         sat.photonPulse.position.set(
-          invPT * invPT * _curveStart.x +
-            2 * invPT * pulseT * _curveMid.x +
-            pulseT * pulseT * _curveEnd.x,
-          invPT * invPT * _curveStart.y +
-            2 * invPT * pulseT * _curveMid.y +
-            pulseT * pulseT * _curveEnd.y,
-          invPT * invPT * _curveStart.z +
-            2 * invPT * pulseT * _curveMid.z +
-            pulseT * pulseT * _curveEnd.z,
+          b1 * midX + b2 * sat.localPos.x,
+          b1 * midY + b2 * sat.localPos.y,
+          b1 * midZ + b2 * sat.localPos.z,
         );
-        const pScale = isSelected ? 0.62 : 0.36;
-        sat.photonPulse.scale.set(pScale, pScale, 1);
-        sat.photonPulse.material.opacity = isSelected ? 0.95 : 0.55;
-      });
+        sat.photonPulse.scale.setScalar(isSelected ? 0.52 : 0.3);
+      }
 
-      const spreadMultiplier = 1 + currentExplode * 0.45;
-      trackMeshes.forEach((tm) => {
-        tm.scale.setScalar(spreadMultiplier);
-      });
+      if (focusedSatellite) {
+        focusedSatellite.group.getWorldPosition(_focusWorldPos);
+        selectionReticle.visible = true;
+        selectionReticle.position.copy(_focusWorldPos);
+        selectionReticle.scale.setScalar(focusedSatellite.nodeScale);
+        selectionReticle.quaternion.copy(camera.quaternion);
+        if (!st.reducedMotion) {
+          reticleInnerRing.rotation.z = elapsed * 0.85;
+        }
+      } else {
+        selectionReticle.visible = false;
+      }
 
       if (st.activeCameraTransition) {
-        const preset = CAMERA_PRESETS[st.cameraPreset];
-        _targetCameraPos.set(...preset.pos);
-        _targetLookAt.set(...preset.target);
+        if (st.cameraPreset === 'focus' && focusedSatellite) {
+          _targetLookAt.copy(_focusWorldPos);
+          const len = Math.hypot(_focusWorldPos.x, _focusWorldPos.z) || 1;
+          _targetCameraPos.set(
+            _focusWorldPos.x + (_focusWorldPos.x / len) * 2.8,
+            _focusWorldPos.y + 1.15,
+            _focusWorldPos.z + (_focusWorldPos.z / len) * 2.8,
+          );
+        } else {
+          const presetKey = st.cameraPreset === 'focus' ? 'overview' : st.cameraPreset;
+          const preset = CAMERA_PRESETS[presetKey];
+          _targetCameraPos.set(...preset.pos);
+          _targetLookAt.set(...preset.target);
+        }
 
-        camera.position.x = THREE.MathUtils.damp(camera.position.x, _targetCameraPos.x, 5, dt);
-        camera.position.y = THREE.MathUtils.damp(camera.position.y, _targetCameraPos.y, 5, dt);
-        camera.position.z = THREE.MathUtils.damp(camera.position.z, _targetCameraPos.z, 5, dt);
+        camera.position.x = THREE.MathUtils.damp(camera.position.x, _targetCameraPos.x, 5.5, dt);
+        camera.position.y = THREE.MathUtils.damp(camera.position.y, _targetCameraPos.y, 5.5, dt);
+        camera.position.z = THREE.MathUtils.damp(camera.position.z, _targetCameraPos.z, 5.5, dt);
 
-        _currentLookAt.x = THREE.MathUtils.damp(_currentLookAt.x, _targetLookAt.x, 5, dt);
-        _currentLookAt.y = THREE.MathUtils.damp(_currentLookAt.y, _targetLookAt.y, 5, dt);
-        _currentLookAt.z = THREE.MathUtils.damp(_currentLookAt.z, _targetLookAt.z, 5, dt);
+        _currentLookAt.x = THREE.MathUtils.damp(_currentLookAt.x, _targetLookAt.x, 5.5, dt);
+        _currentLookAt.y = THREE.MathUtils.damp(_currentLookAt.y, _targetLookAt.y, 5.5, dt);
+        _currentLookAt.z = THREE.MathUtils.damp(_currentLookAt.z, _targetLookAt.z, 5.5, dt);
         controls.target.copy(_currentLookAt);
 
-        if (camera.position.distanceTo(_targetCameraPos) < 0.05) {
+        if (st.cameraPreset !== 'focus' && camera.position.distanceTo(_targetCameraPos) < 0.05) {
           st.activeCameraTransition = false;
         }
       }
@@ -967,11 +1407,30 @@ export default function OrbitalScene3D({
       controls.update();
       renderer.render(scene, camera);
 
-      if (isSoftwareGl) {
-        afterDraw(tick);
-      } else {
-        frameId = requestAnimationFrame(tick);
+      // Update Projected 3D Callout Pin directly via DOM ref (zero 60Hz React re-renders)
+      const pinEl = pinRef.current;
+      if (pinEl && focusedSatellite && mount) {
+        focusedSatellite.group.getWorldPosition(_projWorldPos);
+        _projWorldPos.y += 0.62;
+        _projWorldPos.project(camera);
+        const w = mount.clientWidth;
+        const h = mount.clientHeight;
+        if (_projWorldPos.z < 1 && _projWorldPos.z > -1) {
+          const sx = (_projWorldPos.x * 0.5 + 0.5) * w;
+          const sy = (-_projWorldPos.y * 0.5 + 0.5) * h;
+          const marginX = Math.min(96, Math.max(64, w * 0.25));
+          const clampedX = Math.max(marginX, Math.min(w - marginX, sx));
+          const clampedY = Math.max(54, Math.min(h - 98, sy));
+          pinEl.style.opacity = '1';
+          pinEl.style.transform = `translate3d(${clampedX.toFixed(1)}px, ${clampedY.toFixed(1)}px, 0) translate(-50%, -100%)`;
+        } else {
+          pinEl.style.opacity = '0';
+        }
+      } else if (pinEl) {
+        pinEl.style.opacity = '0';
       }
+
+      scheduleNextFrame();
     }
 
     tick();
@@ -980,13 +1439,52 @@ export default function OrbitalScene3D({
       isDisposed = true;
       cancelAnimationFrame(frameId);
       clearTimeout(frameId);
+      intersectionObserver.disconnect();
       resizeObserver.disconnect();
+      motionQuery.removeEventListener('change', handleMotionChange);
       window.removeEventListener('resize', handleResize);
       renderer.domElement.removeEventListener('pointermove', handlePointerMove);
       renderer.domElement.removeEventListener('pointerleave', handlePointerLeave);
       renderer.domElement.removeEventListener('click', handleClick);
+      renderer.domElement.removeEventListener('dblclick', handleDoubleClick);
+      renderer.domElement.removeEventListener('webglcontextlost', handleContextLost);
+      renderer.domElement.removeEventListener('webglcontextrestored', handleContextRestored);
       controls.removeEventListener('start', onControlStart);
       controls.dispose();
+
+      const disposedGeos = new Set<THREE.BufferGeometry>();
+      const disposedMats = new Set<THREE.Material>();
+      scene.traverse((obj) => {
+        const meshLike = obj as THREE.Mesh;
+        if (meshLike.geometry && !disposedGeos.has(meshLike.geometry)) {
+          meshLike.geometry.dispose();
+          disposedGeos.add(meshLike.geometry);
+        }
+        const mat = meshLike.material;
+        if (Array.isArray(mat)) {
+          mat.forEach((m) => {
+            if (!disposedMats.has(m)) {
+              m.dispose();
+              disposedMats.add(m);
+            }
+          });
+        } else if (mat && !disposedMats.has(mat)) {
+          mat.dispose();
+          disposedMats.add(mat);
+        }
+      });
+
+      Object.values(sharedGeos).forEach((g) => g.dispose());
+      Object.values(archetypeBodyMats).forEach((m) => m.dispose());
+      Object.values(archetypeRingMats).forEach((m) => m.dispose());
+      Object.values(conduitDefaultMats).forEach((m) => m.dispose());
+      selectedRingMat.dispose();
+      conduitActiveMat.dispose();
+      photonAmberMat.dispose();
+      photonCyanMat.dispose();
+      glowSpriteAmberMat.dispose();
+      glowSpriteCyanMat.dispose();
+      satHitMat.dispose();
       dialTexture.dispose();
       radialGlowTexture.dispose();
       envTexture.dispose();
@@ -996,58 +1494,80 @@ export default function OrbitalScene3D({
 
   const selectedProject =
     projects.find((p) => p.slug === (hoveredSlug ?? selectedSlug)) ?? projects[0];
-  const scientific = selectedProject ? assessProjectScientifically(selectedProject) : null;
 
   return (
     <div
+      ref={containerRef}
       data-testid="orbital-3d-viewport"
-      className="relative flex h-[500px] w-full max-w-full min-w-0 flex-col overflow-hidden rounded-3xl border border-[#1E263B]/80 bg-[#07090F] shadow-[0_0_90px_-20px_rgba(245,158,11,0.18)] lg:h-[540px]"
+      className="relative flex h-[410px] w-full max-w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#1E263B] bg-[#07090F] shadow-[0_24px_80px_-24px_rgba(245,158,11,0.18)] sm:h-[480px] lg:h-[552px]"
     >
       {/* Isolated WebGL Canvas Mount */}
       <div ref={canvasMountRef} className="absolute inset-0 h-full w-full overflow-hidden" />
 
-      {/* Organic Radial Atmospheric Vignette */}
+      {/* WebGL Context Loss Fallback */}
+      {contextLost && (
+        <div className="relative z-30 flex h-full w-full flex-col items-center justify-center bg-[#07090F]/95 p-6 text-center">
+          <Compass className="size-8 text-[#F59E0B]" aria-hidden="true" />
+          <p className="mt-3 font-display text-lg font-semibold text-[#F4F5FA]">
+            3D Viewport Paused
+          </p>
+          <p className="mt-1 max-w-xs text-xs text-[#A3A9BF]">
+            WebGL context is recovering. You can still cycle and inspect every repository below.
+          </p>
+        </div>
+      )}
+
+      {/* Organic Radial Vignette */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(circle at 50% 42%, transparent 55%, rgba(7, 9, 15, 0.72) 100%)',
+            'radial-gradient(circle at 50% 42%, transparent 56%, rgba(7, 9, 15, 0.72) 100%)',
         }}
       />
 
-      {/* Compact Single-Line Top-Edge HUD Strip */}
-      <div className="pointer-events-none relative z-10 flex w-full min-w-0 flex-col gap-2 p-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:p-3 sm:px-4">
-        <div className="pointer-events-auto hidden max-w-full items-center gap-1.5 rounded-full border border-[#2D3854]/80 bg-[#0D111C]/90 px-3 py-1 shadow-lg sm:inline-flex">
+      {/* Projected 3D Node Spatial Callout Pin (updated via ref) */}
+      {selectedProject && !contextLost && (
+        <div
+          ref={pinRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute left-0 top-0 z-10 flex flex-col items-center opacity-0 transition-opacity duration-200"
+        >
+          <div className="flex items-center gap-2 rounded-lg border border-[#F59E0B]/60 bg-[#0D111C]/95 px-2.5 py-1 font-mono text-[11px] text-[#F4F5FA] shadow-lg whitespace-nowrap">
+            <span className="font-semibold text-[#FCD34D]">{selectedProject.name}</span>
+            <span className="text-[#868CA6]">·</span>
+            <span className="text-[#A3A9BF]">{selectedProject.language}</span>
+          </div>
+          <div className="h-3 w-px bg-gradient-to-b from-[#F59E0B] to-transparent" />
+        </div>
+      )}
+
+      {/* Compact Single-Row Top-Edge HUD Strip */}
+      <div className="pointer-events-none relative z-10 flex w-full min-w-0 items-center justify-between gap-2 p-3 sm:px-4">
+        <div className="pointer-events-auto hidden items-center gap-1.5 rounded-lg border border-[#1E263B] bg-[#0D111C]/92 px-2.5 py-1.5 font-mono text-[11px] text-[#A3A9BF] whitespace-nowrap shrink-0 sm:inline-flex">
           <Compass className="size-3.5 shrink-0 text-[#F59E0B]" aria-hidden="true" />
-          <span className="truncate font-mono text-[11px] font-medium text-[#F4F5FA]">
-            3D ARMILLARY ASTROLABE
-          </span>
-          <span className="text-[#868CA6]" aria-hidden="true">
-            ·
-          </span>
-          <span className="font-mono text-[11px] text-[#FCD34D] tabular-nums">
-            {projects.length} NODES
-          </span>
+          <span className="font-medium text-[#F4F5FA]">Astrolabe</span>
+          <span aria-hidden="true">·</span>
+          <span className="text-[#FCD34D]">Interactive Orbit</span>
         </div>
 
-        {/* Sleek Single-Line Active Node Pill */}
-        {selectedProject && scientific && (
-          <div className="pointer-events-auto flex w-full min-w-0 items-center gap-2 rounded-full border border-[#2D3854] bg-[#0D111C]/95 px-2.5 py-1 shadow-xl sm:w-auto sm:flex-wrap sm:px-3">
-            <span className="min-w-0 flex-1 truncate font-mono text-xs font-bold text-[#F4F5FA] sm:flex-none">
+        {selectedProject && (
+          <div className="pointer-events-auto flex w-full min-w-0 items-center gap-2 rounded-lg border border-[#2D3854] bg-[#0D111C]/95 px-2.5 py-1.5 shadow-xl sm:w-auto sm:max-w-[75%]">
+            <span className="min-w-0 truncate font-mono text-xs font-semibold text-[#F4F5FA]">
               {selectedProject.name}
             </span>
-            <span className="shrink-0 font-mono text-[11px] text-[#38BDF8] tabular-nums">
-              Idx {scientific.score}
+            <span className="hidden font-mono text-[11px] text-[#868CA6] whitespace-nowrap shrink-0 md:inline">
+              {selectedProject.language}
             </span>
-            <span className="hidden shrink-0 items-center gap-1 font-mono text-xs text-[#F4F5FA] tabular-nums sm:inline-flex">
+            <span className="hidden shrink-0 items-center gap-1 font-mono text-xs text-[#FCD34D] tabular-nums sm:inline-flex">
               <Star className="size-3 text-[#F59E0B]" aria-hidden="true" />
               {selectedProject.stars}
             </span>
             <button
               type="button"
               onClick={() => onOpenDossier(selectedProject)}
-              className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-full bg-[#F59E0B] px-2.5 py-0.5 text-[11px] font-semibold text-[#07090F] transition-colors hover:bg-[#FCD34D] whitespace-nowrap sm:ml-0"
+              className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-md bg-[#F59E0B] px-2.5 py-1 text-[11px] font-semibold text-[#07090F] transition-colors hover:bg-[#FCD34D] whitespace-nowrap sm:ml-0"
             >
               <Eye className="size-3" aria-hidden="true" />
               Dossier
@@ -1057,23 +1577,23 @@ export default function OrbitalScene3D({
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Open ${selectedProject.name} on GitHub`}
-              className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[#2D3854] bg-[#141A29] px-2 py-0.5 text-[11px] font-medium text-[#C9CDE0] transition-colors hover:border-[#F59E0B] hover:text-[#F4F5FA] whitespace-nowrap sm:px-2 sm:py-0.5"
+              className="inline-flex shrink-0 items-center gap-1 rounded-md border border-[#2D3854] bg-[#141A29] px-2 py-1 text-[11px] font-medium text-[#C9CDE0] transition-colors hover:border-[#F59E0B] hover:text-[#F4F5FA] whitespace-nowrap"
             >
-              <span className="hidden sm:inline">GitHub</span>
+              <span className="hidden lg:inline">GitHub</span>
               <ExternalLink className="size-3" aria-hidden="true" />
             </a>
           </div>
         )}
       </div>
 
-      {/* Sleek Single-Row Bottom 3D Control Dock */}
-      <div className="pointer-events-none relative z-10 mt-auto flex w-full min-w-0 flex-col items-center px-3 pb-3 sm:px-4 sm:pb-4">
-        <div className="pointer-events-auto mb-1.5 flex items-center gap-2">
+      {/* Collapsible Bottom 3D Control Dock (wraps cleanly with zero clipping) */}
+      <div className="pointer-events-none relative z-10 mt-auto flex w-full min-w-0 flex-col items-center px-3 pb-3 sm:px-4 sm:pb-3.5">
+        <div className="pointer-events-auto mb-1.5">
           <button
             type="button"
             onClick={() => setDockCollapsed((prev) => !prev)}
             aria-expanded={!dockCollapsed}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[#2D3854] bg-[#0D111C]/95 px-3 py-0.5 font-mono text-[11px] font-medium text-[#C9CDE0] shadow-md transition-colors hover:border-[#F59E0B] hover:text-[#FCD34D] whitespace-nowrap shrink-0"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-[#2D3854] bg-[#0D111C]/95 px-2.5 py-1 font-mono text-[11px] font-medium text-[#C9CDE0] shadow-md transition-colors hover:border-[#F59E0B] hover:text-[#FCD34D] whitespace-nowrap shrink-0"
           >
             {dockCollapsed ? (
               <>
@@ -1093,23 +1613,24 @@ export default function OrbitalScene3D({
           <div
             role="region"
             aria-label="3D Viewport Controls"
-            className="pointer-events-auto flex w-full max-w-full min-w-0 flex-wrap items-center justify-between gap-2 rounded-2xl border border-[#2D3854]/90 bg-[#0D111C]/95 px-3 py-2 shadow-2xl"
+            className="pointer-events-auto flex w-full max-w-full min-w-0 flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 rounded-xl border border-[#2D3854]/90 bg-[#0D111C]/95 px-2.5 py-2 shadow-2xl"
           >
             {/* Camera View Presets */}
-            <div className="no-scrollbar flex max-w-full items-center gap-0.5 overflow-x-auto rounded-xl border border-[#1E263B] bg-[#07090F] p-1">
+            <div className="flex flex-wrap items-center gap-0.5 rounded-lg border border-[#1E263B] bg-[#07090F] p-0.5">
               {(
                 [
                   { id: 'overview', label: 'Overview' },
                   { id: 'core', label: 'Core' },
                   { id: 'top', label: 'Top' },
                   { id: 'horizon', label: 'Horizon' },
+                  { id: 'focus', label: 'Node' },
                 ] as const
               ).map((cam) => (
                 <button
                   key={cam.id}
                   type="button"
                   onClick={() => setCameraPreset(cam.id)}
-                  className={`rounded-lg px-2.5 py-1 text-xs font-medium transition-colors whitespace-nowrap shrink-0 ${
+                  className={`rounded-md px-2 py-1 text-[11px] font-medium transition-colors whitespace-nowrap shrink-0 ${
                     cameraPreset === cam.id
                       ? 'bg-[#1E263B] text-[#FCD34D]'
                       : 'text-[#868CA6] hover:text-[#F4F5FA]'
@@ -1121,13 +1642,13 @@ export default function OrbitalScene3D({
             </div>
 
             {/* Exploded Assembly Slider */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 shrink-0">
               <label
                 htmlFor="explode-slider"
-                className="inline-flex items-center gap-1 font-mono text-xs text-[#C9CDE0] whitespace-nowrap shrink-0"
+                className="inline-flex items-center gap-1 font-mono text-[11px] text-[#C9CDE0] whitespace-nowrap shrink-0"
               >
-                <Layers className="size-3.5 text-[#F59E0B]" aria-hidden="true" />
-                Explode
+                <Layers className="size-3 text-[#F59E0B]" aria-hidden="true" />
+                <span>Explode</span>
               </label>
               <input
                 id="explode-slider"
@@ -1137,53 +1658,51 @@ export default function OrbitalScene3D({
                 value={Math.round(explodeFactor * 100)}
                 onChange={(e) => setExplodeFactor(Number(e.target.value) / 100)}
                 aria-label="Exploded view separation"
-                className="h-1.5 w-16 cursor-pointer appearance-none rounded-lg bg-[#1E263B] accent-[#F59E0B] sm:w-20"
+                className="h-1.5 w-14 cursor-pointer appearance-none rounded-md bg-[#1E263B] accent-[#F59E0B]"
               />
-              <span className="w-8 font-mono text-xs text-[#868CA6] tabular-nums">
+              <span className="w-7 font-mono text-[11px] text-[#868CA6] tabular-nums">
                 {Math.round(explodeFactor * 100)}%
               </span>
             </div>
 
             {/* Material Finish Switcher */}
-            <div className="no-scrollbar flex items-center gap-0.5 overflow-x-auto rounded-xl border border-[#1E263B] bg-[#07090F] p-1">
-              <Sparkles className="ml-1.5 mr-0.5 size-3.5 text-[#F59E0B] shrink-0" aria-hidden="true" />
-              {(
-                [
-                  { id: 'obsidian-gold', label: 'Gold' },
-                  { id: 'brushed-titanium', label: 'Titanium' },
-                  { id: 'optical-crystal', label: 'Crystal' },
-                ] as const
-              ).map((mat) => (
+            <div className="flex items-center gap-0.5 rounded-lg border border-[#1E263B] bg-[#07090F] p-0.5">
+              {FINISH_OPTIONS.map((mat) => (
                 <button
                   key={mat.id}
                   type="button"
                   onClick={() => setFinish(mat.id)}
-                  className={`rounded-lg px-2 py-1 text-xs font-medium transition-colors whitespace-nowrap shrink-0 ${
+                  className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium transition-colors whitespace-nowrap shrink-0 ${
                     finish === mat.id
                       ? 'bg-[#1E263B] text-[#FCD34D]'
                       : 'text-[#868CA6] hover:text-[#F4F5FA]'
                   }`}
                 >
+                  <span
+                    aria-hidden="true"
+                    className="size-2 rounded-full shrink-0"
+                    style={{ backgroundColor: mat.swatch }}
+                  />
                   {mat.label}
                 </button>
               ))}
             </div>
 
             {/* Play/Pause & Reset */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1 shrink-0">
               <button
                 type="button"
                 onClick={() => setPaused((p) => !p)}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-[#2D3854] bg-[#141A29] px-2.5 py-1.5 text-xs font-medium text-[#F4F5FA] transition-colors hover:border-[#F59E0B] whitespace-nowrap shrink-0"
+                className="inline-flex items-center gap-1 rounded-lg border border-[#2D3854] bg-[#141A29] px-2.5 py-1 text-[11px] font-medium text-[#F4F5FA] transition-colors hover:border-[#F59E0B] whitespace-nowrap shrink-0"
               >
                 {paused ? (
                   <>
-                    <Play className="size-3.5 text-[#F59E0B]" aria-hidden="true" />
+                    <Play className="size-3 text-[#F59E0B]" aria-hidden="true" />
                     Resume
                   </>
                 ) : (
                   <>
-                    <Pause className="size-3.5 text-[#F59E0B]" aria-hidden="true" />
+                    <Pause className="size-3 text-[#F59E0B]" aria-hidden="true" />
                     Pause
                   </>
                 )}
@@ -1197,9 +1716,9 @@ export default function OrbitalScene3D({
                   setPaused(false);
                 }}
                 aria-label="Reset 3D view"
-                className="inline-flex size-8 items-center justify-center rounded-xl border border-[#2D3854] bg-[#141A29] text-[#C9CDE0] transition-colors hover:border-[#F59E0B] hover:text-[#F4F5FA] shrink-0"
+                className="inline-flex size-7 items-center justify-center rounded-lg border border-[#2D3854] bg-[#141A29] text-[#C9CDE0] transition-colors hover:border-[#F59E0B] hover:text-[#F4F5FA] shrink-0"
               >
-                <RotateCcw className="size-3.5" aria-hidden="true" />
+                <RotateCcw className="size-3" aria-hidden="true" />
               </button>
             </div>
           </div>

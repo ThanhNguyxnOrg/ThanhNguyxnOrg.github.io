@@ -1,6 +1,6 @@
 {
   "syncedAt": "2026-11-18",
-  "syncedIso": "2026-11-18T00:42:53.912Z",
+  "syncedIso": "2026-11-18T08:22:04.236Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 23,
@@ -46,7 +46,7 @@
       ],
       "created_at": "2026-09-12T07:37:16Z",
       "updated_at": "2026-11-14T11:24:38Z",
-      "pushed_at": "2026-11-17T16:02:49Z",
+      "pushed_at": "2026-11-18T08:21:56Z",
       "default_branch": "main",
       "license": {
         "spdx_id": "MIT"
@@ -54,6 +54,40 @@
       "archived": false,
       "image": "/brand/lagvex.png",
       "logo": "/logos/lagvex.png"
+    },
+    {
+      "name": "PurgeKit",
+      "slug": "purgekit",
+      "description": "Ultimate developer-focused system uninstaller and deep cleaner for Windows.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/PurgeKit",
+      "homepage": null,
+      "language": "Rust",
+      "stargazers_count": 1,
+      "forks_count": 0,
+      "open_issues_count": 2,
+      "has_pages": false,
+      "topics": [
+        "cleaner",
+        "developer-tools",
+        "power-user",
+        "rust",
+        "svelte",
+        "tauri",
+        "uninstaller",
+        "uwp",
+        "win32",
+        "windows"
+      ],
+      "created_at": "2026-06-10T14:24:56Z",
+      "updated_at": "2026-11-11T22:18:40Z",
+      "pushed_at": "2026-11-18T05:28:12Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "Apache-2.0"
+      },
+      "archived": false,
+      "image": "/brand/purgekit.png",
+      "logo": "/logos/purgekit.png"
     },
     {
       "name": "ThanhNguyxnOrg.github.io",
@@ -80,7 +114,7 @@
       ],
       "created_at": "2026-10-13T13:31:35Z",
       "updated_at": "2026-11-17T07:35:23Z",
-      "pushed_at": "2026-11-17T15:40:25Z",
+      "pushed_at": "2026-11-18T00:42:56Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
@@ -256,40 +290,6 @@
       "archived": false,
       "image": "/brand/skillgauge.png",
       "logo": "/logos/skillgauge.png"
-    },
-    {
-      "name": "PurgeKit",
-      "slug": "purgekit",
-      "description": "Ultimate developer-focused system uninstaller and deep cleaner for Windows.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/PurgeKit",
-      "homepage": null,
-      "language": "Rust",
-      "stargazers_count": 1,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": false,
-      "topics": [
-        "cleaner",
-        "developer-tools",
-        "power-user",
-        "rust",
-        "svelte",
-        "tauri",
-        "uninstaller",
-        "uwp",
-        "win32",
-        "windows"
-      ],
-      "created_at": "2026-06-10T14:24:56Z",
-      "updated_at": "2026-11-11T22:18:40Z",
-      "pushed_at": "2026-11-17T14:35:18Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "Apache-2.0"
-      },
-      "archived": false,
-      "image": "/brand/purgekit.png",
-      "logo": "/logos/purgekit.png"
     },
     {
       "name": "lumeo",

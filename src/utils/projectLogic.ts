@@ -227,48 +227,70 @@ export function computeTopicCounts(projects: OrgProject[]): [string, number][] {
   });
 }
 
+export const ORBITAL_RING_TILTS: Record<
+  0 | 1 | 2,
+  { tiltX: number; tiltZ: number; speed: number; baseRadius: number }
+> = {
+  0: { tiltX: 0.28, tiltZ: -0.18, speed: 0.075, baseRadius: 3.55 },
+  1: { tiltX: -0.36, tiltZ: 0.24, speed: -0.052, baseRadius: 5.55 },
+  2: { tiltX: 0.44, tiltZ: 0.16, speed: 0.036, baseRadius: 7.55 },
+};
+
 /**
  * Pure deterministic layout function for the 3D Orbital Constellation Lab.
- * Assigns each of the repositories to one of 3 concentric orbital rings:
- * - Ring 0 (Inner Flagship Ring): Top 5 starred projects
- * - Ring 1 (Middle Core Ring): Next 7 projects
- * - Ring 2 (Outer Frontier Ring): Remaining projects
+ * Assigns each repository to one of 3 cross-inclined 3D orbital planes:
+ * - Ring 0 (Inner Flagship Ecliptic): Top 5 starred projects
+ * - Ring 1 (Middle Core Systems): Next 7 projects
+ * - Ring 2 (Outer Frontier Halo): Remaining projects
  */
 export function computeOrbitalPositions(
   projects: OrgProject[],
   explodeFactor = 0,
 ): OrbitalNodePosition[] {
   const clampedExplode = Math.max(0, Math.min(1, explodeFactor));
-  const baseRadii: [number, number, number] = [3.6, 5.8, 8.2];
-  const spreadMultiplier = 1 + clampedExplode * 0.45;
+  const spreadMultiplier = 1 + clampedExplode * 0.42;
 
   const ring0 = projects.slice(0, 5);
   const ring1 = projects.slice(5, 12);
   const ring2 = projects.slice(12);
 
-  const rings: { items: OrgProject[]; ringIndex: 0 | 1 | 2; baseRadius: number }[] = [
-    { items: ring0, ringIndex: 0, baseRadius: baseRadii[0] * spreadMultiplier },
-    { items: ring1, ringIndex: 1, baseRadius: baseRadii[1] * spreadMultiplier },
-    { items: ring2, ringIndex: 2, baseRadius: baseRadii[2] * spreadMultiplier },
+  const rings: { items: OrgProject[]; ringIndex: 0 | 1 | 2 }[] = [
+    { items: ring0, ringIndex: 0 },
+    { items: ring1, ringIndex: 1 },
+    { items: ring2, ringIndex: 2 },
   ];
 
   const result: OrbitalNodePosition[] = [];
 
   for (const ring of rings) {
     const count = Math.max(1, ring.items.length);
+    const cfg = ORBITAL_RING_TILTS[ring.ringIndex];
+    const cosX = Math.cos(cfg.tiltX);
+    const sinX = Math.sin(cfg.tiltX);
+    const cosZ = Math.cos(cfg.tiltZ);
+    const sinZ = Math.sin(cfg.tiltZ);
+
     ring.items.forEach((proj, idx) => {
-      const phaseOffset = ring.ringIndex * 0.42;
+      const phaseOffset = ring.ringIndex * 0.55;
       const angleRad = (idx / count) * Math.PI * 2 + phaseOffset;
-      const radius = ring.baseRadius;
-      const x = Number((Math.cos(angleRad) * radius).toFixed(4));
-      const z = Number((Math.sin(angleRad) * radius).toFixed(4));
+      const radius = cfg.baseRadius * spreadMultiplier;
+
+      // Local point on ring plane before inclination
+      const lx = Math.cos(angleRad) * radius;
+      const lz = Math.sin(angleRad) * radius;
+      const ly = Math.sin(idx * 1.9 + ring.ringIndex) * 0.16;
+
+      // Rotate around X then Z so each ring orbits on a distinct 3D inclined plane
+      const y1 = ly * cosX - lz * sinX;
+      const z1 = ly * sinX + lz * cosX;
+      const x = Number((lx * cosZ - y1 * sinZ).toFixed(4));
       const yOffset = Number(
-        (
-          Math.sin(idx * 1.7 + ring.ringIndex) * 0.22 +
-          clampedExplode * (ring.ringIndex - 1) * 0.85
-        ).toFixed(4),
+        (lx * sinZ + y1 * cosZ + clampedExplode * (ring.ringIndex - 1) * 0.72).toFixed(4),
       );
-      const nodeScale = Number((1 + Math.min(proj.stars, 4) * 0.12).toFixed(2));
+      const z = Number(z1.toFixed(4));
+
+      const demoBonus = proj.demoUrl ? 0.1 : 0;
+      const nodeScale = Number((0.96 + Math.min(proj.stars, 4) * 0.12 + demoBonus).toFixed(2));
 
       result.push({
         slug: proj.slug,
@@ -285,3 +307,38 @@ export function computeOrbitalPositions(
 
   return result;
 }
+
+export interface PaginatedResult<T> {
+  items: T[];
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  startIndex: number;
+  endIndex: number;
+}
+
+/**
+ * Pure deterministic pagination helper for scaling to 100+ repositories.
+ */
+export function paginateItems<T>(
+  items: T[],
+  requestedPage: number,
+  pageSize: number,
+): PaginatedResult<T> {
+  const safeSize = Math.max(1, Math.floor(pageSize));
+  const totalItems = items.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / safeSize));
+  const currentPage = Math.max(1, Math.min(totalPages, Math.floor(requestedPage)));
+  const startIndex = totalItems === 0 ? 0 : (currentPage - 1) * safeSize;
+  const endIndex = Math.min(totalItems, startIndex + safeSize);
+
+  return {
+    items: items.slice(startIndex, endIndex),
+    currentPage,
+    totalPages,
+    totalItems,
+    startIndex,
+    endIndex,
+  };
+}
+

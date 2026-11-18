@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowUpRight, Compass, ExternalLink, Eye, Layers, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Compass, ExternalLink, Eye, GitBranch, Layers } from 'lucide-react';
 import {
   MIGRATION_DOC,
   ORG_PRINCIPLES,
@@ -16,6 +16,7 @@ interface JourneyAndStackSectionProps {
   onInspectDossier: (project: OrgProject) => void;
   onFocusIn3D: (project: OrgProject) => void;
   onSelectLanguageFilter: (language: string) => void;
+  mode?: 'all' | 'journey' | 'stack';
 }
 
 export default function JourneyAndStackSection({
@@ -23,6 +24,7 @@ export default function JourneyAndStackSection({
   onInspectDossier,
   onFocusIn3D,
   onSelectLanguageFilter,
+  mode = 'all',
 }: JourneyAndStackSectionProps) {
   const [activeStopIndex, setActiveStopIndex] = useState<number>(TIMELINE_STOPS.length - 1);
   const [activeRepoSubIndex, setActiveRepoSubIndex] = useState<number>(0);
@@ -40,7 +42,7 @@ export default function JourneyAndStackSection({
   const principleMetrics = [
     `${projects.length} public repositories`,
     `${languageStats.length} programming languages`,
-    `${projects.filter((project) => Boolean(project.demoUrl)).length} live GitHub Pages demos`,
+    `${projects.filter((project) => Boolean(project.demoUrl)).length} live Pages demos`,
     ORG_PRINCIPLES[3]?.metric ?? '',
   ];
 
@@ -49,14 +51,19 @@ export default function JourneyAndStackSection({
     setActiveRepoSubIndex(0);
   };
 
+  const showJourney = mode === 'all' || mode === 'journey';
+  const showStack = mode === 'all' || mode === 'stack';
+
   return (
     <>
-      {/* SECTION 2: Principles of the Practice */}
-      <section
-        id="principles"
-        aria-labelledby="principles-heading"
-        className="scroll-mt-24 border-b border-[#1E263B]/80 bg-[#0A0E18] py-20 md:py-24"
-      >
+      {showJourney && (
+        <>
+          {/* SECTION 2: Principles of the Practice */}
+          <section
+            id="principles"
+            aria-labelledby="principles-heading"
+            className="scroll-mt-24 border-b border-[#1E263B]/80 bg-[#0A0E18] py-20 md:py-24"
+          >
         <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
           <div className="max-w-2xl">
             <p className="font-mono text-xs text-[#FCD34D]">02. Operating Principles</p>
@@ -68,7 +75,7 @@ export default function JourneyAndStackSection({
             </h2>
             <p className="mt-3 text-base leading-relaxed text-[#A3A9BF]">
               ThanhNguyxnOrg is not tied to a single framework or product vertical. Every tool in
-              the organization follows four foundational rules.
+              the organization follows four foundational engineering standards.
             </p>
           </div>
 
@@ -76,17 +83,19 @@ export default function JourneyAndStackSection({
             {ORG_PRINCIPLES.map((item, idx) => (
               <motion.li
                 key={item.index}
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.45, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
               >
-                <InteractiveCard3D className="h-full" maxTilt={4}>
-                  <div className="flex h-full flex-col justify-between rounded-3xl border border-[#1E263B] bg-gradient-to-b from-[#101625] to-[#0B0F1A] p-6 transition-colors hover:border-[#2D3854]">
+                <InteractiveCard3D className="h-full" maxTilt={3.5}>
+                  <div className="surface-hairline flex h-full flex-col justify-between rounded-2xl border border-[#1E263B] p-6 transition-colors hover:border-[#2D3854]">
                     <div>
-                      <div className="flex items-center justify-between font-mono text-xs text-[#868CA6]">
+                      <div className="flex items-center justify-between gap-2 font-mono text-xs text-[#868CA6]">
                         <span className="text-[#F59E0B]">{item.index}. Principle</span>
-                        <span>{principleMetrics[idx] ?? item.metric}</span>
+                        <span className="truncate tabular-nums">
+                          {principleMetrics[idx] ?? item.metric}
+                        </span>
                       </div>
                       <h3 className="mt-4 font-display text-2xl font-bold text-[#F4F5FA]">
                         {item.verb}
@@ -97,7 +106,7 @@ export default function JourneyAndStackSection({
                       <p className="mt-3 text-sm leading-relaxed text-[#A3A9BF]">{item.body}</p>
                     </div>
                     <div className="mt-6 border-t border-[#1E263B] pt-3 font-mono text-[11px] text-[#868CA6]">
-                      Verified in CI · MIT / Open Source
+                      Verified in CI · Open Source
                     </div>
                   </div>
                 </InteractiveCard3D>
@@ -120,18 +129,18 @@ export default function JourneyAndStackSection({
               id="journey-heading"
               className="mt-2 font-display text-3xl font-bold tracking-tight text-[#F4F5FA] sm:text-4xl"
             >
-              Second lives & milestones.
+              Second lives &amp; milestones.
             </h2>
             <p className="mt-3 text-base leading-relaxed text-[#A3A9BF]">
-              Where each repository came from, and what it evolved into. Select any milestone below
-              to inspect the repositories born or rebuilt during that chapter.
+              Where each repository started, and what it evolved into. Select any milestone below
+              to inspect the repositories built or rebuilt during that chapter.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:items-stretch">
+          <div className="mt-12 grid gap-8 lg:grid-cols-12 lg:items-stretch">
             {/* Left Column: Interactive Timeline Selector */}
             <div
-              className="flex min-w-0 flex-col justify-between gap-3.5 lg:col-span-7"
+              className="flex min-w-0 flex-col justify-between gap-3 lg:col-span-7"
               role="tablist"
               aria-label="Organization timeline milestones"
             >
@@ -144,9 +153,9 @@ export default function JourneyAndStackSection({
                     role="tab"
                     aria-selected={isSelected}
                     onClick={() => handleSelectMilestone(idx)}
-                    className={`group relative flex w-full flex-col gap-2 rounded-3xl border p-5 text-left transition-all duration-300 sm:p-6 ${
+                    className={`group relative flex w-full flex-col gap-2 rounded-2xl border p-5 text-left transition-all duration-200 sm:p-6 ${
                       isSelected
-                        ? 'border-[#F59E0B] bg-gradient-to-r from-[#161F33] to-[#0F1524] shadow-[0_12px_40px_-12px_rgba(245,158,11,0.25)]'
+                        ? 'border-[#F59E0B]/80 bg-[#111829] shadow-[0_12px_36px_-14px_rgba(245,158,11,0.22)]'
                         : 'border-[#1E263B] bg-[#0D111C] hover:border-[#2D3854]'
                     }`}
                   >
@@ -165,31 +174,30 @@ export default function JourneyAndStackSection({
               })}
             </div>
 
-            {/* Right Column: Animated Live Milestone Stage & Era Repository Switcher (Balanced Height) */}
+            {/* Right Column: Spotlight Stage (Primer hairline divisions, no nested boxes) */}
             <div className="flex min-w-0 flex-col lg:col-span-5">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`${activeStop.id}-${spotlightProject.slug}`}
-                  initial={{ opacity: 0, y: 12, scale: 0.985 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -8, scale: 0.985 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   className="h-full"
                 >
-                  <InteractiveCard3D className="h-full" maxTilt={4}>
-                    <div className="flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-[#2D3854] bg-gradient-to-b from-[#111726] to-[#0B0F1A] shadow-2xl">
+                  <InteractiveCard3D className="h-full" maxTilt={3.5}>
+                    <div className="surface-hairline flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#2D3854]">
                       <div>
                         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#1E263B] px-5 py-3.5 font-mono text-xs">
                           <span className="text-[#FCD34D]">
                             Chapter {activeStopIndex + 1} of {TIMELINE_STOPS.length} ·{' '}
                             {activeStop.date}
                           </span>
-                          <span className="text-[#38BDF8] tabular-nums">
-                            Index {spotlightScience.score}/99 · {spotlightScience.tier}
+                          <span className="text-[#A3A9BF] tabular-nums">
+                            {spotlightProject.pushedAt.slice(0, 10)}
                           </span>
                         </div>
 
-                        {/* Interactive Era Repository Switcher Tabs if Milestone has multiple repos */}
                         {matchedProjects.length > 1 && (
                           <div className="flex flex-wrap items-center gap-1.5 border-b border-[#1E263B] bg-[#090D16] px-5 py-2.5">
                             <span className="mr-1 font-mono text-[11px] text-[#868CA6]">
@@ -202,7 +210,7 @@ export default function JourneyAndStackSection({
                                   key={proj.slug}
                                   type="button"
                                   onClick={() => setActiveRepoSubIndex(rIdx)}
-                                  className={`rounded-full px-3 py-1 font-mono text-xs transition-all whitespace-nowrap shrink-0 ${
+                                  className={`rounded-md px-2.5 py-1 font-mono text-xs transition-colors whitespace-nowrap shrink-0 ${
                                     active
                                       ? 'bg-[#F59E0B] font-semibold text-[#07090F]'
                                       : 'bg-[#141A29] text-[#C9CDE0] hover:text-[#F4F5FA]'
@@ -235,7 +243,7 @@ export default function JourneyAndStackSection({
                               {spotlightProject.stars === 1 ? 'star' : 'stars'} ·{' '}
                               {spotlightProject.forks} forks
                             </p>
-                            <div className="mt-1 flex items-center gap-2.5 min-w-0">
+                            <div className="mt-1.5 flex min-w-0 items-center gap-2.5">
                               {spotlightProject.logo && (
                                 <img
                                   src={spotlightProject.logo}
@@ -256,8 +264,8 @@ export default function JourneyAndStackSection({
                             </p>
                           </div>
 
-                          {/* 4D Engineering Metrics inside Milestone Stage */}
-                          <div className="grid grid-cols-2 gap-3 rounded-2xl border border-[#1E263B] bg-[#07090F]/80 p-4">
+                          {/* Hairline-separated 4-Dimension Telemetry (no nested box) */}
+                          <div className="grid grid-cols-2 gap-x-5 gap-y-3 border-t border-[#1E263B] pt-4">
                             {(
                               [
                                 {
@@ -300,7 +308,7 @@ export default function JourneyAndStackSection({
                           <button
                             type="button"
                             onClick={() => onInspectDossier(spotlightProject)}
-                            className="inline-flex items-center gap-1.5 rounded-full bg-[#F59E0B] px-4 py-2 text-xs font-semibold text-[#07090F] transition-colors hover:bg-[#FCD34D] whitespace-nowrap shrink-0"
+                            className="inline-flex items-center gap-1.5 rounded-lg bg-[#F59E0B] px-3.5 py-2 text-xs font-semibold text-[#07090F] transition-colors hover:bg-[#FCD34D] whitespace-nowrap shrink-0"
                           >
                             <Eye className="size-3.5" aria-hidden="true" />
                             Inspect {spotlightProject.name}
@@ -308,10 +316,10 @@ export default function JourneyAndStackSection({
                           <button
                             type="button"
                             onClick={() => onFocusIn3D(spotlightProject)}
-                            className="inline-flex items-center gap-1.5 rounded-full border border-[#2D3854] bg-[#141A29] px-3.5 py-2 text-xs font-medium text-[#F4F5FA] transition-colors hover:border-[#F59E0B] whitespace-nowrap shrink-0"
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-[#2D3854] bg-[#141A29] px-3 py-2 text-xs font-medium text-[#F4F5FA] transition-colors hover:border-[#F59E0B] whitespace-nowrap shrink-0"
                           >
                             <Compass className="size-3.5 text-[#FCD34D]" aria-hidden="true" />
-                            Focus in 3D
+                            3D Node
                           </button>
                         </div>
 
@@ -333,17 +341,21 @@ export default function JourneyAndStackSection({
           </div>
         </div>
       </section>
+        </>
+      )}
 
-      {/* SECTION 4: Live Tech Stack & Migration Monograph */}
+      {showStack && (
       <section
         id="stack"
         aria-labelledby="stack-heading"
-        className="scroll-mt-24 border-b border-[#1E263B]/80 bg-[#0A0E18] py-20 md:py-28"
+        className="scroll-mt-24 border-b border-[#1E263B]/80 bg-[#0A0E18] py-16 md:py-20"
       >
         <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-2xl">
-              <p className="font-mono text-xs text-[#FCD34D]">04. Live Architecture & Migration</p>
+              <p className="font-mono text-xs text-[#FCD34D]">
+                {mode === 'stack' ? 'Live Architecture & Migration' : '04. Live Architecture & Migration'}
+              </p>
               <h2
                 id="stack-heading"
                 className="mt-2 font-display text-3xl font-bold tracking-tight text-[#F4F5FA] sm:text-4xl"
@@ -351,19 +363,20 @@ export default function JourneyAndStackSection({
                 The stack, live in production.
               </h2>
               <p className="mt-3 text-base leading-relaxed text-[#A3A9BF]">
-                Language telemetry is computed directly from the {projects.length} repositories.
-                Click any language bar to filter the scientific repository index below.
+                Language distribution is calculated directly from the {projects.length} synced
+                repositories. Select any language bar to open the Repository Archive filtered by
+                that stack.
               </p>
             </div>
 
-            {/* Interactive Segmented Control for Stack vs Migration */}
-            <div className="flex max-w-full flex-wrap items-center gap-1 self-start rounded-full border border-[#1E263B] bg-[#07090F] p-1">
+            {/* Primer Segmented Control */}
+            <div className="flex max-w-full flex-wrap items-center gap-1 self-start rounded-xl border border-[#1E263B] bg-[#07090F] p-1">
               <button
                 type="button"
                 onClick={() => setActiveDocTab('stack')}
-                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium transition-all whitespace-nowrap shrink-0 sm:px-4 ${
+                className={`inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-xs font-medium transition-colors whitespace-nowrap shrink-0 ${
                   activeDocTab === 'stack'
-                    ? 'bg-[#F59E0B] font-semibold text-[#07090F] shadow-[0_0_16px_rgba(245,158,11,0.3)]'
+                    ? 'bg-[#F59E0B] font-semibold text-[#07090F]'
                     : 'text-[#A3A9BF] hover:text-[#F4F5FA]'
                 }`}
               >
@@ -373,28 +386,28 @@ export default function JourneyAndStackSection({
               <button
                 type="button"
                 onClick={() => setActiveDocTab('migration')}
-                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium transition-all whitespace-nowrap shrink-0 sm:px-4 ${
+                className={`inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-xs font-medium transition-colors whitespace-nowrap shrink-0 ${
                   activeDocTab === 'migration'
-                    ? 'bg-[#F59E0B] font-semibold text-[#07090F] shadow-[0_0_16px_rgba(245,158,11,0.3)]'
+                    ? 'bg-[#F59E0B] font-semibold text-[#07090F]'
                     : 'text-[#A3A9BF] hover:text-[#F4F5FA]'
                 }`}
               >
-                <Sparkles className="size-3.5" aria-hidden="true" />
-                Migration & Legacy Note
+                <GitBranch className="size-3.5" aria-hidden="true" />
+                Migration &amp; Legacy Note
               </button>
             </div>
           </div>
 
-          <div className="mt-12 grid gap-10 lg:grid-cols-12">
+          <div className="mt-12 grid gap-8 lg:grid-cols-12">
             {/* Left 6 Cols: Interactive Language Breakdown */}
-            <div className="flex min-w-0 flex-col justify-between rounded-3xl border border-[#1E263B] bg-gradient-to-b from-[#101625] to-[#0B0F1A] p-6 sm:p-8 lg:col-span-6">
+            <div className="surface-hairline flex min-w-0 flex-col justify-between rounded-2xl border border-[#1E263B] p-6 sm:p-8 lg:col-span-6">
               <div>
                 <div className="flex items-center justify-between font-mono text-xs text-[#868CA6]">
-                  <span>LANGUAGE DISTRIBUTION</span>
-                  <span className="tabular-nums">{projects.length} REPOSITORIES</span>
+                  <span>Language Distribution</span>
+                  <span className="tabular-nums">{projects.length} repositories</span>
                 </div>
                 <ul
-                  className="mt-6 flex flex-col gap-3.5"
+                  className="mt-6 flex flex-col gap-3"
                   aria-label="Languages by repository count"
                 >
                   {languageStats.map((stat) => (
@@ -402,7 +415,7 @@ export default function JourneyAndStackSection({
                       <button
                         type="button"
                         onClick={() => onSelectLanguageFilter(stat.language)}
-                        className="group flex w-full flex-col gap-1.5 rounded-xl p-1.5 text-left transition-colors hover:bg-[#141A29]"
+                        className="group flex w-full flex-col gap-1.5 rounded-lg p-1.5 text-left transition-colors hover:bg-[#141A29]"
                       >
                         <div className="flex items-center justify-between font-mono text-xs">
                           <span className="font-medium text-[#F4F5FA] group-hover:text-[#FCD34D]">
@@ -412,12 +425,12 @@ export default function JourneyAndStackSection({
                             {stat.count} {stat.count === 1 ? 'repo' : 'repos'}
                           </span>
                         </div>
-                        <div className="h-2.5 w-full overflow-hidden rounded-full bg-[#141A29]">
+                        <div className="h-2 w-full overflow-hidden rounded-full bg-[#141A29]">
                           <motion.div
                             initial={{ width: 0 }}
                             whileInView={{ width: `${stat.percentage}%` }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
                             className="h-full rounded-full bg-gradient-to-r from-[#F59E0B] via-[#FCD34D] to-[#38BDF8]"
                           />
                         </div>
@@ -428,20 +441,20 @@ export default function JourneyAndStackSection({
               </div>
 
               <div className="mt-8 border-t border-[#1E263B] pt-4 font-mono text-xs text-[#868CA6]">
-                Click any language row to filter the full index below by that language.
+                Click any language row to open the Repository Archive filtered by that stack.
               </div>
             </div>
 
-            {/* Right 6 Cols: Animated Active Monograph Tab */}
-            <div className="flex min-w-0 flex-col justify-between rounded-3xl border border-[#1E263B] bg-gradient-to-b from-[#101625] to-[#0B0F1A] p-6 sm:p-8 lg:col-span-6">
+            {/* Right 6 Cols: Hairline-Structured Monograph Panel (no nested boxes) */}
+            <div className="surface-hairline flex min-w-0 flex-col justify-between rounded-2xl border border-[#1E263B] p-6 sm:p-8 lg:col-span-6">
               <AnimatePresence mode="wait">
                 {activeDocTab === 'stack' ? (
                   <motion.div
                     key="stack-tab"
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.25 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.2 }}
                     className="flex flex-col gap-6"
                   >
                     <div>
@@ -454,35 +467,28 @@ export default function JourneyAndStackSection({
                       </p>
                     </div>
 
-                    <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="grid gap-6 border-t border-[#1E263B] pt-6 sm:grid-cols-2">
                       {STACK_DOC.layers.map((layer, i) => (
-                        <div
-                          key={layer.name}
-                          className="rounded-2xl border border-[#1E263B] bg-[#07090F]/90 p-4"
-                        >
-                          <p className="font-mono text-xs text-[#F59E0B]">
+                        <div key={layer.name} className="flex flex-col gap-1.5">
+                          <p className="font-mono text-xs font-medium text-[#F59E0B]">
                             0{i + 1}. {layer.name}
                           </p>
-                          <p className="mt-2 text-xs leading-relaxed text-[#C9CDE0]">
-                            {layer.detail}
-                          </p>
+                          <p className="text-xs leading-relaxed text-[#C9CDE0]">{layer.detail}</p>
                         </div>
                       ))}
                     </div>
 
-                    <div className="rounded-2xl border border-[#2D3854] bg-[#141A29] p-4">
-                      <p className="font-display text-sm font-semibold text-[#F4F5FA]">
-                        “{STACK_DOC.mindset}”
-                      </p>
-                    </div>
+                    <blockquote className="border-t border-[#1E263B] pt-5 font-display text-sm font-semibold text-[#F4F5FA]">
+                      “{STACK_DOC.mindset}”
+                    </blockquote>
                   </motion.div>
                 ) : (
                   <motion.div
                     key="migration-tab"
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.25 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.2 }}
                     className="flex flex-col gap-6"
                   >
                     <div>
@@ -497,9 +503,9 @@ export default function JourneyAndStackSection({
                       </p>
                     </div>
 
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <div className="rounded-2xl border border-[#1E263B] bg-[#07090F]/90 p-4">
-                        <p className="font-mono text-xs text-[#F59E0B]">
+                    <div className="grid gap-6 border-t border-[#1E263B] pt-6 sm:grid-cols-2">
+                      <div>
+                        <p className="font-mono text-xs font-medium text-[#F59E0B]">
                           01. Why Migration Matters
                         </p>
                         <ul className="mt-2.5 flex flex-col gap-1.5 text-xs text-[#C9CDE0]">
@@ -508,8 +514,10 @@ export default function JourneyAndStackSection({
                           ))}
                         </ul>
                       </div>
-                      <div className="rounded-2xl border border-[#1E263B] bg-[#07090F]/90 p-4">
-                        <p className="font-mono text-xs text-[#F59E0B]">02. Forms of Rebuild</p>
+                      <div>
+                        <p className="font-mono text-xs font-medium text-[#F59E0B]">
+                          02. Forms of Rebuild
+                        </p>
                         <ul className="mt-2.5 flex flex-col gap-1.5 text-xs text-[#C9CDE0]">
                           {MIGRATION_DOC.forms.map((f) => (
                             <li key={f}>· {f}</li>
@@ -518,11 +526,9 @@ export default function JourneyAndStackSection({
                       </div>
                     </div>
 
-                    <div className="rounded-2xl border border-[#2D3854] bg-[#141A29] p-4">
-                      <p className="font-display text-sm font-semibold text-[#F4F5FA]">
-                        “{MIGRATION_DOC.closing}”
-                      </p>
-                    </div>
+                    <blockquote className="border-t border-[#1E263B] pt-5 font-display text-sm font-semibold text-[#F4F5FA]">
+                      “{MIGRATION_DOC.closing}”
+                    </blockquote>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -545,6 +551,7 @@ export default function JourneyAndStackSection({
           </div>
         </div>
       </section>
+      )}
     </>
   );
 }

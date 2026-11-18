@@ -8,16 +8,28 @@ interface FeaturedSectionProps {
   projects: OrgProject[];
   onInspectDossier: (project: OrgProject) => void;
   onFocusIn3D: (project: OrgProject) => void;
+  onOpenArchive: () => void;
 }
 
 export default function FeaturedSection({
   projects,
   onInspectDossier,
   onFocusIn3D,
+  onOpenArchive,
 }: FeaturedSectionProps) {
-  const [lead, ...rest] = projects.slice(0, 7);
-  if (!lead) return null;
-  const leadScience = assessProjectScientifically(lead);
+  const rankedFeatured = [...projects]
+    .map((project) => ({ project, sci: assessProjectScientifically(project) }))
+    .sort((a, b) => {
+      const scoreDiff = b.sci.score - a.sci.score;
+      if (scoreDiff !== 0) return scoreDiff;
+      return b.project.stars - a.project.stars;
+    });
+
+  const leadItem = rankedFeatured[0];
+  const restItems = rankedFeatured.slice(1, 5);
+
+  if (!leadItem) return null;
+  const { project: lead, sci: leadSci } = leadItem;
 
   return (
     <section
@@ -29,9 +41,7 @@ export default function FeaturedSection({
         {/* Section Header */}
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-2xl">
-            <p className="font-mono text-xs text-[#FCD34D]">
-              01. Featured Engineering Releases · Tier I Flagships
-            </p>
+            <p className="font-mono text-xs text-[#FCD34D]">01. Featured Engineering Releases</p>
             <h2
               id="featured-heading"
               className="mt-2 font-display text-3xl font-bold tracking-tight text-[#F4F5FA] sm:text-4xl"
@@ -39,30 +49,30 @@ export default function FeaturedSection({
               Things leaving the lab.
             </h2>
             <p className="mt-3 text-base leading-relaxed text-[#A3A9BF]">
-              Ranked by scientific impact index, verified GitHub traction, and active production
-              deployments. Hover any card to experience spring-physics 3D depth or inspect its
-              full architectural dossier.
+              Flagship tools ranked by verified GitHub traction, active production releases, and
+              architectural maturity. Inspect any dossier or focus its node in the 3D Astrolabe.
             </p>
           </div>
-          <a
-            href="#archive"
-            className="inline-flex items-start gap-2 font-mono text-xs font-medium text-[#FCD34D] transition-colors hover:text-[#F59E0B] sm:items-center lg:whitespace-nowrap lg:shrink-0"
+          <button
+            type="button"
+            onClick={onOpenArchive}
+            className="inline-flex items-center gap-2 rounded-lg border border-[#2D3854] bg-[#0D111C] px-4 py-2 font-mono text-xs font-medium text-[#FCD34D] transition-colors hover:border-[#F59E0B] hover:text-[#F59E0B] lg:whitespace-nowrap lg:shrink-0"
           >
-            Jump to full {projects.length}-repository scientific index
+            Open Full Archive
             <ArrowUpRight className="size-4" aria-hidden="true" />
-          </a>
+          </button>
         </div>
 
-        {/* Lead Flagship Showcase Card (Split 2-Column with Spring 3D Tilt) */}
+        {/* Lead Flagship Showcase Card */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="mt-12"
         >
-          <InteractiveCard3D maxTilt={4.5}>
-            <article className="grid overflow-hidden rounded-3xl border border-[#2D3854]/90 bg-gradient-to-br from-[#111726] via-[#0D111C] to-[#090C14] shadow-[0_24px_60px_-15px_rgba(0,0,0,0.7)] lg:grid-cols-12 lg:items-stretch">
+          <InteractiveCard3D maxTilt={4}>
+            <article className="surface-hairline grid overflow-hidden rounded-2xl border border-[#2D3854]/90 lg:grid-cols-12 lg:items-stretch">
               <div className="relative min-h-[260px] border-b border-[#1E263B] lg:col-span-7 lg:border-b-0 lg:border-r">
                 <ProjectArtwork
                   title={lead.name}
@@ -77,21 +87,25 @@ export default function FeaturedSection({
 
               <div className="flex flex-col justify-between gap-6 p-6 sm:p-8 lg:col-span-5">
                 <div className="flex flex-col gap-4">
-                  {/* Unboxed Scientific Metadata Line */}
+                  {/* Unboxed Verified Metadata Line */}
                   <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-[#A3A9BF]">
                     <span className="text-[#FCD34D]">{lead.category}</span>
                     <span aria-hidden="true">·</span>
                     <span>{lead.language}</span>
                     <span aria-hidden="true">·</span>
-                    <span className="text-[#38BDF8] tabular-nums">
-                      Index {leadScience.score}/99
-                    </span>
+                    <span className="tabular-nums text-[#FCD34D]">Impact {leadSci.score}</span>
                     <span aria-hidden="true">·</span>
                     <span className="tabular-nums">Updated {lead.pushedAt.slice(0, 10)}</span>
+                    {lead.demoUrl && (
+                      <>
+                        <span aria-hidden="true">·</span>
+                        <span className="text-[#38BDF8]">Live Demo</span>
+                      </>
+                    )}
                   </div>
 
                   <div className="flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-3 min-w-0">
+                    <div className="flex min-w-0 items-center gap-3">
                       {lead.logo && (
                         <img
                           src={lead.logo}
@@ -107,14 +121,14 @@ export default function FeaturedSection({
                         {lead.name}
                       </h3>
                     </div>
-                    <div className="flex items-center gap-3 font-mono text-xs text-[#F4F5FA] tabular-nums shrink-0">
+                    <div className="flex shrink-0 items-center gap-3 font-mono text-xs text-[#F4F5FA] tabular-nums">
                       <span className="inline-flex items-center gap-1">
                         <Star className="size-3.5 text-[#F59E0B]" aria-hidden="true" />
                         {lead.stars}
                       </span>
                       <span aria-hidden="true">·</span>
-                      <span className="inline-flex items-center gap-1">
-                        <GitFork className="size-3.5 text-[#A3A9BF]" aria-hidden="true" />
+                      <span className="inline-flex items-center gap-1 text-[#A3A9BF]">
+                        <GitFork className="size-3.5" aria-hidden="true" />
                         {lead.forks}
                       </span>
                     </div>
@@ -124,16 +138,18 @@ export default function FeaturedSection({
                     {lead.story ?? lead.blurb}
                   </p>
 
-                  <p className="font-mono text-xs leading-relaxed text-[#868CA6]">
-                    {lead.topics.slice(0, 6).join(' · ')}
-                  </p>
+                  {lead.topics.length > 0 && (
+                    <p className="font-mono text-xs leading-relaxed text-[#868CA6]">
+                      {lead.topics.slice(0, 5).join(' · ')}
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2.5 border-t border-[#1E263B] pt-5">
                   <button
                     type="button"
                     onClick={() => onInspectDossier(lead)}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-[#F59E0B] px-4 py-2 text-xs font-semibold text-[#07090F] transition-all hover:bg-[#FCD34D] hover:shadow-[0_0_20px_rgba(245,158,11,0.35)] whitespace-nowrap shrink-0"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-[#F59E0B] px-4 py-2 text-xs font-semibold text-[#07090F] transition-colors hover:bg-[#FCD34D] whitespace-nowrap shrink-0"
                   >
                     <Eye className="size-3.5" aria-hidden="true" />
                     Inspect Dossier
@@ -141,10 +157,10 @@ export default function FeaturedSection({
                   <button
                     type="button"
                     onClick={() => onFocusIn3D(lead)}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-[#2D3854] bg-[#141A29] px-4 py-2 text-xs font-medium text-[#F4F5FA] transition-colors hover:border-[#F59E0B] whitespace-nowrap shrink-0"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-[#2D3854] bg-[#141A29] px-3.5 py-2 text-xs font-medium text-[#F4F5FA] transition-colors hover:border-[#F59E0B] whitespace-nowrap shrink-0"
                   >
                     <Compass className="size-3.5 text-[#FCD34D]" aria-hidden="true" />
-                    View in 3D Astrolabe
+                    View in 3D
                   </button>
                   <a
                     href={lead.repoUrl}
@@ -161,9 +177,9 @@ export default function FeaturedSection({
           </InteractiveCard3D>
         </motion.div>
 
-        {/* Asymmetric Bento Grid for Next 6 Featured Projects */}
+        {/* Asymmetric Editorial Bento Grid */}
         <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-12">
-          {rest.map((project, index) => {
+          {restItems.map(({ project, sci }, index) => {
             const spanClass =
               index === 0
                 ? 'lg:col-span-7'
@@ -174,23 +190,22 @@ export default function FeaturedSection({
                     : index === 3
                       ? 'lg:col-span-7'
                       : 'lg:col-span-6';
-            const sci = assessProjectScientifically(project);
 
             return (
               <motion.div
                 key={project.slug}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{
-                  duration: 0.5,
-                  delay: Math.min(index * 0.06, 0.3),
+                  duration: 0.45,
+                  delay: Math.min(index * 0.05, 0.25),
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 className={`min-w-0 ${spanClass}`}
               >
-                <InteractiveCard3D className="h-full" maxTilt={5}>
-                  <article className="flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-[#1E263B] bg-gradient-to-b from-[#101625] to-[#0B0F1A] shadow-xl transition-colors hover:border-[#2D3854]">
+                <InteractiveCard3D className="h-full" maxTilt={4.5}>
+                  <article className="surface-hairline flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#1E263B] transition-colors hover:border-[#2D3854]">
                     <div>
                       <div className="aspect-[2/1] w-full border-b border-[#1E263B]/80">
                         <ProjectArtwork
@@ -212,7 +227,13 @@ export default function FeaturedSection({
                             <span aria-hidden="true"> · </span>
                             <span>{project.language}</span>
                             <span aria-hidden="true"> · </span>
-                            <span className="text-[#38BDF8] tabular-nums">Index {sci.score}</span>
+                            <span className="tabular-nums text-[#FCD34D]">Impact {sci.score}</span>
+                            {project.demoUrl && (
+                              <>
+                                <span aria-hidden="true"> · </span>
+                                <span className="text-[#38BDF8]">Live Demo</span>
+                              </>
+                            )}
                           </div>
                           <div className="flex items-center gap-2.5 text-[#F4F5FA] tabular-nums">
                             <span className="inline-flex items-center gap-1">
@@ -227,7 +248,7 @@ export default function FeaturedSection({
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="flex min-w-0 items-center gap-2.5">
                           {project.logo && (
                             <img
                               src={project.logo}
@@ -248,18 +269,20 @@ export default function FeaturedSection({
                           {project.story ?? project.blurb}
                         </p>
 
-                        <p className="font-mono text-xs text-[#868CA6]">
-                          {project.topics.slice(0, 5).join(' · ')}
-                        </p>
+                        {project.topics.length > 0 && (
+                          <p className="font-mono text-xs text-[#868CA6]">
+                            {project.topics.slice(0, 4).join(' · ')}
+                          </p>
+                        )}
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#1E263B]/80 px-4 py-4 sm:px-6">
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#1E263B]/80 px-5 py-3.5 sm:px-6">
                       <div className="flex items-center gap-2">
                         <button
                           type="button"
                           onClick={() => onInspectDossier(project)}
-                          className="inline-flex items-center gap-1.5 rounded-full bg-[#141A29] px-3 py-1.5 text-xs font-medium text-[#F4F5FA] transition-colors hover:bg-[#1E263B] hover:text-[#FCD34D] whitespace-nowrap shrink-0"
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-[#141A29] px-3 py-1.5 text-xs font-medium text-[#F4F5FA] transition-colors hover:bg-[#1E263B] hover:text-[#FCD34D] whitespace-nowrap shrink-0"
                         >
                           <Eye className="size-3.5 text-[#F59E0B]" aria-hidden="true" />
                           Dossier
@@ -267,7 +290,7 @@ export default function FeaturedSection({
                         <button
                           type="button"
                           onClick={() => onFocusIn3D(project)}
-                          className="inline-flex items-center gap-1 rounded-full border border-[#2D3854] px-2.5 py-1.5 font-mono text-xs text-[#C9CDE0] transition-colors hover:border-[#F59E0B] hover:text-[#FCD34D] whitespace-nowrap shrink-0"
+                          className="inline-flex items-center gap-1 rounded-lg border border-[#2D3854] px-2.5 py-1.5 font-mono text-xs text-[#C9CDE0] transition-colors hover:border-[#F59E0B] hover:text-[#FCD34D] whitespace-nowrap shrink-0"
                         >
                           <Compass className="size-3.5 text-[#F59E0B]" aria-hidden="true" />
                           3D Node

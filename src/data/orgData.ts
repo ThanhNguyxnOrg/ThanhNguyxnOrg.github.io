@@ -75,29 +75,6 @@ export interface PrincipleItem {
   metric: string;
 }
 
-export const ORG_METADATA = {
-  name: 'ThanhNguyxnOrg',
-  tagline: 'Build. Explore. Evolve.',
-  subtitle:
-    'Independent technology practice building developer tools, AI workflows, and open-source utilities. Documented, preserved, and rebuilt in the open.',
-  fetchedAt: '2026-10-29',
-  foundedAt: '2026-04-09',
-  githubUrl: 'https://github.com/ThanhNguyxnOrg',
-  issuesUrl: 'https://github.com/ThanhNguyxnOrg/.github/issues',
-  liveSiteUrl: 'https://thanhnguyxnorg.github.io/',
-  totals: {
-    repos: 22,
-    stars: 10,
-    forks: 8,
-    openIssues: 0,
-    packages: 2,
-    demos: 7,
-    downloads30d: 274,
-    followers: 8,
-    languages: ['TypeScript', 'JavaScript', 'Python', 'C++', 'Go', 'Rust', 'PowerShell', 'Vue'],
-  },
-};
-
 export const ORG_PRINCIPLES: PrincipleItem[] = [
   {
     index: '01',
@@ -885,6 +862,48 @@ export const ORG_PROJECTS: OrgProject[] = [
     image: 'https://raw.githubusercontent.com/ThanhNguyxnOrg/Techstack-Studio/7da8f0250de31a0d93b9a71ae4689b9e63a082c9/public/Techstack-Studio%20theme.png',
   },
   {
+    name: 'chromadna',
+    slug: 'chromadna',
+    repoUrl: 'https://github.com/ThanhNguyxnOrg/chromadna',
+    description:
+      'Adobe Lightroom / Camera Raw Color DNA Miner, Mathematical Preset Blender, XMP Compiler, 3D LUT Exporter, Agent Skill, and MCP Server.',
+    blurb: 'Color DNA Miner, Preset Blender, XMP Compiler, 3D LUT Exporter & MCP Server for Lightroom',
+    story: 'Built in Python to extract, blend mathematically, and compile color grading DNA into portable XMP presets and 3D LUTs.',
+    category: 'Media',
+    language: 'Python',
+    license: 'MIT',
+    stars: 0,
+    forks: 0,
+    openIssues: 0,
+    pushedAt: '2026-11-17T14:34:16Z',
+    createdAt: '2026-11-16T18:14:19Z',
+    defaultBranch: 'main',
+    hasPages: false,
+    demoUrl: null,
+    homepage: null,
+    topics: [
+      '3d-lut',
+      'adobe-lightroom',
+      'agent-skill',
+      'camera-raw',
+      'color-grading',
+      'color-science',
+      'film-emulation',
+      'lightroom',
+      'lut',
+      'mcp',
+      'mcp-server',
+      'photo-editing',
+      'presets',
+      'python',
+      'xmp',
+    ],
+    accent: 'highlight',
+    pattern: 'wave',
+    logo: '/logos/chromadna.png',
+    image: '/brand/chromadna.png',
+  },
+  {
     name: 'ThanhNguyxnOrg.github.io',
     slug: 'thanhnguyxnorg.github.io',
     repoUrl: 'https://github.com/ThanhNguyxnOrg/ThanhNguyxnOrg.github.io',
@@ -972,7 +991,7 @@ export const TIMELINE_STOPS: TimelineStop[] = [
     date: '2026-10',
     title: 'Still shipping',
     description:
-      'Lumeo keeps shipping live AI dubbing tiers, ClipForge and WriteCanvas land in the lab, the org holds 19 repositories, and this spatial portal goes live.',
+      'Lumeo keeps shipping live AI dubbing tiers, ClipForge and WriteCanvas land in the lab, and this spatial portal goes live.',
     tags: ['lumeo', 'ClipForge', 'WriteCanvas'],
     current: true,
   },
@@ -1006,6 +1025,29 @@ export const NPM_PACKAGES: NpmPackageRecord[] = [
     url: 'https://www.npmjs.com/package/production-backend-kit',
   },
 ];
+
+export const ORG_METADATA = {
+  name: 'ThanhNguyxnOrg',
+  tagline: 'Build. Explore. Evolve.',
+  subtitle:
+    'Independent technology practice building developer tools, AI workflows, and open-source utilities. Documented, preserved, and rebuilt in the open.',
+  fetchedAt: '2026-11-18',
+  foundedAt: '2026-04-09',
+  githubUrl: 'https://github.com/ThanhNguyxnOrg',
+  issuesUrl: 'https://github.com/ThanhNguyxnOrg/.github/issues',
+  liveSiteUrl: 'https://thanhnguyxnorg.github.io/',
+  totals: {
+    repos: ORG_PROJECTS.length,
+    stars: ORG_PROJECTS.reduce((acc, p) => acc + p.stars, 0),
+    forks: ORG_PROJECTS.reduce((acc, p) => acc + p.forks, 0),
+    openIssues: ORG_PROJECTS.reduce((acc, p) => acc + p.openIssues, 0),
+    packages: NPM_PACKAGES.length,
+    demos: ORG_PROJECTS.filter((p) => Boolean(p.demoUrl)).length,
+    downloads30d: NPM_PACKAGES.reduce((acc, p) => acc + p.downloads30d, 0),
+    followers: 8,
+    languages: Array.from(new Set(ORG_PROJECTS.map((p) => p.language).filter(Boolean))),
+  },
+};
 
 export const ECO_RESOURCES: EcoResource[] = [
   {
