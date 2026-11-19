@@ -1,6 +1,6 @@
 {
-  "syncedAt": "2026-11-18",
-  "syncedIso": "2026-11-18T23:59:56.336Z",
+  "syncedAt": "2026-11-19",
+  "syncedIso": "2026-11-19T07:12:29.742Z",
   "org": "ThanhNguyxnOrg",
   "totals": {
     "repos": 23,
@@ -21,6 +21,111 @@
     }
   },
   "repos": [
+    {
+      "name": "blendops",
+      "slug": "blendops",
+      "description": "AI-native Blender workflow and skill pack for non-Blender users, built around official Blender MCP, Claude Blender Connector, and Blender CLI.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/blendops",
+      "homepage": "https://github.com/ThanhNguyxnOrg/blendops",
+      "language": "JavaScript",
+      "stargazers_count": 4,
+      "forks_count": 0,
+      "open_issues_count": 1,
+      "has_pages": false,
+      "topics": [
+        "agent-skills",
+        "ai-agents",
+        "blender",
+        "blender-mcp",
+        "claude",
+        "claude-code",
+        "creative-ai",
+        "glb",
+        "gltf",
+        "product-visualization",
+        "react-three-fiber",
+        "skills",
+        "threejs",
+        "web-3d",
+        "workflows"
+      ],
+      "created_at": "2026-04-24T15:17:43Z",
+      "updated_at": "2026-11-14T00:08:54Z",
+      "pushed_at": "2026-11-19T05:52:14Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/blendops.png",
+      "logo": "/logos/blendops.png"
+    },
+    {
+      "name": ".github",
+      "slug": ".github",
+      "description": "Organization profile and community health files for ThanhNguyxnOrg",
+      "html_url": "https://github.com/ThanhNguyxnOrg/.github",
+      "homepage": null,
+      "language": "Python",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": false,
+      "topics": [
+        "community-health",
+        "docs",
+        "github",
+        "organization",
+        "templates"
+      ],
+      "created_at": "2026-05-06T10:34:21Z",
+      "updated_at": "2026-11-11T11:59:16Z",
+      "pushed_at": "2026-11-19T05:50:08Z",
+      "default_branch": "main",
+      "license": null,
+      "archived": false,
+      "image": "/brand/org-github.png",
+      "logo": "/logo.png"
+    },
+    {
+      "name": "chromadna",
+      "slug": "chromadna",
+      "description": "Adobe Lightroom / Camera Raw Color DNA Miner, Mathematical Preset Blender, XMP Compiler, 3D LUT Exporter, Agent Skill, and MCP Server.",
+      "html_url": "https://github.com/ThanhNguyxnOrg/chromadna",
+      "homepage": "",
+      "language": "Python",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "has_pages": false,
+      "topics": [
+        "3d-lut",
+        "adobe-lightroom",
+        "agent-skill",
+        "camera-raw",
+        "color-grading",
+        "color-science",
+        "film-emulation",
+        "lightroom",
+        "lut",
+        "mcp",
+        "mcp-server",
+        "photo-editing",
+        "presets",
+        "python",
+        "xmp"
+      ],
+      "created_at": "2026-11-16T18:14:19Z",
+      "updated_at": "2026-11-17T07:30:26Z",
+      "pushed_at": "2026-11-19T02:24:37Z",
+      "default_branch": "main",
+      "license": {
+        "spdx_id": "MIT"
+      },
+      "archived": false,
+      "image": "/brand/chromadna.png",
+      "logo": "/logos/chromadna.png"
+    },
     {
       "name": "ThanhNguyxnOrg.github.io",
       "slug": "thanhnguyxnorg.github.io",
@@ -46,7 +151,7 @@
       ],
       "created_at": "2026-10-13T13:31:35Z",
       "updated_at": "2026-11-17T07:35:23Z",
-      "pushed_at": "2026-11-18T15:18:32Z",
+      "pushed_at": "2026-11-18T23:59:58Z",
       "default_branch": "main",
       "license": null,
       "archived": false,
@@ -540,45 +645,6 @@
       "logo": "/logos/forgehelm.png"
     },
     {
-      "name": "chromadna",
-      "slug": "chromadna",
-      "description": "Adobe Lightroom / Camera Raw Color DNA Miner, Mathematical Preset Blender, XMP Compiler, 3D LUT Exporter, Agent Skill, and MCP Server.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/chromadna",
-      "homepage": "",
-      "language": "Python",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": false,
-      "topics": [
-        "3d-lut",
-        "adobe-lightroom",
-        "agent-skill",
-        "camera-raw",
-        "color-grading",
-        "color-science",
-        "film-emulation",
-        "lightroom",
-        "lut",
-        "mcp",
-        "mcp-server",
-        "photo-editing",
-        "presets",
-        "python",
-        "xmp"
-      ],
-      "created_at": "2026-11-16T18:14:19Z",
-      "updated_at": "2026-11-17T07:30:26Z",
-      "pushed_at": "2026-11-18T14:09:51Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/chromadna.png",
-      "logo": "/logos/chromadna.png"
-    },
-    {
       "name": "ClipForge",
       "slug": "clipforge",
       "description": "Offline audio inspection and batch-processing toolkit (C++23, NASM x86-64 SSE2, CMake, CLI)",
@@ -645,45 +711,6 @@
       "archived": false,
       "image": "/brand/chess-on-glass.png",
       "logo": "/logos/chess-on-glass.png"
-    },
-    {
-      "name": "blendops",
-      "slug": "blendops",
-      "description": "AI-native Blender workflow and skill pack for non-Blender users, built around official Blender MCP, Claude Blender Connector, and Blender CLI.",
-      "html_url": "https://github.com/ThanhNguyxnOrg/blendops",
-      "homepage": "https://github.com/ThanhNguyxnOrg/blendops",
-      "language": "JavaScript",
-      "stargazers_count": 4,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": false,
-      "topics": [
-        "agent-skills",
-        "ai-agents",
-        "blender",
-        "blender-mcp",
-        "claude",
-        "claude-code",
-        "creative-ai",
-        "glb",
-        "gltf",
-        "product-visualization",
-        "react-three-fiber",
-        "skills",
-        "threejs",
-        "web-3d",
-        "workflows"
-      ],
-      "created_at": "2026-04-24T15:17:43Z",
-      "updated_at": "2026-11-14T00:08:54Z",
-      "pushed_at": "2026-11-18T14:09:44Z",
-      "default_branch": "main",
-      "license": {
-        "spdx_id": "MIT"
-      },
-      "archived": false,
-      "image": "/brand/blendops.png",
-      "logo": "/logos/blendops.png"
     },
     {
       "name": "awesome-cert-sherpa",
@@ -792,33 +819,6 @@
       "archived": false,
       "image": "/brand/afterframe-the-last-loop.png",
       "logo": "/logos/afterframe-the-last-loop.png"
-    },
-    {
-      "name": ".github",
-      "slug": ".github",
-      "description": "Organization profile and community health files for ThanhNguyxnOrg",
-      "html_url": "https://github.com/ThanhNguyxnOrg/.github",
-      "homepage": null,
-      "language": "Python",
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "has_pages": false,
-      "topics": [
-        "community-health",
-        "docs",
-        "github",
-        "organization",
-        "templates"
-      ],
-      "created_at": "2026-05-06T10:34:21Z",
-      "updated_at": "2026-11-11T11:59:16Z",
-      "pushed_at": "2026-11-18T14:09:18Z",
-      "default_branch": "main",
-      "license": null,
-      "archived": false,
-      "image": "/brand/org-github.png",
-      "logo": "/logo.png"
     }
   ]
 }
