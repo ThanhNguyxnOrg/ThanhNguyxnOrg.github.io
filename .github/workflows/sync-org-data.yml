@@ -60,18 +60,12 @@ jobs:
       - name: Test and type-check
         run: npm test && npm run lint
 
-      - name: Set ThanhNguyxnAgent commit identity
-        uses: ThanhNguyxnOrg/.github/.github/actions/agent-git-identity@da9d02544f60aeec92f8c851846ee3a587044beb
-
-      - name: Commit synced data
-        run: |
-          git add -A src/data/liveSnapshot.json public/logos public/brand
-          if git diff --cached --quiet; then
-            echo "No synced data changes"
-            exit 0
-          fi
-          git commit -m "chore(sync): update live telemetry and brand assets [skip ci]"
-          git push
+      # NOTE: synced telemetry and brand assets are intentionally NOT
+      # committed. The sync steps above regenerate them in-runner and
+      # the build below bakes them into the deployed bundle, so the
+      # live site is always fresh without a commit per run. The
+      # previously committed src/data/liveSnapshot.json stays in the
+      # repo as the offline fallback for local builds.
 
       - name: Build production bundle
         run: npm run build
