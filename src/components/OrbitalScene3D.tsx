@@ -47,6 +47,15 @@ const FINISH_OPTIONS: { id: MaterialFinish; label: string; swatch: string }[] = 
 ];
 
 type PlanetArchetype = 'ai' | 'systems' | 'media' | 'learning';
+export type ClusterFilter = 'all' | PlanetArchetype;
+
+const CLUSTER_FILTER_OPTIONS: { id: ClusterFilter; label: string }[] = [
+  { id: 'all', label: 'All' },
+  { id: 'ai', label: 'AI' },
+  { id: 'systems', label: 'Sys' },
+  { id: 'media', label: 'Media' },
+  { id: 'learning', label: 'Learn' },
+];
 type PlanetSilhouette =
   | 'gyro'
   | 'relay'
@@ -74,55 +83,57 @@ function getPlanetSilhouette(proj: OrgProject, idx: number): PlanetSilhouette {
   return idx % 2 === 0 ? 'cubesat' : 'relay';
 }
 
-function createCompassDialTexture(maxAnisotropy: number): THREE.CanvasTexture {
+function createBrushedMetalTexture(maxAnisotropy: number): THREE.CanvasTexture {
   const canvas = document.createElement('canvas');
-  canvas.width = 512;
-  canvas.height = 512;
+  canvas.width = 256;
+  canvas.height = 256;
   const ctx = canvas.getContext('2d');
   if (ctx) {
-    ctx.clearRect(0, 0, 512, 512);
-    const cx = 256;
-    const cy = 256;
-
-    const grad = ctx.createRadialGradient(cx, cy, 12, cx, cy, 248);
-    grad.addColorStop(0, 'rgba(245, 158, 11, 0.16)');
-    grad.addColorStop(0.45, 'rgba(56, 189, 248, 0.05)');
-    grad.addColorStop(1, 'rgba(7, 9, 15, 0)');
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(cx, cy, 248, 0, Math.PI * 2);
-    ctx.fill();
-
-    [236, 188, 134, 82].forEach((r, idx) => {
-      ctx.strokeStyle =
-        idx === 0
-          ? 'rgba(245, 158, 11, 0.34)'
-          : idx === 3
-            ? 'rgba(56, 189, 248, 0.25)'
-            : 'rgba(148, 163, 184, 0.16)';
-      ctx.lineWidth = idx === 0 ? 1.5 : 1;
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.stroke();
-    });
-
-    for (let i = 0; i < 72; i++) {
-      const angle = (i / 72) * Math.PI * 2;
-      const isMajor = i % 6 === 0;
-      const rInner = isMajor ? 220 : 228;
-      const rOuter = 235;
-      ctx.strokeStyle = isMajor ? 'rgba(252, 211, 77, 0.65)' : 'rgba(148, 163, 184, 0.2)';
-      ctx.lineWidth = isMajor ? 1.8 : 1;
-      ctx.beginPath();
-      ctx.moveTo(cx + Math.cos(angle) * rInner, cy + Math.sin(angle) * rInner);
-      ctx.lineTo(cx + Math.cos(angle) * rOuter, cy + Math.sin(angle) * rOuter);
-      ctx.stroke();
+    ctx.fillStyle = '#888888';
+    ctx.fillRect(0, 0, 256, 256);
+    for (let y = 0; y < 256; y++) {
+      const lum = 105 + ((y * 53) % 58) + Math.round(Math.sin(y * 0.45) * 14);
+      ctx.fillStyle = `rgb(${lum},${lum},${lum})`;
+      ctx.fillRect(0, y, 256, 1);
+    }
+    for (let i = 0; i < 420; i++) {
+      const x = (i * 79) % 256;
+      const y = (i * 137) % 256;
+      const w = 18 + (i % 46);
+      ctx.fillStyle = i % 2 === 0 ? 'rgba(255,255,255,0.12)' : 'rgba(20,20,20,0.14)';
+      ctx.fillRect(x, y, w, 1);
     }
   }
   const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(3, 1);
   texture.anisotropy = maxAnisotropy;
   return texture;
+}
+
+function createMachinedBandGeometry(
+  innerRadius: number,
+  outerRadius: number,
+  depth: number,
+  bevelSize = 0.016,
+): THREE.ExtrudeGeometry {
+  const shape = new THREE.Shape();
+  shape.absarc(0, 0, outerRadius, 0, Math.PI * 2, false);
+  const hole = new THREE.Path();
+  hole.absarc(0, 0, innerRadius, 0, Math.PI * 2, true);
+  shape.holes.push(hole);
+
+  const geo = new THREE.ExtrudeGeometry(shape, {
+    depth,
+    bevelEnabled: true,
+    bevelThickness: bevelSize,
+    bevelSize,
+    bevelSegments: 2,
+    curveSegments: 72,
+  });
+  geo.center();
+  return geo;
 }
 
 function createRadialGlowTexture(): THREE.CanvasTexture {
@@ -134,7 +145,7 @@ function createRadialGlowTexture(): THREE.CanvasTexture {
     const grad = ctx.createRadialGradient(64, 64, 2, 64, 64, 62);
     grad.addColorStop(0, 'rgba(254, 249, 195, 1.0)');
     grad.addColorStop(0.24, 'rgba(245, 158, 11, 0.62)');
-    grad.addColorStop(0.55, 'rgba(56, 189, 248, 0.16)');
+    grad.addColorStop(0.55, 'rgba(56, 189, 248, 0.14)');
     grad.addColorStop(1, 'rgba(7, 9, 15, 0.0)');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 128, 128);
@@ -165,6 +176,7 @@ export default function OrbitalScene3D({
 
   const [finish, setFinish] = useState<MaterialFinish>('obsidian-gold');
   const [cameraPreset, setCameraPreset] = useState<CameraPreset>('overview');
+  const [clusterFilter, setClusterFilter] = useState<ClusterFilter>('all');
   const [explodeFactor, setExplodeFactor] = useState<number>(0);
   const [paused, setPaused] = useState<boolean>(false);
   const [dockCollapsed, setDockCollapsed] = useState<boolean>(false);
@@ -176,6 +188,7 @@ export default function OrbitalScene3D({
   const stateRef = useRef({
     finish,
     cameraPreset,
+    clusterFilter,
     explodeFactor,
     paused,
     selectedSlug,
@@ -197,6 +210,10 @@ export default function OrbitalScene3D({
     stateRef.current.cameraPreset = cameraPreset;
     stateRef.current.activeCameraTransition = true;
   }, [cameraPreset]);
+
+  useEffect(() => {
+    stateRef.current.clusterFilter = clusterFilter;
+  }, [clusterFilter]);
 
   useEffect(() => {
     stateRef.current.explodeFactor = explodeFactor;
@@ -306,62 +323,104 @@ export default function OrbitalScene3D({
     };
     controls.addEventListener('start', onControlStart);
 
-    // 3-Point Studio Lighting Rig (warm key + cool sky fill + cyan rim)
-    const hemiLight = new THREE.HemisphereLight(0xdbeafe, 0x090d16, 1.05);
+    // 3-Point Studio Lighting Rig (warm amber key + cool zenith fill + crisp cyan rim)
+    const hemiLight = new THREE.HemisphereLight(0xdbeafe, 0x090d16, 1.1);
     hemiLight.position.set(0, 22, 0);
     scene.add(hemiLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffedd5, 2.25);
+    const keyLight = new THREE.DirectionalLight(0xffedd5, 2.45);
     keyLight.position.set(8, 14, 10);
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0x38bdf8, 1.55);
+    const rimLight = new THREE.DirectionalLight(0x38bdf8, 1.85);
     rimLight.position.set(-10, 6, -9);
     scene.add(rimLight);
 
-    const FLOOR_Y = -2.15;
-    const CORE_Y = 0.35;
+    const CORE_Y = 0.25;
 
-    const corePointLight = new THREE.PointLight(0xf59e0b, 3.4, 18, 1.4);
+    const corePointLight = new THREE.PointLight(0xf59e0b, 4.2, 20, 1.3);
     corePointLight.position.set(0, CORE_Y, 0);
     scene.add(corePointLight);
 
     const maxAniso = renderer.capabilities.getMaxAnisotropy();
-    const dialTexture = createCompassDialTexture(maxAniso);
+    const brushedTexture = createBrushedMetalTexture(maxAniso);
     const radialGlowTexture = createRadialGlowTexture();
 
-    // Shared Core Materials (only updated inside applyFinish)
-    const primaryMetalMat = new THREE.MeshPhysicalMaterial({
-      color: 0xf59e0b,
-      metalness: 0.9,
-      roughness: 0.14,
-      clearcoat: 0.9,
-      clearcoatRoughness: 0.08,
-      ior: 1.54,
-      thickness: 1.2,
-      attenuationColor: new THREE.Color(0x38bdf8),
-      attenuationDistance: 2.5,
+    // Machined Brushed Titanium Gimbal & Track Materials (matched to reference render)
+    const gimbalOuterMat = new THREE.MeshPhysicalMaterial({
+      color: 0x3b475c,
+      metalness: 0.94,
+      roughness: 0.26,
+      roughnessMap: brushedTexture,
+      bumpMap: brushedTexture,
+      bumpScale: 0.008,
+      clearcoat: 0.65,
+      clearcoatRoughness: 0.16,
+      envMapIntensity: 1.5,
+    });
+
+    const gimbalMidMat = new THREE.MeshPhysicalMaterial({
+      color: 0x64748b,
+      metalness: 0.95,
+      roughness: 0.2,
+      roughnessMap: brushedTexture,
+      bumpMap: brushedTexture,
+      bumpScale: 0.006,
+      clearcoat: 0.85,
+      clearcoatRoughness: 0.1,
+      envMapIntensity: 1.65,
     });
 
     const darkStructuralMat = new THREE.MeshStandardMaterial({
-      color: 0x1e293b,
-      metalness: 0.84,
-      roughness: 0.24,
+      color: 0x2b3648,
+      metalness: 0.9,
+      roughness: 0.28,
+      roughnessMap: brushedTexture,
+      envMapIntensity: 1.3,
     });
 
     const accentChromeMat = new THREE.MeshPhysicalMaterial({
-      color: 0xfef3c7,
-      metalness: 0.95,
-      roughness: 0.09,
-      anisotropy: 0.75,
-      clearcoat: 0.85,
+      color: 0xe2e8f0,
+      metalness: 0.96,
+      roughness: 0.12,
+      clearcoat: 0.9,
+      envMapIntensity: 1.65,
+    });
+
+    const cyanFilamentMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.88,
+    });
+
+    const fineWireMat = new THREE.MeshStandardMaterial({
+      color: 0x475569,
+      metalness: 0.92,
+      roughness: 0.24,
+      envMapIntensity: 1.25,
+    });
+
+    // Outer Glossy Amber Glass Shell over the Inner Molten Core
+    const coreGlassShellMat = new THREE.MeshPhysicalMaterial({
+      color: 0xf59e0b,
+      emissive: 0xc2410c,
+      emissiveIntensity: 0.34,
+      metalness: 0.05,
+      roughness: 0.04,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.03,
+      ior: 1.52,
+      reflectivity: 1.0,
+      transparent: true,
+      opacity: 0.36,
+      envMapIntensity: 2.0,
     });
 
     const coreShaderUniforms = {
       uTime: { value: 0 },
-      uBaseColor: { value: new THREE.Color(0xd97706) },
+      uBaseColor: { value: new THREE.Color(0xea580c) },
       uRimColor: { value: new THREE.Color(0xfef08a) },
-      uPulseColor: { value: new THREE.Color(0x38bdf8) },
+      uPulseColor: { value: new THREE.Color(0xf59e0b) },
     };
 
     const corePlasmaMat = new THREE.ShaderMaterial({
@@ -370,14 +429,12 @@ export default function OrbitalScene3D({
         uniform float uTime;
         varying vec3 vNormal;
         varying vec3 vViewPosition;
-        varying float vDisplacement;
+        varying float vFlow;
 
         void main() {
-          float wave = sin(position.x * 4.0 + uTime * 1.5) * cos(position.y * 4.0 - uTime * 1.3) * cos(position.z * 4.0 + uTime * 1.1);
-          float disp = wave * 0.028;
-          vDisplacement = disp;
-
-          vec3 newPos = position + normal * disp;
+          float wave = sin(position.x * 3.5 + uTime * 1.1) * cos(position.y * 3.5 - uTime * 0.9) * cos(position.z * 3.5 + uTime * 0.8);
+          vFlow = wave;
+          vec3 newPos = position + normal * (wave * 0.015);
           vec4 mvPosition = modelViewMatrix * vec4(newPos, 1.0);
           vViewPosition = -mvPosition.xyz;
           vNormal = normalize(normalMatrix * normal);
@@ -391,79 +448,95 @@ export default function OrbitalScene3D({
         uniform vec3 uPulseColor;
         varying vec3 vNormal;
         varying vec3 vViewPosition;
-        varying float vDisplacement;
+        varying float vFlow;
 
         void main() {
           vec3 normal = normalize(vNormal);
           vec3 viewDir = normalize(vViewPosition);
-          float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 2.3);
-          float bands = sin(vDisplacement * 90.0 + uTime * 2.2) * 0.5 + 0.5;
-          vec3 col = mix(uBaseColor, uRimColor, fresnel * 0.85 + bands * 0.25);
-          col = mix(col, uPulseColor, pow(fresnel, 4.0) * 0.45);
+          float facing = max(dot(normal, viewDir), 0.0);
+          float fresnel = pow(1.0 - facing, 2.1);
+          float coreHeat = pow(facing, 1.35);
+          vec3 col = mix(uBaseColor, uPulseColor, 0.55 + vFlow * 0.35);
+          col = mix(col, uRimColor, coreHeat * 0.72 + fresnel * 0.35);
           gl_FragColor = vec4(col, 1.0);
         }
       `,
     });
 
-    // Pooled Planet Archetype Materials (8 shared PBR materials instead of 23x duplicate Physical shaders!)
+    // Pooled Faceted Gunmetal / Titanium Satellite Materials + Crisp Wireframe Edge Cages
     const archetypeBodyMats: Record<PlanetArchetype, THREE.MeshStandardMaterial> = {
       ai: new THREE.MeshStandardMaterial({
-        color: 0xf59e0b,
+        color: 0x222938,
         emissive: 0x78350f,
-        emissiveIntensity: 0.45,
-        metalness: 0.88,
-        roughness: 0.16,
+        emissiveIntensity: 0.22,
+        metalness: 0.9,
+        roughness: 0.24,
+        roughnessMap: brushedTexture,
+        flatShading: true,
       }),
       systems: new THREE.MeshStandardMaterial({
-        color: 0x94a3b8,
-        emissive: 0x075985,
-        emissiveIntensity: 0.35,
+        color: 0x1e293b,
+        emissive: 0x0c4a6e,
+        emissiveIntensity: 0.18,
         metalness: 0.92,
         roughness: 0.22,
+        roughnessMap: brushedTexture,
+        flatShading: true,
       }),
       media: new THREE.MeshStandardMaterial({
-        color: 0x34d399,
-        emissive: 0x065f46,
-        emissiveIntensity: 0.42,
-        metalness: 0.65,
-        roughness: 0.18,
+        color: 0x27303f,
+        emissive: 0x064e3b,
+        emissiveIntensity: 0.2,
+        metalness: 0.86,
+        roughness: 0.2,
+        roughnessMap: brushedTexture,
+        flatShading: true,
       }),
       learning: new THREE.MeshStandardMaterial({
-        color: 0x818cf8,
+        color: 0x262e42,
         emissive: 0x312e81,
-        emissiveIntensity: 0.4,
-        metalness: 0.78,
-        roughness: 0.2,
+        emissiveIntensity: 0.2,
+        metalness: 0.88,
+        roughness: 0.22,
+        roughnessMap: brushedTexture,
+        flatShading: true,
       }),
+    };
+
+    const archetypeEdgeMats: Record<PlanetArchetype, THREE.LineBasicMaterial> = {
+      ai: new THREE.LineBasicMaterial({ color: 0xfcd34d, transparent: true, opacity: 0.78 }),
+      systems: new THREE.LineBasicMaterial({ color: 0x94a3b8, transparent: true, opacity: 0.82 }),
+      media: new THREE.LineBasicMaterial({ color: 0x7dd3fc, transparent: true, opacity: 0.76 }),
+      learning: new THREE.LineBasicMaterial({ color: 0xcbd5e1, transparent: true, opacity: 0.76 }),
     };
 
     const archetypeRingMats: Record<PlanetArchetype, THREE.MeshStandardMaterial> = {
       ai: new THREE.MeshStandardMaterial({
-        color: 0xfcd34d,
-        emissive: 0xd97706,
-        emissiveIntensity: 0.55,
-        metalness: 0.88,
-        roughness: 0.15,
+        color: 0xf59e0b,
+        emissive: 0xb45309,
+        emissiveIntensity: 0.45,
+        metalness: 0.92,
+        roughness: 0.16,
       }),
       systems: new THREE.MeshStandardMaterial({
         color: 0x38bdf8,
         emissive: 0x0284c7,
-        emissiveIntensity: 0.65,
-        metalness: 0.85,
-        roughness: 0.16,
+        emissiveIntensity: 0.5,
+        metalness: 0.9,
+        roughness: 0.18,
       }),
       media: new THREE.MeshStandardMaterial({
-        color: 0xa78bfa,
-        emissive: 0x7c3aed,
-        emissiveIntensity: 0.5,
-        metalness: 0.8,
+        color: 0x94a3b8,
+        emissive: 0x0369a1,
+        emissiveIntensity: 0.35,
+        metalness: 0.92,
         roughness: 0.18,
       }),
       learning: new THREE.MeshStandardMaterial({
         color: 0xfbbf24,
-        emissive: 0x4f46e5,
-        emissiveIntensity: 0.48,
-        metalness: 0.84,
+        emissive: 0x92400e,
+        emissiveIntensity: 0.38,
+        metalness: 0.88,
         roughness: 0.18,
       }),
     };
@@ -477,23 +550,29 @@ export default function OrbitalScene3D({
     });
 
     const conduitDefaultMats: Record<PlanetArchetype, THREE.LineBasicMaterial> = {
-      ai: new THREE.LineBasicMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.2 }),
+      ai: new THREE.LineBasicMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.18 }),
       systems: new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.18 }),
-      media: new THREE.LineBasicMaterial({ color: 0x34d399, transparent: true, opacity: 0.18 }),
-      learning: new THREE.LineBasicMaterial({ color: 0x818cf8, transparent: true, opacity: 0.18 }),
+      media: new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.16 }),
+      learning: new THREE.LineBasicMaterial({ color: 0xfcd34d, transparent: true, opacity: 0.16 }),
     };
 
     const conduitActiveMat = new THREE.LineBasicMaterial({
       color: 0xfef08a,
       transparent: true,
-      opacity: 0.82,
+      opacity: 0.85,
+    });
+
+    const conduitDimMat = new THREE.LineBasicMaterial({
+      color: 0x334155,
+      transparent: true,
+      opacity: 0.05,
     });
 
     const photonAmberMat = new THREE.SpriteMaterial({
       map: radialGlowTexture,
       color: 0xfef08a,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.88,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -502,7 +581,7 @@ export default function OrbitalScene3D({
       map: radialGlowTexture,
       color: 0x7dd3fc,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.84,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -511,7 +590,7 @@ export default function OrbitalScene3D({
       map: radialGlowTexture,
       color: 0xfcd34d,
       transparent: true,
-      opacity: 0.42,
+      opacity: 0.34,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -520,42 +599,51 @@ export default function OrbitalScene3D({
       map: radialGlowTexture,
       color: 0x38bdf8,
       transparent: true,
-      opacity: 0.34,
+      opacity: 0.28,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
 
     const applyFinish = (mode: MaterialFinish) => {
       if (mode === 'obsidian-gold') {
-        primaryMetalMat.color.setHex(0xf59e0b);
-        primaryMetalMat.metalness = 0.9;
-        primaryMetalMat.roughness = 0.14;
-        primaryMetalMat.transmission = 0;
-        primaryMetalMat.opacity = 1;
-        primaryMetalMat.transparent = false;
-        darkStructuralMat.color.setHex(0x1e293b);
-        coreShaderUniforms.uBaseColor.value.setHex(0xd97706);
+        gimbalOuterMat.color.setHex(0x3b475c);
+        gimbalMidMat.color.setHex(0x64748b);
+        darkStructuralMat.color.setHex(0x2b3648);
+        coreGlassShellMat.color.setHex(0xf59e0b);
+        coreGlassShellMat.emissive.setHex(0xc2410c);
+        coreGlassShellMat.emissiveIntensity = 0.34;
+        coreGlassShellMat.opacity = 0.36;
+        coreShaderUniforms.uBaseColor.value.setHex(0xea580c);
+        coreShaderUniforms.uPulseColor.value.setHex(0xf59e0b);
         coreShaderUniforms.uRimColor.value.setHex(0xfef08a);
+        cyanFilamentMat.color.setHex(0x38bdf8);
+        corePointLight.color.setHex(0xf59e0b);
       } else if (mode === 'brushed-titanium') {
-        primaryMetalMat.color.setHex(0xe2e8f0);
-        primaryMetalMat.metalness = 0.95;
-        primaryMetalMat.roughness = 0.19;
-        primaryMetalMat.transmission = 0;
-        primaryMetalMat.opacity = 1;
-        primaryMetalMat.transparent = false;
-        darkStructuralMat.color.setHex(0x334155);
-        coreShaderUniforms.uBaseColor.value.setHex(0x64748b);
+        gimbalOuterMat.color.setHex(0xcbd5e1);
+        gimbalMidMat.color.setHex(0xf1f5f9);
+        darkStructuralMat.color.setHex(0x475569);
+        coreGlassShellMat.color.setHex(0x94a3b8);
+        coreGlassShellMat.emissive.setHex(0x334155);
+        coreGlassShellMat.emissiveIntensity = 0.24;
+        coreGlassShellMat.opacity = 0.36;
+        coreShaderUniforms.uBaseColor.value.setHex(0x475569);
+        coreShaderUniforms.uPulseColor.value.setHex(0x94a3b8);
         coreShaderUniforms.uRimColor.value.setHex(0xf8fafc);
+        cyanFilamentMat.color.setHex(0x7dd3fc);
+        corePointLight.color.setHex(0xe2e8f0);
       } else {
-        primaryMetalMat.color.setHex(0x7dd3fc);
-        primaryMetalMat.metalness = 0.12;
-        primaryMetalMat.roughness = 0.06;
-        primaryMetalMat.transmission = isSoftwareGl ? 0 : 0.85;
-        primaryMetalMat.transparent = true;
-        primaryMetalMat.opacity = isSoftwareGl ? 0.58 : 1;
-        darkStructuralMat.color.setHex(0x0f172a);
+        gimbalOuterMat.color.setHex(0x334155);
+        gimbalMidMat.color.setHex(0x7dd3fc);
+        darkStructuralMat.color.setHex(0x1e293b);
+        coreGlassShellMat.color.setHex(0x38bdf8);
+        coreGlassShellMat.emissive.setHex(0x0369a1);
+        coreGlassShellMat.emissiveIntensity = 0.28;
+        coreGlassShellMat.opacity = 0.44;
         coreShaderUniforms.uBaseColor.value.setHex(0x0284c7);
+        coreShaderUniforms.uPulseColor.value.setHex(0x38bdf8);
         coreShaderUniforms.uRimColor.value.setHex(0xe0f2fe);
+        cyanFilamentMat.color.setHex(0xfcd34d);
+        corePointLight.color.setHex(0x38bdf8);
       }
     };
     applyFinishRef.current = applyFinish;
@@ -564,95 +652,77 @@ export default function OrbitalScene3D({
     const masterGroup = new THREE.Group();
     scene.add(masterGroup);
 
-    // Subtle Observatory Floor Compass Dial far beneath the floating 3D astrolabe
-    const dialGeo = new THREE.CircleGeometry(9.6, 72);
-    const dialMat = new THREE.MeshStandardMaterial({
-      map: dialTexture,
-      transparent: true,
-      opacity: 0.72,
-      roughness: 0.88,
-      metalness: 0.1,
-      depthWrite: false,
-      polygonOffset: true,
-      polygonOffsetFactor: -1,
-      polygonOffsetUnits: -1,
-    });
-    const dialMesh = new THREE.Mesh(dialGeo, dialMat);
-    dialMesh.rotation.x = -Math.PI / 2;
-    dialMesh.position.y = FLOOR_Y;
-    masterGroup.add(dialMesh);
-
-    // Central Gimbal Armillary Assembly (suspended in 3D space at CORE_Y)
+    // Central Sculptural Core: Inner Molten Orb + Glossy Amber Glass Shell + 3 Machined Titanium Gimbal Bands + Cyan Energy Arcs
     const coreAnchorGroup = new THREE.Group();
     coreAnchorGroup.position.set(0, CORE_Y, 0);
     masterGroup.add(coreAnchorGroup);
 
-    const coreMesh = new THREE.Mesh(new THREE.IcosahedronGeometry(0.54, 2), corePlasmaMat);
+    const coreMesh = new THREE.Mesh(new THREE.SphereGeometry(0.72, 32, 24), corePlasmaMat);
     coreAnchorGroup.add(coreMesh);
+
+    const coreGlassShell = new THREE.Mesh(
+      new THREE.SphereGeometry(0.84, 36, 28),
+      coreGlassShellMat,
+    );
+    coreAnchorGroup.add(coreGlassShell);
 
     const coreGlowSprite = new THREE.Sprite(
       new THREE.SpriteMaterial({
         map: radialGlowTexture,
-        color: 0xfcd34d,
+        color: 0xf59e0b,
         transparent: true,
-        opacity: 0.68,
+        opacity: 0.56,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
       }),
     );
-    coreGlowSprite.scale.set(3.2, 3.2, 1);
+    coreGlowSprite.scale.set(3.4, 3.4, 1);
     coreAnchorGroup.add(coreGlowSprite);
 
+    const gimbalBandGeoInner = createMachinedBandGeometry(1.06, 1.16, 0.1, 0.014);
+    const gimbalBandGeoMid = createMachinedBandGeometry(1.3, 1.41, 0.11, 0.015);
+    const gimbalBandGeoOuter = createMachinedBandGeometry(1.56, 1.68, 0.12, 0.016);
+
     const equatorialGroup = new THREE.Group();
-    equatorialGroup.add(new THREE.Mesh(new THREE.TorusGeometry(1.08, 0.032, 14, 64), primaryMetalMat));
-    equatorialGroup.rotation.x = Math.PI * 0.42;
+    equatorialGroup.add(new THREE.Mesh(gimbalBandGeoInner, gimbalMidMat));
+    equatorialGroup.rotation.set(Math.PI * 0.4, 0.18, -0.14);
     coreAnchorGroup.add(equatorialGroup);
 
     const meridianGroupA = new THREE.Group();
-    meridianGroupA.add(new THREE.Mesh(new THREE.TorusGeometry(1.34, 0.024, 12, 64), accentChromeMat));
-    meridianGroupA.rotation.set(Math.PI / 4, Math.PI / 6, 0);
+    meridianGroupA.add(new THREE.Mesh(gimbalBandGeoMid, gimbalOuterMat));
+    meridianGroupA.rotation.set(Math.PI * 0.26, Math.PI * 0.22, 0.42);
     coreAnchorGroup.add(meridianGroupA);
 
     const meridianGroupB = new THREE.Group();
-    meridianGroupB.add(new THREE.Mesh(new THREE.TorusGeometry(1.34, 0.024, 12, 64), primaryMetalMat));
-    meridianGroupB.rotation.set(-Math.PI / 4, -Math.PI / 6, 0);
+    meridianGroupB.add(new THREE.Mesh(gimbalBandGeoMid, gimbalMidMat));
+    meridianGroupB.rotation.set(-Math.PI * 0.28, -Math.PI * 0.18, -0.36);
     coreAnchorGroup.add(meridianGroupB);
 
     const outerEclipticGroup = new THREE.Group();
-    outerEclipticGroup.add(
-      new THREE.Mesh(new THREE.TorusGeometry(1.64, 0.028, 12, 64), darkStructuralMat),
-    );
-    outerEclipticGroup.rotation.set(Math.PI / 2 - 0.16, 0, 0.22);
+    outerEclipticGroup.add(new THREE.Mesh(gimbalBandGeoOuter, gimbalOuterMat));
+    outerEclipticGroup.rotation.set(Math.PI * 0.48 - 0.15, -0.22, 0.28);
     coreAnchorGroup.add(outerEclipticGroup);
 
-    // Tall Vertical Meridian Calibration Frame around the Constellation (breaks horizontal flatness)
-    const verticalMeridianMat = new THREE.MeshStandardMaterial({
-      color: 0x334155,
-      emissive: 0x0f172a,
-      emissiveIntensity: 0.35,
-      metalness: 0.88,
-      roughness: 0.25,
-    });
-    const verticalMeridianA = new THREE.Mesh(
-      new THREE.TorusGeometry(4.35, 0.014, 10, 88),
-      verticalMeridianMat,
-    );
-    verticalMeridianA.rotation.y = Math.PI * 0.18;
-    coreAnchorGroup.add(verticalMeridianA);
+    // Fine Glowing Cyan Energy Filaments weaving around the Gimbal Assembly
+    const cyanArcGroup = new THREE.Group();
+    const cyanArcGeoA = new THREE.TorusGeometry(1.29, 0.008, 6, 96);
+    const cyanArcGeoB = new THREE.TorusGeometry(1.56, 0.008, 6, 96);
+    const cyanArcGeoC = new THREE.TorusGeometry(1.94, 0.007, 6, 108);
+    const cyanArcA = new THREE.Mesh(cyanArcGeoA, cyanFilamentMat);
+    cyanArcA.rotation.set(Math.PI * 0.36, 0.55, 0.2);
+    const cyanArcB = new THREE.Mesh(cyanArcGeoB, cyanFilamentMat);
+    cyanArcB.rotation.set(-Math.PI * 0.3, -0.45, 0.72);
+    const cyanArcC = new THREE.Mesh(cyanArcGeoC, cyanFilamentMat);
+    cyanArcC.rotation.set(Math.PI * 0.46, 0.15, -0.5);
+    cyanArcGroup.add(cyanArcA, cyanArcB, cyanArcC);
+    coreAnchorGroup.add(cyanArcGroup);
 
-    const verticalMeridianB = new THREE.Mesh(
-      new THREE.TorusGeometry(6.35, 0.012, 10, 96),
-      verticalMeridianMat,
-    );
-    verticalMeridianB.rotation.y = -Math.PI * 0.32;
-    verticalMeridianB.rotation.x = 0.14;
-    coreAnchorGroup.add(verticalMeridianB);
-
-    // 3 Cross-Inclined 3D Orbital Planes (each ring tilts & spins cleanly around its own normal!)
+    // 3 Cross-Inclined Twin-Rail Truss Orbital Tracks + Hairline Guide Wires
     const ringConfigs = [0, 1, 2] as const;
     const ringTiltGroups: THREE.Group[] = [];
     const ringSpinGroups: THREE.Group[] = [];
-    const ringTrackMeshes: THREE.Mesh[] = [];
+    const ringTrackMeshes: THREE.Group[] = [];
+    const sharedRungGeo = new THREE.BoxGeometry(0.28, 0.016, 0.032);
 
     ringConfigs.forEach((ringIdx) => {
       const cfg = ORBITAL_RING_TILTS[ringIdx];
@@ -666,23 +736,45 @@ export default function OrbitalScene3D({
       tiltGroup.add(spinGroup);
       ringSpinGroups.push(spinGroup);
 
-      const trackGeo = new THREE.TorusGeometry(
-        cfg.baseRadius,
-        ringIdx === 0 ? 0.022 : 0.016,
-        10,
-        96,
+      // Twin-rail ladder truss + parallel outer/inner fine guide wires
+      const trackAssembly = new THREE.Group();
+      const innerRailGeo = new THREE.TorusGeometry(cfg.baseRadius - 0.13, 0.018, 8, 108);
+      innerRailGeo.rotateX(Math.PI / 2);
+      const outerRailGeo = new THREE.TorusGeometry(cfg.baseRadius + 0.13, 0.018, 8, 108);
+      outerRailGeo.rotateX(Math.PI / 2);
+      const guideWireGeoA = new THREE.TorusGeometry(cfg.baseRadius - 0.28, 0.007, 6, 108);
+      guideWireGeoA.rotateX(Math.PI / 2);
+      const guideWireGeoB = new THREE.TorusGeometry(cfg.baseRadius + 0.28, 0.007, 6, 108);
+      guideWireGeoB.rotateX(Math.PI / 2);
+
+      const railMat = ringIdx === 0 ? gimbalOuterMat : darkStructuralMat;
+      trackAssembly.add(
+        new THREE.Mesh(innerRailGeo, railMat),
+        new THREE.Mesh(outerRailGeo, railMat),
+        new THREE.Mesh(guideWireGeoA, fineWireMat),
+        new THREE.Mesh(guideWireGeoB, ringIdx === 1 ? cyanFilamentMat : fineWireMat),
       );
-      trackGeo.rotateX(Math.PI / 2);
-      const trackMat = new THREE.MeshStandardMaterial({
-        color: ringIdx === 0 ? 0xf59e0b : ringIdx === 1 ? 0x38bdf8 : 0x64748b,
-        emissive: ringIdx === 0 ? 0x92400e : ringIdx === 1 ? 0x075985 : 0x1e293b,
-        emissiveIntensity: 0.48,
-        metalness: 0.85,
-        roughness: 0.25,
-      });
-      const trackMesh = new THREE.Mesh(trackGeo, trackMat);
-      spinGroup.add(trackMesh);
-      ringTrackMeshes.push(trackMesh);
+
+      // Instanced radial truss rungs bridging the twin orbital rails
+      const rungCount = ringIdx === 0 ? 32 : ringIdx === 1 ? 42 : 52;
+      const rungInstanced = new THREE.InstancedMesh(sharedRungGeo, railMat, rungCount);
+      const rungDummy = new THREE.Object3D();
+      for (let rIdx = 0; rIdx < rungCount; rIdx++) {
+        const theta = (rIdx / rungCount) * Math.PI * 2;
+        rungDummy.position.set(
+          Math.cos(theta) * cfg.baseRadius,
+          0,
+          Math.sin(theta) * cfg.baseRadius,
+        );
+        rungDummy.rotation.set(0, -theta, 0);
+        rungDummy.updateMatrix();
+        rungInstanced.setMatrixAt(rIdx, rungDummy.matrix);
+      }
+      rungInstanced.instanceMatrix.needsUpdate = true;
+      trackAssembly.add(rungInstanced);
+
+      spinGroup.add(trackAssembly);
+      ringTrackMeshes.push(trackAssembly);
     });
 
     // Instanced 3D Spherical Cosmic Dust Field (spread in full vertical & horizontal volume)
@@ -779,32 +871,32 @@ export default function OrbitalScene3D({
     selectionReticle.visible = false;
     scene.add(selectionReticle);
 
-    // Shared Archetype & Satellite Geometries (7 distinct planet silhouettes + 4 micro-satellite moonlet types)
+    // Shared Faceted Polyhedral & Wireframe-Caged Satellite Geometries
     const sharedGeos = {
-      aiCore: new THREE.OctahedronGeometry(0.23, 1),
-      aiRingA: new THREE.TorusGeometry(0.39, 0.02, 10, 36),
-      aiRingB: new THREE.TorusGeometry(0.3, 0.014, 8, 30),
+      aiCore: new THREE.IcosahedronGeometry(0.25, 0),
+      aiRingA: new THREE.TorusGeometry(0.41, 0.016, 8, 36),
+      aiRingB: new THREE.TorusGeometry(0.32, 0.012, 6, 30),
 
-      sysCore: new THREE.CylinderGeometry(0.16, 0.21, 0.27, 6),
-      sysCollar: new THREE.TorusGeometry(0.22, 0.018, 8, 24),
-      sysRing: new THREE.TorusGeometry(0.42, 0.02, 10, 36),
+      sysCore: new THREE.OctahedronGeometry(0.24, 0),
+      sysCollar: new THREE.TorusGeometry(0.24, 0.016, 8, 24),
+      sysRing: new THREE.TorusGeometry(0.42, 0.016, 8, 36),
       sysMast: new THREE.CylinderGeometry(0.014, 0.014, 0.56, 6),
       solarWing: new THREE.BoxGeometry(0.34, 0.012, 0.11),
 
-      mediaCore: new THREE.DodecahedronGeometry(0.22, 0),
-      mediaFlagshipCore: new THREE.TorusKnotGeometry(0.145, 0.044, 34, 8),
-      mediaRing: new THREE.TorusGeometry(0.41, 0.02, 10, 36),
+      mediaCore: new THREE.DodecahedronGeometry(0.24, 0),
+      mediaFlagshipCore: new THREE.IcosahedronGeometry(0.27, 1),
+      mediaRing: new THREE.TorusGeometry(0.42, 0.016, 8, 36),
 
-      learnCore: new THREE.SphereGeometry(0.21, 16, 12),
-      learnBand: new THREE.TorusGeometry(0.24, 0.015, 8, 28),
-      learnRing: new THREE.TorusGeometry(0.39, 0.02, 10, 36),
+      learnCore: new THREE.IcosahedronGeometry(0.23, 1),
+      learnBand: new THREE.TorusGeometry(0.27, 0.014, 8, 28),
+      learnRing: new THREE.TorusGeometry(0.4, 0.016, 8, 36),
       learnBeacon: new THREE.ConeGeometry(0.08, 0.16, 6),
 
-      cubeCore: new THREE.BoxGeometry(0.24, 0.24, 0.24),
+      cubeCore: new THREE.BoxGeometry(0.25, 0.25, 0.25),
       cubeBoom: new THREE.CylinderGeometry(0.01, 0.01, 0.62, 5),
 
-      binaryPrimary: new THREE.SphereGeometry(0.135, 12, 10),
-      binaryCompanion: new THREE.OctahedronGeometry(0.095, 0),
+      binaryPrimary: new THREE.IcosahedronGeometry(0.15, 0),
+      binaryCompanion: new THREE.OctahedronGeometry(0.105, 0),
 
       moonletSphere: new THREE.SphereGeometry(0.052, 8, 6),
       moonletCube: new THREE.BoxGeometry(0.078, 0.056, 0.056),
@@ -818,6 +910,17 @@ export default function OrbitalScene3D({
     sharedGeos.sysRing.rotateX(Math.PI / 2);
     sharedGeos.mediaRing.rotateX(Math.PI / 2);
     sharedGeos.learnRing.rotateX(Math.PI / 2);
+
+    // Pooled Wireframe Edge Geometries for faceted geometric look
+    const sharedEdgeGeos = {
+      aiCore: new THREE.EdgesGeometry(sharedGeos.aiCore),
+      sysCore: new THREE.EdgesGeometry(sharedGeos.sysCore),
+      mediaCore: new THREE.EdgesGeometry(sharedGeos.mediaCore),
+      mediaFlagshipCore: new THREE.EdgesGeometry(sharedGeos.mediaFlagshipCore),
+      learnCore: new THREE.EdgesGeometry(sharedGeos.learnCore),
+      cubeCore: new THREE.EdgesGeometry(sharedGeos.cubeCore),
+      binaryPrimary: new THREE.EdgesGeometry(sharedGeos.binaryPrimary),
+    };
 
     const satHitMat = new THREE.MeshBasicMaterial({ visible: false });
     const interactableHitMeshes: THREE.Mesh[] = [];
@@ -845,7 +948,9 @@ export default function OrbitalScene3D({
       localPos: THREE.Vector3;
       hasDemo: boolean;
       isSelectedNow: boolean;
+      isDimmedNow: boolean;
       currentRingScale: number;
+      currentClusterScale: number;
     }
 
     const satelliteRecords: SatelliteRecord[] = [];
@@ -893,18 +998,21 @@ export default function OrbitalScene3D({
         satGroup.add(bodyGroup);
 
         const bodyMat = archetypeBodyMats[archetype];
+        const edgeMat = archetypeEdgeMats[archetype];
         const ringMat = archetypeRingMats[archetype];
 
-        // 7 Distinct Planet / Satellite Silhouettes
+        // 7 Distinct Faceted Polyhedral Satellites with Crisp Metallic Wireframe Cages
         if (silhouette === 'gyro') {
           bodyGroup.add(new THREE.Mesh(sharedGeos.aiCore, bodyMat));
+          bodyGroup.add(new THREE.LineSegments(sharedEdgeGeos.aiCore, edgeMat));
           const innerDiamond = new THREE.Mesh(sharedGeos.aiRingB, accentChromeMat);
           innerDiamond.rotation.set(Math.PI / 3, Math.PI / 5, 0);
           bodyGroup.add(innerDiamond);
         } else if (silhouette === 'relay') {
           bodyGroup.add(new THREE.Mesh(sharedGeos.sysCore, bodyMat));
+          bodyGroup.add(new THREE.LineSegments(sharedEdgeGeos.sysCore, edgeMat));
           const flange = new THREE.Mesh(sharedGeos.sysCollar, accentChromeMat);
-          flange.position.y = 0.06;
+          flange.position.y = 0.04;
           bodyGroup.add(flange);
           bodyGroup.add(new THREE.Mesh(sharedGeos.sysMast, darkStructuralMat));
           const leftWing = new THREE.Mesh(sharedGeos.solarWing, ringMat);
@@ -914,15 +1022,17 @@ export default function OrbitalScene3D({
           rightWing.position.set(0.29, 0, 0);
           bodyGroup.add(rightWing);
         } else if (silhouette === 'prism') {
-          const mediaMesh = new THREE.Mesh(
-            proj.stars >= 2 ? sharedGeos.mediaFlagshipCore : sharedGeos.mediaCore,
-            bodyMat,
-          );
-          bodyGroup.add(mediaMesh);
+          const isFlagship = proj.stars >= 2;
+          const geo = isFlagship ? sharedGeos.mediaFlagshipCore : sharedGeos.mediaCore;
+          const edgeGeo = isFlagship ? sharedEdgeGeos.mediaFlagshipCore : sharedEdgeGeos.mediaCore;
+          bodyGroup.add(new THREE.Mesh(geo, bodyMat));
+          bodyGroup.add(new THREE.LineSegments(edgeGeo, edgeMat));
         } else if (silhouette === 'cubesat') {
           const cube = new THREE.Mesh(sharedGeos.cubeCore, bodyMat);
           cube.rotation.set(0.35, 0.65, 0.2);
-          bodyGroup.add(cube);
+          const cubeWire = new THREE.LineSegments(sharedEdgeGeos.cubeCore, edgeMat);
+          cubeWire.rotation.copy(cube.rotation);
+          bodyGroup.add(cube, cubeWire);
           const boomA = new THREE.Mesh(sharedGeos.cubeBoom, accentChromeMat);
           boomA.rotation.z = Math.PI / 4;
           bodyGroup.add(boomA);
@@ -932,26 +1042,30 @@ export default function OrbitalScene3D({
         } else if (silhouette === 'binary') {
           const primary = new THREE.Mesh(sharedGeos.binaryPrimary, bodyMat);
           primary.position.set(-0.12, 0.03, 0);
-          bodyGroup.add(primary);
+          const primaryWire = new THREE.LineSegments(sharedEdgeGeos.binaryPrimary, edgeMat);
+          primaryWire.position.copy(primary.position);
+          bodyGroup.add(primary, primaryWire);
           const companion = new THREE.Mesh(sharedGeos.binaryCompanion, ringMat);
           companion.position.set(0.15, -0.04, 0);
           bodyGroup.add(companion);
         } else if (silhouette === 'beacon') {
           bodyGroup.add(new THREE.Mesh(sharedGeos.aiCore, bodyMat));
+          bodyGroup.add(new THREE.LineSegments(sharedEdgeGeos.aiCore, edgeMat));
           const vertBand = new THREE.Mesh(sharedGeos.learnBand, ringMat);
           vertBand.rotation.x = Math.PI / 2;
           bodyGroup.add(vertBand);
           const crest = new THREE.Mesh(sharedGeos.learnBeacon, accentChromeMat);
-          crest.position.y = 0.25;
+          crest.position.y = 0.27;
           bodyGroup.add(crest);
         } else {
           // observatory
           bodyGroup.add(new THREE.Mesh(sharedGeos.learnCore, bodyMat));
+          bodyGroup.add(new THREE.LineSegments(sharedEdgeGeos.learnCore, edgeMat));
           const meridianBand = new THREE.Mesh(sharedGeos.learnBand, accentChromeMat);
           meridianBand.rotation.z = Math.PI / 2;
           bodyGroup.add(meridianBand);
           const beaconTip = new THREE.Mesh(sharedGeos.learnBeacon, ringMat);
-          beaconTip.position.y = 0.27;
+          beaconTip.position.y = 0.28;
           bodyGroup.add(beaconTip);
         }
 
@@ -1071,7 +1185,9 @@ export default function OrbitalScene3D({
           localPos: new THREE.Vector3(lx, baseLocalY, lz),
           hasDemo: Boolean(proj.demoUrl),
           isSelectedNow: false,
+          isDimmedNow: false,
           currentRingScale: 1.0,
+          currentClusterScale: 1.0,
         });
       });
     });
@@ -1279,12 +1395,15 @@ export default function OrbitalScene3D({
       hoverSpeedDamp = THREE.MathUtils.damp(hoverSpeedDamp, targetSpeedMult, 6, dt);
 
       if (!st.paused && !st.reducedMotion) {
-        coreMesh.rotation.y += dt * 0.26;
-        equatorialGroup.rotation.y += dt * 0.2;
+        coreMesh.rotation.y += dt * 0.22;
+        coreGlassShell.rotation.y -= dt * 0.08;
+        equatorialGroup.rotation.y += dt * 0.24;
         meridianGroupA.rotation.y += dt * 0.28;
         meridianGroupB.rotation.y -= dt * 0.28;
         outerEclipticGroup.rotation.y -= dt * 0.16;
-        starField.rotation.y += dt * 0.014;
+        cyanArcGroup.rotation.z += dt * 0.18;
+        cyanArcGroup.rotation.y -= dt * 0.12;
+        starField.rotation.y += dt * 0.012;
 
         ringSpinGroups[0].rotation.y += dt * ORBITAL_RING_TILTS[0].speed * hoverSpeedDamp;
         ringSpinGroups[1].rotation.y += dt * ORBITAL_RING_TILTS[1].speed * hoverSpeedDamp;
@@ -1307,19 +1426,40 @@ export default function OrbitalScene3D({
         }
 
         const isSelected = sat.slug === activeFocusSlug;
+        const isClusterActive = st.clusterFilter !== 'all';
+        const isDimmed = isClusterActive && sat.archetype !== st.clusterFilter && !isSelected;
         if (isSelected) {
           focusedSatellite = sat;
         }
 
         // Only swap pooled materials on state change (zero per-frame material churn)
-        if (isSelected !== sat.isSelectedNow) {
+        if (isSelected !== sat.isSelectedNow || isDimmed !== sat.isDimmedNow) {
           sat.isSelectedNow = isSelected;
+          sat.isDimmedNow = isDimmed;
           sat.outerRing.material = isSelected
             ? selectedRingMat
             : archetypeRingMats[sat.archetype];
           sat.conduitLine.material = isSelected
             ? conduitActiveMat
-            : conduitDefaultMats[sat.archetype];
+            : isDimmed
+              ? conduitDimMat
+              : isClusterActive
+                ? conduitActiveMat
+                : conduitDefaultMats[sat.archetype];
+        }
+
+        const targetClusterScale = isClusterActive ? (isDimmed ? 0.68 : 1.16) : 1.0;
+        if (Math.abs(sat.currentClusterScale - targetClusterScale) > 0.002) {
+          sat.currentClusterScale = THREE.MathUtils.damp(
+            sat.currentClusterScale,
+            targetClusterScale,
+            7.5,
+            dt,
+          );
+          if (Math.abs(sat.currentClusterScale - targetClusterScale) <= 0.002) {
+            sat.currentClusterScale = targetClusterScale;
+          }
+          sat.group.scale.setScalar(sat.nodeScale * sat.currentClusterScale);
         }
 
         const targetScale = isSelected ? 1.28 : 1.0;
@@ -1339,7 +1479,7 @@ export default function OrbitalScene3D({
           }
         }
 
-        const targetGlow = isSelected ? 1.5 : 0.96;
+        const targetGlow = isSelected ? 1.5 : isDimmed ? 0.35 : isClusterActive ? 1.18 : 0.96;
         if (sat.glowSprite.scale.x !== targetGlow) {
           sat.glowSprite.scale.setScalar(targetGlow);
         }
@@ -1358,7 +1498,8 @@ export default function OrbitalScene3D({
           b1 * midY + b2 * sat.localPos.y,
           b1 * midZ + b2 * sat.localPos.z,
         );
-        sat.photonPulse.scale.setScalar(isSelected ? 0.52 : 0.3);
+        sat.photonPulse.visible = !isDimmed;
+        sat.photonPulse.scale.setScalar(isSelected ? 0.52 : isClusterActive ? 0.38 : 0.3);
       }
 
       if (focusedSatellite) {
@@ -1475,17 +1616,24 @@ export default function OrbitalScene3D({
       });
 
       Object.values(sharedGeos).forEach((g) => g.dispose());
+      Object.values(sharedEdgeGeos).forEach((g) => g.dispose());
+      gimbalBandGeoInner.dispose();
+      gimbalBandGeoMid.dispose();
+      gimbalBandGeoOuter.dispose();
+      sharedRungGeo.dispose();
       Object.values(archetypeBodyMats).forEach((m) => m.dispose());
+      Object.values(archetypeEdgeMats).forEach((m) => m.dispose());
       Object.values(archetypeRingMats).forEach((m) => m.dispose());
       Object.values(conduitDefaultMats).forEach((m) => m.dispose());
       selectedRingMat.dispose();
       conduitActiveMat.dispose();
+      conduitDimMat.dispose();
       photonAmberMat.dispose();
       photonCyanMat.dispose();
       glowSpriteAmberMat.dispose();
       glowSpriteCyanMat.dispose();
       satHitMat.dispose();
-      dialTexture.dispose();
+      brushedTexture.dispose();
       radialGlowTexture.dispose();
       envTexture.dispose();
       renderer.dispose();
@@ -1499,7 +1647,8 @@ export default function OrbitalScene3D({
     <div
       ref={containerRef}
       data-testid="orbital-3d-viewport"
-      className="relative flex h-[410px] w-full max-w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#1E263B] bg-[#07090F] shadow-[0_24px_80px_-24px_rgba(245,158,11,0.18)] sm:h-[480px] lg:h-[552px]"
+      data-cluster-filter={clusterFilter}
+      className="cad-frame relative flex h-[410px] w-full max-w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#1E263B] bg-[#07090F] shadow-[0_24px_80px_-24px_rgba(245,158,11,0.18)] sm:h-[480px] lg:h-[552px]"
     >
       {/* Isolated WebGL Canvas Mount */}
       <div ref={canvasMountRef} className="absolute inset-0 h-full w-full overflow-hidden" />
@@ -1688,6 +1837,29 @@ export default function OrbitalScene3D({
               ))}
             </div>
 
+            {/* Domain Cluster Isolation Filter */}
+            <div
+              role="group"
+              aria-label="Filter 3D orbital domain cluster"
+              className="flex flex-wrap items-center gap-0.5 rounded-lg border border-[#1E263B] bg-[#07090F] p-0.5"
+            >
+              {CLUSTER_FILTER_OPTIONS.map((cl) => (
+                <button
+                  key={cl.id}
+                  type="button"
+                  onClick={() => setClusterFilter(cl.id)}
+                  aria-pressed={clusterFilter === cl.id}
+                  className={`rounded-md px-2 py-1 font-mono text-[11px] font-medium transition-colors whitespace-nowrap shrink-0 ${
+                    clusterFilter === cl.id
+                      ? 'bg-[#F59E0B] font-semibold text-[#07090F]'
+                      : 'text-[#868CA6] hover:text-[#F4F5FA]'
+                  }`}
+                >
+                  {cl.label}
+                </button>
+              ))}
+            </div>
+
             {/* Play/Pause & Reset */}
             <div className="flex items-center gap-1 shrink-0">
               <button
@@ -1711,6 +1883,7 @@ export default function OrbitalScene3D({
                 type="button"
                 onClick={() => {
                   setCameraPreset('overview');
+                  setClusterFilter('all');
                   setExplodeFactor(0);
                   setFinish('obsidian-gold');
                   setPaused(false);

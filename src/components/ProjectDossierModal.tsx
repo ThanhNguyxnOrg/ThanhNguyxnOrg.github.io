@@ -109,8 +109,13 @@ export default function ProjectDossierModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.97, y: 10 }}
             transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-            className="surface-hairline relative flex max-h-[90vh] w-full max-w-3xl flex-col overflow-y-auto rounded-2xl border border-[#2D3854]"
+            className="surface-hairline obsidian-scroll relative flex max-h-[90vh] w-full max-w-3xl flex-col overflow-y-auto rounded-2xl border border-[#2D3854]"
           >
+            {/* 2px Amber-to-Cyan Top Architectural Accent Strip */}
+            <div
+              aria-hidden="true"
+              className="h-[2px] w-full shrink-0 bg-gradient-to-r from-[#F59E0B] via-[#FCD34D] to-[#38BDF8]"
+            />
             {/* Top Sticky Header */}
             <div className="sticky top-0 z-20 flex items-center justify-between gap-4 border-b border-[#1E263B] bg-[#0D111C]/95 px-6 py-4 backdrop-blur-sm">
               <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-[#A3A9BF]">
@@ -136,8 +141,14 @@ export default function ProjectDossierModal({
               </button>
             </div>
 
-            {/* Visual Banner */}
-            <div className="relative aspect-[2/1] w-full border-b border-[#1E263B]">
+            {/* Visual Banner + Dossier Content with Smooth Prev/Next Keyed Transition */}
+            <motion.div
+              key={project.slug}
+              initial={{ opacity: 0.25, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            >
+            <div className="cad-frame relative aspect-[2/1] w-full border-b border-[#1E263B]">
               <ProjectArtwork
                 title={project.name}
                 image={project.image}
@@ -341,6 +352,7 @@ export default function ProjectDossierModal({
                 </button>
               </div>
             </div>
+            </motion.div>
 
             {/* Seamless Previous / Next Project Navigation Footer */}
             {prevProject && nextProject && (

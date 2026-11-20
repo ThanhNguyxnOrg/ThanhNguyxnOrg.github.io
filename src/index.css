@@ -54,12 +54,27 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Precision Architectural Grid (Primer structure + Technical spatial depth) */
+/* Precision Architectural Grid & Dot-Matrix (Vercel / Linear / v0 craft) */
 .bg-blueprint-grid {
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.032) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.032) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
   background-size: 48px 48px;
+}
+
+.bg-dot-matrix {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.22) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.bg-diagonal-hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.022) 0px,
+    rgba(255, 255, 255, 0.022) 1px,
+    transparent 1px,
+    transparent 10px
+  );
 }
 
 .bg-gold-grid {
@@ -69,22 +84,49 @@
   background-size: 28px 28px;
 }
 
-/* Subtle top specular edge highlight (Fluent polish) */
+.mask-fade-x {
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+/* Subtle top specular edge highlight (Linear / Fluent polish) */
 .surface-hairline {
-  background: linear-gradient(180deg, rgba(20, 26, 42, 0.92) 0%, rgba(11, 15, 26, 0.98) 100%);
+  background: linear-gradient(180deg, rgba(17, 22, 36, 0.92) 0%, rgba(10, 14, 24, 0.98) 100%);
   box-shadow:
     inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
-    0 18px 42px -18px rgba(0, 0, 0, 0.72);
+    0 18px 42px -20px rgba(0, 0, 0, 0.72);
 }
 
 .surface-hairline-interactive {
-  transition: border-color 0.2s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  transition: border-color 0.22s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .surface-hairline-interactive:hover {
   box-shadow:
-    inset 0 1px 0 0 rgba(252, 211, 77, 0.14),
-    0 22px 48px -18px rgba(245, 158, 11, 0.12);
+    inset 0 1px 0 0 rgba(252, 211, 77, 0.16),
+    0 22px 48px -20px rgba(245, 158, 11, 0.12);
+}
+
+/* Subtle architectural top-edge highlight beam on hover */
+.cell-top-beam {
+  position: relative;
+}
+
+.cell-top-beam::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 14%;
+  right: 14%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.65), rgba(56, 189, 248, 0.45), transparent);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+  pointer-events: none;
+}
+
+.cell-top-beam:hover::before {
+  opacity: 1;
 }
 
 @keyframes marquee-slide {
@@ -97,7 +139,7 @@
 }
 
 .animate-marquee {
-  animation: marquee-slide 42s linear infinite;
+  animation: marquee-slide 46s linear infinite;
 }
 
 .hairline-divider-glow {
@@ -105,11 +147,164 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(30, 38, 59, 0.85) 20%,
-    rgba(245, 158, 11, 0.35) 50%,
-    rgba(30, 38, 59, 0.85) 80%,
+    rgba(30, 38, 59, 0.9) 18%,
+    rgba(245, 158, 11, 0.32) 50%,
+    rgba(30, 38, 59, 0.9) 82%,
     transparent 100%
   );
+}
+
+/* Precision Architectural CAD Corner Registration Marks */
+.cad-frame {
+  position: relative;
+}
+
+.cad-frame::before,
+.cad-frame::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: 20;
+  width: 11px;
+  height: 11px;
+  opacity: 0.65;
+  transition: opacity 0.25s ease, border-color 0.25s ease;
+}
+
+.cad-frame::before {
+  top: -1px;
+  left: -1px;
+  border-top: 1.5px solid rgba(245, 158, 11, 0.62);
+  border-left: 1.5px solid rgba(245, 158, 11, 0.62);
+  border-top-left-radius: inherit;
+}
+
+.cad-frame::after {
+  right: -1px;
+  bottom: -1px;
+  border-right: 1.5px solid rgba(56, 189, 248, 0.5);
+  border-bottom: 1.5px solid rgba(56, 189, 248, 0.5);
+  border-bottom-right-radius: inherit;
+}
+
+.cad-frame:hover::before,
+.cad-frame:hover::after {
+  opacity: 1;
+}
+
+/* Editorial Top Spotlight Callout Canvas (v0 / Linear inspired) */
+.ambient-cta-glow {
+  background-image:
+    radial-gradient(ellipse 55% 65% at 50% 0%, rgba(245, 158, 11, 0.13), transparent 72%),
+    radial-gradient(ellipse 40% 55% at 85% 100%, rgba(56, 189, 248, 0.08), transparent 72%),
+    linear-gradient(180deg, rgba(16, 21, 35, 0.96) 0%, rgba(9, 13, 22, 0.99) 100%);
+  box-shadow:
+    inset 0 1px 0 0 rgba(252, 211, 77, 0.18),
+    0 24px 56px -24px rgba(0, 0, 0, 0.82);
+}
+
+/* Pointer-tracked specular illumination (Vercel / Linear / v0 spotlight surface) */
+.spotlight-surface {
+  position: relative;
+}
+
+.spotlight-surface::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+  background: radial-gradient(
+    360px circle at var(--spot-x, 50%) var(--spot-y, 0%),
+    rgba(245, 158, 11, 0.11),
+    rgba(56, 189, 248, 0.04) 42%,
+    transparent 70%
+  );
+  z-index: 1;
+}
+
+.spotlight-surface:hover::after {
+  opacity: 1;
+}
+
+/* Architectural Vector Signal Animations (Linear / Stripe bento craft) */
+@keyframes svg-dash-travel {
+  from {
+    stroke-dashoffset: 64;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes svg-orbit-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes svg-node-breathe {
+  0%, 100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.svg-dash-flow {
+  stroke-dasharray: 5 11;
+  animation: svg-dash-travel 3.2s linear infinite;
+}
+
+.svg-dash-flow-slow {
+  stroke-dasharray: 8 16;
+  animation: svg-dash-travel 6s linear infinite;
+}
+
+.svg-orbit-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: svg-orbit-rotate 24s linear infinite;
+}
+
+.svg-orbit-spin-reverse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: svg-orbit-rotate 34s linear infinite reverse;
+}
+
+.svg-pulse-node {
+  animation: svg-node-breathe 3.4s ease-in-out infinite;
+}
+
+/* Slim Obsidian Scrollbar for Modals & Code Viewers */
+.obsidian-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #2d3854 #07090f;
+}
+
+.obsidian-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.obsidian-scroll::-webkit-scrollbar-track {
+  background: #07090f;
+}
+
+.obsidian-scroll::-webkit-scrollbar-thumb {
+  background-color: #2d3854;
+  border-radius: 9999px;
+}
+
+.obsidian-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #f59e0b;
 }
 
 @media (prefers-reduced-motion: reduce) {

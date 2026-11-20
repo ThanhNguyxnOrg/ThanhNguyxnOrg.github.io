@@ -6,7 +6,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import {
-  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   Check,
@@ -34,6 +33,40 @@ import JourneyAndStackSection from './components/JourneyAndStackSection';
 import ExplorerAndEcosystemSection from './components/ExplorerAndEcosystemSection';
 import ProjectDossierModal from './components/ProjectDossierModal';
 import CommandPaletteModal from './components/CommandPaletteModal';
+import EcosystemBentoPage from './components/EcosystemBentoPage';
+import { InteractiveCard3D } from './components/InteractiveCard3D';
+import {
+  ArchiveMatrixPreview,
+  ClosingOrbitalBackdrop,
+  DotMatrixBackdrop,
+  HeroAmbientBackdrop,
+  LanguageSpectrumPreview,
+  SectionSeam,
+  SpotlightSurface,
+} from './components/ArchitecturalDecor';
+
+const LANG_SHORT_MAP: Record<string, string> = {
+  TypeScript: 'TS',
+  JavaScript: 'JS',
+  Python: 'Py',
+  PowerShell: 'PS',
+  'C++': 'C++',
+  Rust: 'Rust',
+  Go: 'Go',
+  Vue: 'Vue',
+  Svelte: 'Svelte',
+  Shell: 'Sh',
+};
+
+function formatTopLanguageCodes(
+  stats: ReturnType<typeof computeLanguageBreakdown>,
+  limit = 6,
+): string {
+  return stats
+    .slice(0, limit)
+    .map((item) => LANG_SHORT_MAP[item.language] ?? item.language)
+    .join(' · ');
+}
 
 const OrbitalScene3D = lazy(() => import('./components/OrbitalScene3D'));
 
@@ -181,6 +214,11 @@ export default function App() {
     activeProjects.findIndex((p) => p.slug === selected3DSlug),
   );
   const selected3DProject = activeProjects[selectedIndex] ?? activeProjects[0];
+  const liveLanguageStats = computeLanguageBreakdown(activeProjects);
+  const topLanguageSummary = formatTopLanguageCodes(liveLanguageStats, 6);
+  const topFooterFlagships = [...activeProjects]
+    .sort((a, b) => b.stars - a.stars || b.forks - a.forks || b.pushedAt.localeCompare(a.pushedAt))
+    .slice(0, 4);
 
   const handleCycle3DNode = (dir: -1 | 1) => {
     const nextIdx = (selectedIndex + dir + activeProjects.length) % activeProjects.length;
@@ -436,11 +474,17 @@ export default function App() {
       </header>
 
       <main id="top">
+        <motion.div
+          key={activePage}
+          initial={{ opacity: 0.25, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+        >
         {activePage === 'overview' && (
           <>
         {/* HERO SECTION: Split-Screen Editorial Typography + 3D Astrolabe Constellation */}
         <section className="relative overflow-hidden border-b border-[#1E263B]/80 pt-8 pb-14 sm:pt-12 md:pt-14 md:pb-20">
-          {/* Subtle Precision Blueprint Grid & Ambient Radial Aura */}
+          {/* Subtle Precision Blueprint Grid & Architectural Astrolabe Arcs */}
           <div
             aria-hidden="true"
             className="bg-blueprint-grid pointer-events-none absolute inset-0 opacity-45"
@@ -450,14 +494,7 @@ export default function App() {
                 'radial-gradient(ellipse 75% 65% at 32% 40%, black 20%, transparent 80%)',
             }}
           />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -top-40 left-1/4 h-[520px] w-[720px] -translate-x-1/2 rounded-full opacity-22 blur-3xl"
-            style={{
-              background:
-                'radial-gradient(circle, rgba(245, 158, 11, 0.32) 0%, rgba(56, 189, 248, 0.08) 55%, transparent 100%)',
-            }}
-          />
+          <HeroAmbientBackdrop />
 
           <div className="relative z-10 mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
             <div className="grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-10">
@@ -490,20 +527,12 @@ export default function App() {
                       onClick={() => navigateToPage('ecosystem')}
                       className="inline-flex items-center gap-1.5 text-[#34D399] transition-colors hover:text-[#6EE7B7]"
                     >
-                      <span className="relative flex size-2" aria-hidden="true">
-                        <span
-                          className={`absolute inline-flex h-full w-full rounded-full opacity-75 ${
-                            syncState.status === 'syncing'
-                              ? 'animate-ping bg-[#F59E0B]'
-                              : 'animate-ping bg-[#34D399]'
-                          }`}
-                        />
-                        <span
-                          className={`relative inline-flex size-2 rounded-full ${
-                            syncState.status === 'syncing' ? 'bg-[#F59E0B]' : 'bg-[#34D399]'
-                          }`}
-                        />
-                      </span>
+                      <span
+                        aria-hidden="true"
+                        className={`inline-block size-1.5 rounded-full ${
+                          syncState.status === 'syncing' ? 'bg-[#F59E0B]' : 'bg-[#34D399]'
+                        }`}
+                      />
                       <span>
                         {syncState.status === 'syncing' ? 'Syncing telemetry' : 'Live telemetry'}
                       </span>
@@ -582,9 +611,10 @@ export default function App() {
               </motion.div>
             </div>
 
-            {/* Full-Width 5-Column Verified Metrics Row Below Split */}
-            <dl className="surface-hairline mt-10 grid grid-cols-2 gap-4 rounded-2xl border border-[#1E263B] p-6 sm:grid-cols-3 lg:grid-cols-5">
-              <div className="flex flex-col gap-1 border-[#1E263B] lg:border-r lg:pr-4">
+            {/* Full-Width 5-Column Verified Metrics Architectural Grid Below Split */}
+            <SpotlightSurface className="mt-10 rounded-2xl">
+            <dl className="surface-hairline grid grid-cols-2 overflow-hidden rounded-2xl border border-[#1E263B] sm:grid-cols-3 lg:grid-cols-5">
+              <div className="cell-top-beam flex flex-col gap-1 border-r border-b border-[#1E263B] p-5 transition-colors hover:bg-[#111728]/70 sm:p-6 lg:border-b-0">
                 <dt className="font-mono text-xs text-[#868CA6]">Public Repositories</dt>
                 <dd className="font-display text-3xl font-bold text-[#F4F5FA] tabular-nums">
                   {syncState.totals.repos}
@@ -592,7 +622,7 @@ export default function App() {
                 <dd className="font-mono text-[11px] text-[#FCD34D]">100% open source</dd>
               </div>
 
-              <div className="flex flex-col gap-1 border-[#1E263B] lg:border-r lg:pr-4">
+              <div className="cell-top-beam flex flex-col gap-1 border-b border-[#1E263B] p-5 transition-colors hover:bg-[#111728]/70 sm:border-r sm:p-6 lg:border-b-0">
                 <dt className="font-mono text-xs text-[#868CA6]">Verified GitHub Stars</dt>
                 <dd className="font-display text-3xl font-bold text-[#F4F5FA] tabular-nums">
                   {syncState.totals.stars}
@@ -602,7 +632,7 @@ export default function App() {
                 </dd>
               </div>
 
-              <div className="flex flex-col gap-1 border-[#1E263B] lg:border-r lg:pr-4">
+              <div className="cell-top-beam flex flex-col gap-1 border-r border-b border-[#1E263B] p-5 transition-colors hover:bg-[#111728]/70 sm:border-r-0 sm:p-6 lg:border-r lg:border-b-0">
                 <dt className="font-mono text-xs text-[#868CA6]">npm Downloads (30d)</dt>
                 <dd className="font-display text-3xl font-bold text-[#F4F5FA] tabular-nums">
                   {syncState.totals.downloads30d}
@@ -612,7 +642,7 @@ export default function App() {
                 </dd>
               </div>
 
-              <div className="flex flex-col gap-1 border-[#1E263B] lg:border-r lg:pr-4">
+              <div className="cell-top-beam flex flex-col gap-1 border-b border-[#1E263B] p-5 transition-colors hover:bg-[#111728]/70 sm:border-r sm:border-b-0 sm:p-6">
                 <dt className="font-mono text-xs text-[#868CA6]">Live Pages Demos</dt>
                 <dd className="font-display text-3xl font-bold text-[#F4F5FA] tabular-nums">
                   {syncState.totals.demos}
@@ -620,33 +650,38 @@ export default function App() {
                 <dd className="font-mono text-[11px] text-[#A3A9BF]">Zero-config browser apps</dd>
               </div>
 
-              <div className="col-span-2 flex flex-col gap-1 sm:col-span-1">
+              <div className="cell-top-beam col-span-2 flex flex-col gap-1 p-5 transition-colors hover:bg-[#111728]/70 sm:col-span-2 sm:p-6 lg:col-span-1">
                 <dt className="font-mono text-xs text-[#868CA6]">Core Languages</dt>
                 <dd className="font-display text-3xl font-bold text-[#F4F5FA] tabular-nums">
                   {syncState.totals.languages.length}
                 </dd>
-                <dd className="font-mono text-[11px] text-[#A3A9BF]">
-                  TS · JS · Py · Rust · C++ · Go
+                <dd className="truncate font-mono text-[11px] tracking-tight text-[#A3A9BF]">
+                  {topLanguageSummary}
                 </dd>
               </div>
             </dl>
+            </SpotlightSurface>
           </div>
         </section>
 
-        {/* Subtle Editorial Marquee Divider */}
+        {/* Edge-Faded Editorial Tech Strip */}
         <div
           aria-hidden="true"
-          className="overflow-hidden border-b border-[#1E263B]/80 bg-[#0A0E18] py-3.5"
+          className="overflow-hidden border-b border-[#1E263B]/80 bg-[#090D16] py-3.5"
         >
-          <div className="animate-marquee flex w-max items-center gap-10">
-            {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-              <span key={i} className="font-mono text-xs text-[#868CA6] whitespace-nowrap">
-                <span className="mr-3 text-[#F59E0B]">◆</span>
-                {item}
-              </span>
-            ))}
+          <div className="mask-fade-x mx-auto w-full max-w-[1440px] overflow-hidden">
+            <div className="animate-marquee flex w-max items-center gap-10">
+              {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
+                <span key={i} className="font-mono text-xs text-[#868CA6] whitespace-nowrap">
+                  <span className="mr-3 text-[#F59E0B]/80">◆</span>
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
+
+        <SectionSeam label="01 · FEATURED" />
 
         {/* Featured Releases Bento Grid (Lead + Top 4 Highlights) */}
         <FeaturedSection
@@ -665,15 +700,16 @@ export default function App() {
           onSelectLanguageFilter={handleSelectLanguageFilter}
         />
 
-        {/* Subtle Radial Hairline Transition */}
-        <div aria-hidden="true" className="hairline-divider-glow" />
+        <SectionSeam glow label="04 · DEEP DIVE" />
 
-        {/* Compact Dedicated-Pages Gateway (keeps Overview crisp even at 100+ repos) */}
+        {/* Compact Dedicated-Pages Gateway (with bespoke data-driven architectural previews) */}
         <section
           aria-labelledby="explore-more-heading"
-          className="border-b border-[#1E263B]/80 bg-[#0A0E18] py-16 md:py-20"
+          className="relative overflow-hidden bg-[#090D16] py-20 md:py-24"
         >
-          <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
+          <DotMatrixBackdrop align="center" tint="cyan" />
+
+          <div className="relative z-10 mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
             <div className="max-w-2xl">
               <p className="font-mono text-xs text-[#FCD34D]">04. Deep Dive Pages</p>
               <h2
@@ -690,131 +726,165 @@ export default function App() {
             </div>
 
             <div className="mt-10 grid gap-6 lg:grid-cols-2">
-              <article className="surface-hairline surface-hairline-interactive flex flex-col justify-between gap-6 rounded-2xl border border-[#2D3854] p-7 hover:border-[#F59E0B]/70">
-                <div>
-                  <div className="flex items-center justify-between gap-2 font-mono text-xs text-[#FCD34D]">
-                    <span className="inline-flex items-center gap-1.5">
-                      <Layers className="size-3.5 text-[#F59E0B]" aria-hidden="true" />
-                      Dedicated Archive Page
-                    </span>
-                    <span className="text-[#A3A9BF] tabular-nums">
-                      {activeProjects.length} repositories · {syncState.totals.demos} live demos
-                    </span>
-                  </div>
-                  <h3 className="mt-3 font-display text-2xl font-bold text-[#F4F5FA]">
-                    Paginated Repository Archive
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[#A3A9BF]">
-                    Browse all {activeProjects.length} repositories in paginated Grid, Domain
-                    Clusters, or Compact Table views with instant search, topic filters, and impact
-                    sorting.
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs text-[#868CA6]">
-                    <span>Developer Tools</span>
-                    <span aria-hidden="true">·</span>
-                    <span>AI &amp; Agents</span>
-                    <span aria-hidden="true">·</span>
-                    <span>Web Apps</span>
-                    <span aria-hidden="true">·</span>
-                    <span>Media &amp; Network</span>
-                  </div>
-                </div>
+              <InteractiveCard3D className="h-full" maxTilt={3}>
+                <SpotlightSurface className="h-full rounded-2xl">
+                <article className="surface-hairline surface-hairline-interactive cell-top-beam flex h-full flex-col justify-between gap-6 rounded-2xl border border-[#2D3854]/90 p-6 sm:p-7 hover:border-[#F59E0B]/70">
+                  <div className="flex flex-col gap-5">
+                    <div className="flex items-center justify-between gap-2 font-mono text-xs text-[#FCD34D]">
+                      <span className="inline-flex items-center gap-1.5">
+                        <Layers className="size-3.5 text-[#F59E0B]" aria-hidden="true" />
+                        Dedicated Archive Page
+                      </span>
+                      <span className="text-[#A3A9BF] tabular-nums">
+                        {activeProjects.length} repos · {syncState.totals.demos} live demos
+                      </span>
+                    </div>
 
-                <div className="border-t border-[#1E263B] pt-4">
-                  <button
-                    type="button"
-                    onClick={() => navigateToPage('archive')}
-                    className="inline-flex items-center gap-2 rounded-lg bg-[#F59E0B] px-4 py-2.5 text-xs font-semibold text-[#07090F] transition-colors hover:bg-[#FCD34D]"
-                  >
-                    Open Paginated Archive
-                    <ArrowUpRight className="size-4" aria-hidden="true" />
-                  </button>
-                </div>
-              </article>
+                    <ArchiveMatrixPreview projects={activeProjects} />
 
-              <article className="surface-hairline surface-hairline-interactive flex flex-col justify-between gap-6 rounded-2xl border border-[#2D3854] p-7 hover:border-[#38BDF8]/70">
-                <div>
-                  <div className="flex items-center justify-between gap-2 font-mono text-xs text-[#38BDF8]">
-                    <span className="inline-flex items-center gap-1.5">
-                      <Database className="size-3.5" aria-hidden="true" />
-                      Dedicated Stack &amp; Telemetry Page
-                    </span>
-                    <span className="text-[#34D399] tabular-nums">
-                      {syncState.status === 'live' ? 'Live API Synced' : 'CI Snapshot Active'}
-                    </span>
+                    <div>
+                      <h3 className="font-display text-2xl font-bold text-[#F4F5FA]">
+                        Paginated Repository Archive
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-[#A3A9BF]">
+                        Browse all {activeProjects.length} repositories in paginated Grid, Domain
+                        Clusters, or Compact Table views with instant search, topic filters, and
+                        impact sorting.
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="mt-3 font-display text-2xl font-bold text-[#F4F5FA]">
-                    Live Stack, npm Registry &amp; Auto-Sync
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[#A3A9BF]">
-                    Inspect real-time GitHub language distribution across{' '}
-                    {syncState.totals.languages.length} languages, published npm packages (
-                    {syncState.totals.downloads30d} downloads/30d), and the 6-hour CI sync pipeline.
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs text-[#868CA6]">
-                    {computeLanguageBreakdown(activeProjects)
-                      .slice(0, 4)
-                      .map((lang, i) => (
-                        <span key={lang.language} className="inline-flex items-center gap-2">
-                          {i > 0 && <span aria-hidden="true">·</span>}
-                          <span>
-                            {lang.language} ({lang.count})
-                          </span>
-                        </span>
-                      ))}
-                  </div>
-                </div>
 
-                <div className="border-t border-[#1E263B] pt-4">
-                  <button
-                    type="button"
-                    onClick={() => navigateToPage('ecosystem')}
-                    className="inline-flex items-center gap-2 rounded-lg border border-[#2D3854] bg-[#141A29] px-4 py-2.5 text-xs font-semibold text-[#F4F5FA] transition-colors hover:border-[#38BDF8] hover:text-[#38BDF8]"
-                  >
-                    Explore Stack &amp; Telemetry
-                    <ArrowUpRight className="size-4" aria-hidden="true" />
-                  </button>
-                </div>
-              </article>
+                  <div className="flex items-center justify-between gap-3 border-t border-[#1E263B] pt-4">
+                    <span className="font-mono text-[11px] text-[#868CA6]">
+                      Search · Topics · Clusters
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => navigateToPage('archive')}
+                      className="inline-flex items-center gap-2 rounded-lg bg-[#F59E0B] px-4 py-2 text-xs font-semibold text-[#07090F] transition-colors hover:bg-[#FCD34D] whitespace-nowrap shrink-0"
+                    >
+                      Open Paginated Archive
+                      <ArrowUpRight className="size-4" aria-hidden="true" />
+                    </button>
+                  </div>
+                </article>
+                </SpotlightSurface>
+              </InteractiveCard3D>
+
+              <InteractiveCard3D className="h-full" maxTilt={3}>
+                <SpotlightSurface className="h-full rounded-2xl">
+                <article className="surface-hairline surface-hairline-interactive cell-top-beam flex h-full flex-col justify-between gap-6 rounded-2xl border border-[#2D3854]/90 p-6 sm:p-7 hover:border-[#38BDF8]/70">
+                  <div className="flex flex-col gap-5">
+                    <div className="flex items-center justify-between gap-2 font-mono text-xs text-[#38BDF8]">
+                      <span className="inline-flex items-center gap-1.5">
+                        <Database className="size-3.5" aria-hidden="true" />
+                        Dedicated Stack &amp; Telemetry Page
+                      </span>
+                      <span className="text-[#34D399] tabular-nums">
+                        {syncState.status === 'live' ? 'Live API Synced' : 'CI Snapshot Active'}
+                      </span>
+                    </div>
+
+                    <LanguageSpectrumPreview
+                      stats={liveLanguageStats}
+                      totalRepos={activeProjects.length}
+                      downloads30d={syncState.totals.downloads30d}
+                    />
+
+                    <div>
+                      <h3 className="font-display text-2xl font-bold text-[#F4F5FA]">
+                        Live Stack, npm Registry &amp; Auto-Sync
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-[#A3A9BF]">
+                        Inspect real-time GitHub language distribution across{' '}
+                        {syncState.totals.languages.length} languages, published npm packages (
+                        {syncState.totals.downloads30d} downloads/30d), and the 6-hour CI sync
+                        pipeline.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between gap-3 border-t border-[#1E263B] pt-4">
+                    <span className="font-mono text-[11px] text-[#868CA6]">
+                      3D Telemetry Core · npm · .yml
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => navigateToPage('ecosystem')}
+                      className="inline-flex items-center gap-2 rounded-lg border border-[#2D3854] bg-[#141A29] px-4 py-2 text-xs font-semibold text-[#F4F5FA] transition-colors hover:border-[#38BDF8] hover:text-[#38BDF8] whitespace-nowrap shrink-0"
+                    >
+                      Explore Stack &amp; Telemetry
+                      <ArrowUpRight className="size-4" aria-hidden="true" />
+                    </button>
+                  </div>
+                </article>
+                </SpotlightSurface>
+              </InteractiveCard3D>
             </div>
           </div>
         </section>
 
-        {/* Closing Conversion / Open Source Callout */}
-        <section className="border-b border-[#1E263B]/80 py-20 md:py-24">
-          <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
-            <div className="surface-hairline flex flex-col items-start justify-between gap-8 rounded-2xl border border-[#2D3854] p-8 sm:p-12 lg:flex-row lg:items-center">
-              <div className="max-w-2xl">
-                <p className="font-mono text-xs text-[#FCD34D]">Open Source Workspace</p>
-                <h2 className="mt-2 font-display text-3xl font-bold tracking-tight text-[#F4F5FA] sm:text-4xl">
-                  Use it. Fork it. Make it better.
-                </h2>
-                <p className="mt-3 text-base leading-relaxed text-[#A3A9BF]">
-                  Personal engineering practice, best effort. Active repositories get priority
-                  review; older experiments are preserved for transparency. Start with an issue on
-                  GitHub.
-                </p>
-              </div>
+        <SectionSeam label="05 · OPEN SOURCE" />
 
-              <div className="flex flex-wrap items-center gap-3 shrink-0">
-                <a
-                  href={ORG_METADATA.issuesUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-lg bg-[#F59E0B] px-5 py-3 text-sm font-semibold text-[#07090F] transition-all hover:bg-[#FCD34D] hover:shadow-[0_0_24px_rgba(245,158,11,0.3)] whitespace-nowrap shrink-0"
-                >
-                  Open an Issue
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </a>
-                <a
-                  href={ORG_METADATA.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-lg border border-[#2D3854] bg-[#141A29] px-5 py-3 text-sm font-medium text-[#F4F5FA] transition-colors hover:border-[#F59E0B] whitespace-nowrap shrink-0"
-                >
-                  Follow on GitHub
-                  <ExternalLink className="size-4" aria-hidden="true" />
-                </a>
+        {/* Closing Conversion / Open Source Spotlight Canvas (v0 / Linear Editorial) */}
+        <section className="relative overflow-hidden py-20 md:py-28">
+          <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
+            <div className="ambient-cta-glow cad-frame relative overflow-hidden rounded-2xl border border-[#2D3854]/90 p-8 sm:p-12 lg:p-14">
+              {/* Subtle architectural diagonal-hatch, orbital wireframe & dot vignette */}
+              <div
+                aria-hidden="true"
+                className="bg-diagonal-hatch pointer-events-none absolute inset-0 opacity-60"
+                style={{
+                  maskImage: 'radial-gradient(ellipse 65% 80% at 85% 20%, black 0%, transparent 75%)',
+                  WebkitMaskImage:
+                    'radial-gradient(ellipse 65% 80% at 85% 20%, black 0%, transparent 75%)',
+                }}
+              />
+              <ClosingOrbitalBackdrop />
+              {/* Crisp top spotlight hairline */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute top-0 left-1/2 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-[#F59E0B]/70 to-transparent"
+              />
+
+              <div className="relative z-10 flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
+                <div className="max-w-2xl">
+                  <p className="font-mono text-xs text-[#FCD34D]">Open Source Workspace</p>
+                  <h2 className="mt-2 font-display text-3xl font-bold tracking-tight text-[#F4F5FA] sm:text-4xl">
+                    Use it. Fork it. Make it better.
+                  </h2>
+                  <p className="mt-3 text-base leading-relaxed text-[#A3A9BF]">
+                    Personal engineering practice, best effort. Active repositories get priority
+                    review; older experiments are preserved for transparency. Start with an issue
+                    on GitHub.
+                  </p>
+                  <p className="mt-4 font-mono text-[11px] text-[#868CA6] tabular-nums">
+                    {syncState.totals.repos} public repos · {syncState.totals.stars} stars ·{' '}
+                    {syncState.totals.downloads30d} npm downloads/30d · Auto-synced via{' '}
+                    <span className="text-[#34D399]">sync-org-data.yml</span>
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3 shrink-0">
+                  <a
+                    href={ORG_METADATA.issuesUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg bg-[#F59E0B] px-5 py-3 text-sm font-semibold text-[#07090F] transition-all hover:bg-[#FCD34D] hover:shadow-[0_0_24px_rgba(245,158,11,0.3)] whitespace-nowrap shrink-0"
+                  >
+                    Open an Issue
+                    <ArrowRight className="size-4" aria-hidden="true" />
+                  </a>
+                  <a
+                    href={ORG_METADATA.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg border border-[#2D3854] bg-[#0D111C]/90 px-5 py-3 text-sm font-medium text-[#F4F5FA] transition-colors hover:border-[#F59E0B] whitespace-nowrap shrink-0"
+                  >
+                    Follow on GitHub
+                    <ExternalLink className="size-4" aria-hidden="true" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -838,54 +908,17 @@ export default function App() {
         )}
 
         {activePage === 'ecosystem' && (
-          <>
-            <div className="border-b border-[#1E263B]/80 bg-[#07090F] py-5">
-              <div className="mx-auto flex w-full max-w-[1280px] flex-wrap items-center justify-between gap-3 px-4 sm:px-6 lg:px-10">
-                <button
-                  type="button"
-                  onClick={() => navigateToPage('overview')}
-                  className="inline-flex items-center gap-2 rounded-lg border border-[#2D3854] bg-[#0D111C] px-3.5 py-1.5 font-mono text-xs font-medium text-[#C9CDE0] transition-colors hover:border-[#F59E0B] hover:text-[#FCD34D]"
-                >
-                  <ArrowLeft className="size-3.5 text-[#F59E0B]" aria-hidden="true" />
-                  Back to Overview
-                </button>
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="font-mono text-xs text-[#868CA6]">
-                    Live Architecture, Stack &amp; Auto-Sync Telemetry
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => navigateToPage('archive')}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-[#2D3854] bg-[#0D111C] px-3 py-1.5 font-mono text-xs text-[#FCD34D] transition-colors hover:border-[#F59E0B]"
-                  >
-                    Open Archive
-                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <JourneyAndStackSection
-              mode="stack"
-              projects={activeProjects}
-              onInspectDossier={(proj) => setDossierProject(proj)}
-              onFocusIn3D={handleFocusIn3D}
-              onSelectLanguageFilter={handleSelectLanguageFilter}
-            />
-
-            <ExplorerAndEcosystemSection
-              mode="ecosystem"
-              projects={activeProjects}
-              resources={syncState.resources}
-              syncState={syncState}
-              onTriggerSync={handleManualSync}
-              externalQuery={archiveSearchQuery}
-              onExternalQueryChange={setArchiveSearchQuery}
-              onInspectDossier={(proj) => setDossierProject(proj)}
-              onFocusIn3D={handleFocusIn3D}
-            />
-          </>
+          <EcosystemBentoPage
+            projects={activeProjects}
+            resources={syncState.resources}
+            syncState={syncState}
+            onTriggerSync={handleManualSync}
+            onSelectLanguageFilter={handleSelectLanguageFilter}
+            onBackToOverview={() => navigateToPage('overview')}
+            onOpenArchive={() => navigateToPage('archive')}
+          />
         )}
+        </motion.div>
       </main>
 
       <div aria-hidden="true" className="hairline-divider-glow" />
@@ -978,46 +1011,18 @@ export default function App() {
               <div className="flex flex-col gap-3">
                 <p className="font-mono text-xs text-[#FCD34D]">Flagship Projects</p>
                 <ul className="flex flex-col gap-2 text-sm text-[#A3A9BF]">
-                  <li>
-                    <a
-                      href="https://github.com/ThanhNguyxnOrg/blendops"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-[#F4F5FA]"
-                    >
-                      blendops
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://github.com/ThanhNguyxnOrg/lumeo"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-[#F4F5FA]"
-                    >
-                      lumeo
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://github.com/ThanhNguyxnOrg/apidex-hub"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-[#F4F5FA]"
-                    >
-                      apidex-hub
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://github.com/ThanhNguyxnOrg/SkillGauge"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-[#F4F5FA]"
-                    >
-                      SkillGauge
-                    </a>
-                  </li>
+                  {topFooterFlagships.map((proj) => (
+                    <li key={proj.slug}>
+                      <a
+                        href={proj.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-[#F4F5FA]"
+                      >
+                        {proj.name}
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               </div>
 

@@ -63,7 +63,7 @@ const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 export const WORKFLOW_YAML_SNIPPET = `name: Sync telemetry and deploy
 on:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: "0 */6 * * *"
   workflow_dispatch:
   repository_dispatch:
     types: [org-repo-updated, release-published]
@@ -75,24 +75,44 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: org-telemetry-sync-and-pages
+  cancel-in-progress: false
+
 jobs:
   sync-verify-and-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
+      - name: Mint repository-scoped ThanhNguyxnAgent token
+        id: agent-token
+        uses: ThanhNguyxnOrg/.github/.github/actions/agent-token@2b5c5cad571ee93fd091e16e1734ebd819191e68
+        with:
+          profile: content
+          app-id: \${{ vars.BOT_APP_ID }}
+          private-key: \${{ secrets.BOT_PRIVATE_KEY }}
       - uses: actions/checkout@v4
+        with:
+          token: \${{ steps.agent-token.outputs.token }}
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: npm }
       - run: npm ci
       - run: npm run brand:sync
-      - run: npm run sync
+      - name: Bake live GitHub and npm telemetry
+        env:
+          GITHUB_TOKEN: \${{ steps.agent-token.outputs.token }}
+        run: npm run sync
       - run: npm test && npm run lint
+      - uses: ThanhNguyxnOrg/.github/.github/actions/agent-git-identity@da9d02544f60aeec92f8c851846ee3a587044beb
       - name: Commit synced data
         run: |
-          git config user.name "ThanhNguyxnAgent[bot]"
-          git config user.email "296222857+thanhnguyxnagent[bot]@users.noreply.github.com"
           git add -A src/data/liveSnapshot.json public/logos public/brand
-          git diff --cached --quiet || git commit -m "chore(sync): update live telemetry and brand assets [skip ci]"
-          git diff --cached --quiet || git push
+          if git diff --cached --quiet; then
+            echo "No synced data changes"
+            exit 0
+          fi
+          git commit -m "chore(sync): update live telemetry and brand assets [skip ci]"
+          git push
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with: { path: ./dist }

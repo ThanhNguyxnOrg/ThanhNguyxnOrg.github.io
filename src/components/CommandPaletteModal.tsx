@@ -41,8 +41,13 @@ export default function CommandPaletteModal({
       setActiveIndex(0);
       return;
     }
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     const timer = window.setTimeout(() => inputRef.current?.focus(), 40);
-    return () => window.clearTimeout(timer);
+    return () => {
+      window.clearTimeout(timer);
+      document.body.style.overflow = prevOverflow;
+    };
   }, [open]);
 
   const pageShortcuts = useMemo(
@@ -63,7 +68,7 @@ export default function CommandPaletteModal({
       },
       {
         id: 'nav-archive',
-        label: `Paginated Repository Archive (${projects.length})`,
+        label: 'Paginated Repository Archive',
         hint: 'Page · #/archive',
         icon: Layers,
         run: () => onNavigatePage('archive'),
@@ -76,7 +81,7 @@ export default function CommandPaletteModal({
         run: () => onNavigatePage('ecosystem'),
       },
     ],
-    [onNavigatePage, projects.length],
+    [onNavigatePage],
   );
 
   const filteredShortcuts = useMemo(() => {
@@ -222,7 +227,7 @@ export default function CommandPaletteModal({
 
               <div>
                 <p className="px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-[#868CA6]">
-                  Repositories ({matchingProjects.length})
+                  Matching Repositories
                 </p>
                 {matchingProjects.length === 0 ? (
                   <p className="px-3 py-6 text-center font-mono text-xs text-[#868CA6]">

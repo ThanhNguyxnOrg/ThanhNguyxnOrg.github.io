@@ -3,6 +3,11 @@ import { ArrowUpRight, Compass, ExternalLink, Eye, GitFork, Star } from 'lucide-
 import type { OrgProject } from '../data/orgData';
 import { assessProjectScientifically } from '../utils/projectLogic';
 import { InteractiveCard3D, ProjectArtwork } from './InteractiveCard3D';
+import {
+  DomainDistributionRibbon,
+  DotMatrixBackdrop,
+  SpotlightSurface,
+} from './ArchitecturalDecor';
 
 interface FeaturedSectionProps {
   projects: OrgProject[];
@@ -35,10 +40,12 @@ export default function FeaturedSection({
     <section
       id="projects"
       aria-labelledby="featured-heading"
-      className="scroll-mt-20 border-b border-[#1E263B]/80 py-20 md:py-28"
+      className="relative scroll-mt-20 overflow-hidden py-20 md:py-28"
     >
-      <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
-        {/* Section Header */}
+      <DotMatrixBackdrop align="right" tint="amber" />
+
+      <div className="relative z-10 mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
+        {/* Clean Editorial Header (v0 / Linear architectural restraint) */}
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-2xl">
             <p className="font-mono text-xs text-[#FCD34D]">01. Featured Engineering Releases</p>
@@ -53,27 +60,36 @@ export default function FeaturedSection({
               architectural maturity. Inspect any dossier or focus its node in the 3D Astrolabe.
             </p>
           </div>
-          <button
-            type="button"
-            onClick={onOpenArchive}
-            className="inline-flex items-center gap-2 rounded-lg border border-[#2D3854] bg-[#0D111C] px-4 py-2 font-mono text-xs font-medium text-[#FCD34D] transition-colors hover:border-[#F59E0B] hover:text-[#F59E0B] lg:whitespace-nowrap lg:shrink-0"
-          >
-            Open Full Archive
-            <ArrowUpRight className="size-4" aria-hidden="true" />
-          </button>
+          <div className="flex flex-wrap items-center gap-4 md:flex-col md:items-end md:gap-2">
+            <button
+              type="button"
+              onClick={onOpenArchive}
+              className="inline-flex items-center gap-2 rounded-lg border border-[#2D3854] bg-[#0D111C]/90 px-4 py-2 font-mono text-xs font-medium text-[#FCD34D] transition-colors hover:border-[#F59E0B] hover:text-[#F59E0B] whitespace-nowrap shrink-0"
+            >
+              Open Full Archive
+              <ArrowUpRight className="size-4" aria-hidden="true" />
+            </button>
+            <span className="font-mono text-[11px] text-[#868CA6] tabular-nums">
+              {projects.length} synced repos · Top {restItems.length + 1} highlighted
+            </span>
+          </div>
         </div>
 
-        {/* Lead Flagship Showcase Card */}
+        {/* Auto-Synced Engineering Domain Distribution Ribbon */}
+        <DomainDistributionRibbon projects={projects} />
+
+        {/* Lead Flagship Showcase Card (preserves authentic repository theme artwork) */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-12"
+          className="mt-6"
         >
-          <InteractiveCard3D maxTilt={4}>
-            <article className="surface-hairline grid overflow-hidden rounded-2xl border border-[#2D3854]/90 lg:grid-cols-12 lg:items-stretch">
-              <div className="relative min-h-[260px] border-b border-[#1E263B] lg:col-span-7 lg:border-b-0 lg:border-r">
+          <InteractiveCard3D maxTilt={3.5}>
+            <SpotlightSurface className="rounded-2xl">
+            <article className="surface-hairline cell-top-beam grid overflow-hidden rounded-2xl border border-[#2D3854]/85 lg:grid-cols-12 lg:items-stretch">
+              <div className="relative aspect-[2/1] border-b border-[#1E263B] lg:col-span-7 lg:aspect-auto lg:min-h-[360px] lg:border-b-0 lg:border-r">
                 <ProjectArtwork
                   title={lead.name}
                   image={lead.image}
@@ -174,6 +190,7 @@ export default function FeaturedSection({
                 </div>
               </div>
             </article>
+            </SpotlightSurface>
           </InteractiveCard3D>
         </motion.div>
 
@@ -204,8 +221,9 @@ export default function FeaturedSection({
                 }}
                 className={`min-w-0 ${spanClass}`}
               >
-                <InteractiveCard3D className="h-full" maxTilt={4.5}>
-                  <article className="surface-hairline flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#1E263B] transition-colors hover:border-[#2D3854]">
+                <InteractiveCard3D className="h-full" maxTilt={3.5}>
+                  <SpotlightSurface className="h-full rounded-2xl">
+                  <article className="surface-hairline cell-top-beam flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#1E263B] transition-colors hover:border-[#2D3854]">
                     <div>
                       <div className="aspect-[2/1] w-full border-b border-[#1E263B]/80">
                         <ProjectArtwork
@@ -322,6 +340,7 @@ export default function FeaturedSection({
                       </div>
                     </div>
                   </article>
+                  </SpotlightSurface>
                 </InteractiveCard3D>
               </motion.div>
             );
