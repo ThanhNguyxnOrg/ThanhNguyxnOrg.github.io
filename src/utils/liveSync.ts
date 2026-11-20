@@ -103,16 +103,6 @@ jobs:
           GITHUB_TOKEN: \${{ steps.agent-token.outputs.token }}
         run: npm run sync
       - run: npm test && npm run lint
-      - uses: ThanhNguyxnOrg/.github/.github/actions/agent-git-identity@da9d02544f60aeec92f8c851846ee3a587044beb
-      - name: Commit synced data
-        run: |
-          git add -A src/data/liveSnapshot.json public/logos public/brand
-          if git diff --cached --quiet; then
-            echo "No synced data changes"
-            exit 0
-          fi
-          git commit -m "chore(sync): update live telemetry and brand assets [skip ci]"
-          git push
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with: { path: ./dist }
