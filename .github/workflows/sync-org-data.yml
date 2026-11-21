@@ -70,11 +70,16 @@ jobs:
       - name: Build production bundle
         run: npm run build
 
+      # Include the attempt number so a retry never collides with an
+      # artifact uploaded by an earlier attempt of the same workflow run.
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          name: github-pages-${{ github.run_attempt }}
           path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+        with:
+          artifact_name: github-pages-${{ github.run_attempt }}
