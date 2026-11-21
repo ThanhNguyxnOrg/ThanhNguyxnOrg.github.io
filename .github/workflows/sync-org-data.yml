@@ -36,12 +36,12 @@ jobs:
 
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           token: ${{ steps.agent-token.outputs.token }}
 
       - name: Setup Node 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -73,7 +73,7 @@ jobs:
       # Include the attempt number so a retry never collides with an
       # artifact uploaded by an earlier attempt of the same workflow run.
       - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           name: github-pages-${{ github.run_attempt }}
           path: ./dist
