@@ -1660,7 +1660,7 @@ export default function OrbitalScene3D({
           {projects.map((project) => (
             <button key={project.slug} type="button" aria-pressed={project.slug === selectedSlug} onClick={() => onSelectProject(project)} onDoubleClick={() => onOpenDossier(project)} className={`rounded-xl border p-3 text-left transition-colors hover:border-[#F59E0B] focus-visible:outline-2 focus-visible:outline-[#F59E0B] ${project.slug === selectedSlug ? 'border-[#F59E0B] bg-[#F59E0B]/10' : 'border-[#1E263B] bg-[#0D111C]'}`}>
               <span className="block font-mono text-sm text-[#FCD34D]">◉ {project.name}</span>
-              <span className="mt-1 block text-xs text-[#A3A9BF]">{project.language} · {project.stars} stars</span>
+              <span className="mt-1 block text-xs text-[#A3A9BF]">{project.language} · {project.stars} {project.stars === 1 ? 'star' : 'stars'}</span>
             </button>
           ))}
           {projects.length === 0 && <p className="text-sm text-[#A3A9BF]">No repositories to display.</p>}
