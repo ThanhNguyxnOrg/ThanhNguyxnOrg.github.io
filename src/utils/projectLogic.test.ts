@@ -11,6 +11,40 @@ import {
   paginateItems,
 } from './projectLogic';
 import { mergeLiveGitHubRepos } from './liveSync';
+import { supportsWebGL, createRendererOrFallback } from './webgl';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import OrbitalScene3D from '../components/OrbitalScene3D';
+
+test('WebGL detection handles missing, blocked, and supported contexts', () => {
+  assert.equal(supportsWebGL(() => null), false);
+  assert.equal(supportsWebGL(() => { throw new Error('blocked'); }), false);
+  for (const supported of ['webgl2', 'webgl', 'experimental-webgl']) {
+    assert.equal(supportsWebGL((name) => name === supported ? { getExtension: () => null } : null), true);
+  }
+});
+
+test('renderer selection skips unsupported WebGL and catches initialization failures', () => {
+  let calls = 0;
+  const create = () => { calls++; return { renderer: true }; };
+  assert.equal(createRendererOrFallback(false, create), null);
+  assert.equal(calls, 0);
+  assert.deepEqual(createRendererOrFallback(true, create), { renderer: true });
+  assert.equal(createRendererOrFallback(true, () => { throw new Error('GPU unavailable'); }), null);
+});
+
+test('without WebGL the initial render lists the same repositories, including an empty state', () => {
+  const render = (projects: typeof ORG_PROJECTS) => renderToStaticMarkup(createElement(OrbitalScene3D, {
+    projects, selectedSlug: projects[0]?.slug ?? '', onSelectProject: () => {}, onOpenDossier: () => {},
+  }));
+  const markup = render(ORG_PROJECTS);
+  assert.match(markup, /orbital-2d-viewport/);
+  assert.doesNotMatch(markup, /orbital-3d-viewport/);
+  for (const project of ORG_PROJECTS) assert.ok(markup.includes(project.name));
+  assert.match(markup, /aria-pressed="true"/);
+  assert.match(markup, /Open dossier/);
+  assert.match(render([]), /No repositories to display/);
+});
 
 test('dataset integrity matches baked totals', () => {
   assert.equal(ORG_PROJECTS.length, ORG_METADATA.totals.repos);

@@ -15,6 +15,7 @@ import {
   Star,
 } from 'lucide-react';
 import type { OrgProject } from '../data/orgData';
+import { createRendererOrFallback, supportsWebGL } from '../utils/webgl';
 import {
   assessProjectScientifically,
   ORBITAL_RING_TILTS,
@@ -182,6 +183,7 @@ export default function OrbitalScene3D({
   const [dockCollapsed, setDockCollapsed] = useState<boolean>(false);
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   const [contextLost, setContextLost] = useState<boolean>(false);
+  const [useFallback, setUseFallback] = useState(() => !supportsWebGL());
 
   const applyFinishRef = useRef<((mode: MaterialFinish) => void) | null>(null);
 
@@ -238,16 +240,10 @@ export default function OrbitalScene3D({
   }, [projects, onSelectProject, onOpenDossier]);
 
   useEffect(() => {
+    if (useFallback) return;
     const mount = canvasMountRef.current;
     const outerContainer = containerRef.current;
     if (!mount || !outerContainer) return;
-
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    stateRef.current.reducedMotion = motionQuery.matches;
-    const handleMotionChange = (e: MediaQueryListEvent) => {
-      stateRef.current.reducedMotion = e.matches;
-    };
-    motionQuery.addEventListener('change', handleMotionChange);
 
     const isSoftwareGl = (() => {
       const probeCanvas = document.createElement('canvas');
@@ -263,11 +259,23 @@ export default function OrbitalScene3D({
     const width = Math.max(mount.clientWidth, 280);
     const height = Math.max(mount.clientHeight, 360);
 
-    const renderer = new THREE.WebGLRenderer({
+    const initializedRenderer = createRendererOrFallback(!useFallback, () => new THREE.WebGLRenderer({
       antialias: !isSoftwareGl,
       powerPreference: 'high-performance',
       alpha: false,
-    });
+    }));
+    if (!initializedRenderer) {
+      setUseFallback(true);
+      return;
+    }
+    const renderer = initializedRenderer;
+
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    stateRef.current.reducedMotion = motionQuery.matches;
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      stateRef.current.reducedMotion = e.matches;
+    };
+    motionQuery.addEventListener('change', handleMotionChange);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
@@ -1638,10 +1646,32 @@ export default function OrbitalScene3D({
       envTexture.dispose();
       renderer.dispose();
     };
-  }, []);
+  }, [useFallback]);
 
   const selectedProject =
     projects.find((p) => p.slug === (hoveredSlug ?? selectedSlug)) ?? projects[0];
+
+  if (useFallback) {
+    return (
+      <section data-testid="orbital-2d-viewport" aria-label="Repository astrolabe, 2D view" className="cad-frame flex h-[410px] flex-col rounded-2xl border border-[#1E263B] bg-[#07090F] p-4 text-[#F4F5FA] sm:h-[480px] lg:h-[552px]">
+        <h2 className="flex items-center gap-2 font-display text-lg"><Compass className="size-5 text-[#F59E0B]" aria-hidden="true" />Repository Astrolabe · 2D</h2>
+        <p className="mt-1 text-xs text-[#A3A9BF]">WebGL is unavailable. Select a repository to explore its dossier.</p>
+        <div className="mt-4 grid min-h-0 flex-1 grid-cols-1 gap-2 overflow-y-auto sm:grid-cols-2" aria-label="Repository nodes">
+          {projects.map((project) => (
+            <button key={project.slug} type="button" aria-pressed={project.slug === selectedSlug} onClick={() => onSelectProject(project)} onDoubleClick={() => onOpenDossier(project)} className={`rounded-xl border p-3 text-left transition-colors hover:border-[#F59E0B] focus-visible:outline-2 focus-visible:outline-[#F59E0B] ${project.slug === selectedSlug ? 'border-[#F59E0B] bg-[#F59E0B]/10' : 'border-[#1E263B] bg-[#0D111C]'}`}>
+              <span className="block font-mono text-sm text-[#FCD34D]">◉ {project.name}</span>
+              <span className="mt-1 block text-xs text-[#A3A9BF]">{project.language} · {project.stars} stars</span>
+            </button>
+          ))}
+          {projects.length === 0 && <p className="text-sm text-[#A3A9BF]">No repositories to display.</p>}
+        </div>
+        {selectedProject && <div className="mt-3 flex items-center justify-between gap-2 border-t border-[#1E263B] pt-3 text-xs">
+          <span className="truncate font-mono">{selectedProject.name}</span>
+          <button type="button" onClick={() => onOpenDossier(selectedProject)} className="shrink-0 rounded-lg border border-[#F59E0B]/50 px-3 py-2 text-[#FCD34D] hover:bg-[#F59E0B]/10">Open dossier</button>
+        </div>}
+      </section>
+    );
+  }
 
   return (
     <div
