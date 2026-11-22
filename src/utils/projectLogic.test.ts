@@ -148,6 +148,40 @@ test('mergeLiveGitHubRepos updates stars, preserves curated story, and never dup
   assert.equal(nova.demoUrl, 'https://thanhnguyxnorg.github.io/NovaEngine/');
 });
 
+test('mergeLiveGitHubRepos preserves identified licences and labels undetermined licences honestly', () => {
+  const cases = [
+    { license: null, expected: 'Unknown' },
+    { license: undefined, expected: 'Unknown' },
+    { license: {}, expected: 'Unknown' },
+    { license: { spdx_id: null }, expected: 'Unknown' },
+    { license: { spdx_id: '' }, expected: 'Unknown' },
+    { license: { spdx_id: 'NOASSERTION' }, expected: 'Unknown' },
+    { license: { spdx_id: 'other' }, expected: 'Unknown' },
+    { license: { spdx_id: 'MIT' }, expected: 'MIT' },
+    { license: { spdx_id: 'Apache-2.0' }, expected: 'Apache-2.0' },
+  ];
+
+  for (const { license, expected } of cases) {
+    const projects = mergeLiveGitHubRepos([], [{
+      name: 'NewRepo',
+      description: null,
+      html_url: 'https://github.com/ThanhNguyxnOrg/NewRepo',
+      homepage: null,
+      language: null,
+      stargazers_count: 0,
+      forks_count: 0,
+      created_at: '2026-10-21T00:00:00Z',
+      updated_at: '2026-10-21T00:00:00Z',
+      pushed_at: '2026-10-21T00:00:00Z',
+      default_branch: 'main',
+      license,
+    }]);
+
+    assert.equal(projects.length, 1);
+    assert.equal(projects[0].license, expected, JSON.stringify(license));
+  }
+});
+
 test('computeLanguageBreakdown calculates accurate counts and relative percentages', () => {
   const breakdown = computeLanguageBreakdown(ORG_PROJECTS);
   const expectedTypeScript = ORG_PROJECTS.filter(
@@ -191,4 +225,3 @@ test('paginateItems slices cleanly and clamps bounds for 100+ repositories', () 
   assert.equal(empty.startIndex, 0);
   assert.equal(empty.endIndex, 0);
 });
-

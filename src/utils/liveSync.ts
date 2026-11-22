@@ -307,9 +307,9 @@ export function mergeLiveGitHubRepos(
       hasPages: Boolean(extra.has_pages || validDemoUrl?.includes('github.io')),
       homepage,
       license:
-        extra.license?.spdx_id && extra.license.spdx_id !== 'NOASSERTION'
+        extra.license?.spdx_id && !['NOASSERTION', 'other'].includes(extra.license.spdx_id)
           ? extra.license.spdx_id
-          : 'MIT',
+          : 'Unknown',
       topics,
       repoUrl: extra.html_url,
       demoUrl: validDemoUrl,
