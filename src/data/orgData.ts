@@ -108,6 +108,46 @@ export const ORG_PRINCIPLES: PrincipleItem[] = [
 
 export const ORG_PROJECTS: OrgProject[] = [
   {
+    name: 'PixelCraft',
+    slug: 'pixelcraft',
+    repoUrl: 'https://github.com/ThanhNguyxnOrg/Pixelcraft',
+    description:
+      'An evolving frontend design-engineering toolkit spanning reusable UI patterns, visual QA, data visualization, document and media surfaces, PWA, chat interfaces, constrained devices, spatial UI, and design handoff.',
+    blurb:
+      'A modular frontend toolkit for reusable patterns, visual QA, platform-specific interfaces, and design-to-code handoff.',
+    story:
+      'Early-stage project organizing frontend engineering knowledge into reusable skills, cross-platform patterns, evaluation workflows, and implementation handoff.',
+    category: 'Developer Tools',
+    language: 'Other',
+    license: null,
+    stars: 0,
+    forks: 1,
+    openIssues: 0,
+    pushedAt: '2026-11-23T10:56:45Z',
+    createdAt: '2026-11-23T04:16:24Z',
+    defaultBranch: 'main',
+    hasPages: false,
+    demoUrl: null,
+    homepage: null,
+    topics: [
+      'agent-skills',
+      'design-engineering',
+      'frontend',
+      'figma',
+      'ui-patterns',
+      'visual-qa',
+      'design-handoff',
+      'pwa',
+      'dataviz',
+      'spatial-ui',
+    ],
+    accent: 'highlight',
+    pattern: 'grid',
+    logo: '/logos/pixelcraft.png',
+    image: '/brand/pixelcraft.png',
+  },
+
+  {
     name: 'chess-on-glass',
     slug: 'chess-on-glass',
     repoUrl: 'https://github.com/ThanhNguyxnOrg/chess-on-glass',
