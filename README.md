@@ -44,7 +44,7 @@ The `Sync telemetry and deploy` workflow runs every 6 hours, on pushes to `main`
 ## Brand assets
 
 - `public/logos/<slug>.png|svg` — repository logos, raster max 256px.
-- `public/brand/<slug>.png` — repository themes, exactly 1024x512.
+- `public/brand/<slug>.png` — repository themes, 1024x512 PNG. The 1280x640 (2:1) social-preview export is also accepted as a high-resolution source and normalized during build.
 - `public/logo.png` — org logo.
 - `public/og-image.png` — social preview, 1200x630.
 

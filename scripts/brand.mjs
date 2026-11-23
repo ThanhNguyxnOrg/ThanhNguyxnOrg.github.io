@@ -17,8 +17,14 @@ const rules = [
   },
   {
     dir: join(ROOT, "public/brand"),
-    needs: (meta) => meta.width !== 1024 || meta.height !== 512 || meta.format !== "png",
-    describe: (meta) => `${meta.width}x${meta.height} ${meta.format} (expects 1024x512 png)`,
+    needs: (meta) =>
+      !(
+        meta.format === "png" &&
+        ((meta.width === 1024 && meta.height === 512) ||
+          (meta.width === 1280 && meta.height === 640))
+      ),
+    describe: (meta) =>
+      `${meta.width}x${meta.height} ${meta.format} (expects 1024x512 or 1280x640 2:1 png)`,
     encode: (img) =>
       img.resize({ width: 1024, height: 512, fit: "cover", position: "centre" }).png({ compressionLevel: 9 }),
   },
